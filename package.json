@@ -1,0 +1,139 @@
+{
+  "name": "install-on-abtnode",
+  "title": "Install On ABTNODE",
+  "version": "1.0.0",
+  "description": "A simple blocklet that helps you install blocklet on abtnode",
+  "keywords": [
+    "dapp",
+    "forge"
+  ],
+  "publishConfig": {
+    "directory": "_blocklet/"
+  },
+  "files": [
+    "api/",
+    "build",
+    "screenshots",
+    "logo.png",
+    "blocklet.json",
+    "blocklet.md",
+    "blocklet.js",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocklet/install-on-abtnode"
+  },
+  "dependencies": {
+    "@arcblock/did": "^1.4.2",
+    "@arcblock/did-auth": "^1.4.2",
+    "@arcblock/did-auth-storage-nedb": "^1.4.2",
+    "@arcblock/did-react": "^0.78.14",
+    "@arcblock/forge-sdk": "^1.4.2",
+    "@arcblock/forge-util": "^1.4.2",
+    "@arcblock/forge-wallet": "^1.4.2",
+    "@arcblock/mcrypto": "^1.4.2",
+    "@arcblock/react-hooks": "^0.78.0",
+    "@arcblock/ux": "^0.78.14",
+    "@material-ui/core": "^4.10.1",
+    "@material-ui/icons": "4.5.1",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.4",
+    "core-js": "2.5.7",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "express-history-api-fallback": "^2.2.1",
+    "flat": "^5.0.2",
+    "http-proxy-middleware": "^0.19.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "multibase": "^0.6.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-helmet": "^5.2.1",
+    "react-hook-form": "5.7.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.3",
+    "react-use": "^13.26.3",
+    "serverless-http": "^2.0.2",
+    "store": "^2.0.12",
+    "styled-components": "^5.0.1"
+  },
+  "scripts": {
+    "lint": "eslint src api",
+    "precommit": "yarn lint",
+    "prepush": "yarn lint",
+    "clean": "rm -rf build api/dist",
+    "start": "npm-run-all --parallel start:*",
+    "start:client": "PUBLIC_URL=\"\" react-app-rewired start",
+    "start:server": "nodemon api/index.js -w api",
+    "build": "yarn clean && npm-run-all build:*",
+    "build:client": "PUBLIC_URL=\"/z8ia1C4xp1vVwH2VpAhkyknR4gSZBfXemJBZn\" react-app-rewired build && rm -f _blocklet/build/static/**/*.{js,css}.map",
+    "build:server": "netlify-lambda build api/functions",
+    "bundle": "yarn clean && npm-run-all bundle:*",
+    "bundle:client": "REACT_APP_API_PREFIX=\"\" REACT_APP_APP_NAME=\"Blockchain Boarding Gate\" yarn build:client",
+    "bundle:server": "NODE_ENV=production abtnode bundle -w api/webpack.blocklet.js",
+    "bundle-server": "DEBUG=@abtnode/* NODE_ENV=development abtnode bundle -w api/webpack.blocklet.js",
+    "prepublishOnly": "npm run bundle && rm -f _blocklet/build/**/**/*.js.map",
+    "test": "react-app-rewired test --env=jsdom --passWithNoTests",
+    "eject": "react-app-rewired eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "7.5.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.5",
+    "mutationobserver-shim": "^0.3.7",
+    "netlify-lambda": "^1.4.13",
+    "nodemon": "^1.19.1",
+    "npm-run-all": "^4.1.5",
+    "react-app-rewired": "^2.1.6"
+  },
+  "blocklet": {
+    "group": "dapp",
+    "color": "primary",
+    "main": "api/index.js",
+    "logo": "logo.png",
+    "provider": "arcblock",
+    "support": "support@arcblock.io",
+    "community": "https://community.arcblockio.cn",
+    "config_url": "",
+    "public_url": "/",
+    "admin_url": "",
+    "doc_url": "",
+    "install-scripts": {},
+    "hooks": {
+      "pre-deploy": "npm run bundle"
+    },
+    "hookFiles": [],
+    "scripts": {
+      "dev": "npm run start"
+    }
+  },
+  "license": "Apache-2.0"
+}
