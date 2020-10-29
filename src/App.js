@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const App = () => (
+const App = () => (
   <MuiThemeProvider theme={theme}>
     <ThemeProvider theme={theme}>
       <LocaleProvider translations={translations}>

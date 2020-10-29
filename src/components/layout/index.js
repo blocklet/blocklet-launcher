@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Container from '@material-ui/core/Container';
+import Header from './header';
 
 export default function Layout({ title, children }) {
-  const appName = window.env ? window.env.appName : 'Blockchain Boarding Gate';
   return (
-    <Div title={title} brand={appName}>
-      <Container>{children}</Container>
+    <Div>
+      <Header />
+      <Main>{children}</Main>
     </Div>
   );
 }
@@ -22,7 +23,10 @@ Layout.defaultProps = {};
 
 const Div = styled.div`
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+`;
+
+const Main = styled(Container)`
+  padding: 0;
 `;
