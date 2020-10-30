@@ -7,7 +7,7 @@ import MaterialTable from 'material-table';
 import Button from '@arcblock/ux/lib/Button';
 import Icons from '../table_icons';
 
-export default function TableList({ rows, onDelete }) {
+export default function TableList({ params: { rows } }) {
   const { t } = useContext(LocaleContext);
 
   const columns = [
@@ -21,16 +21,8 @@ export default function TableList({ rows, onDelete }) {
       sorting: false,
       align: 'center',
       render: (d) => (
-        <Button
-          rounded
-          edge="end"
-          size="small"
-          className="rule-action"
-          color="danger"
-          onClick={() => {
-            onDelete(d.name);
-          }}>
-          {t('common.delete')}
+        <Button rounded edge="end" size="small" className="rule-action" color="primary" onClick={() => {}}>
+          {t('blocklet.select')}
         </Button>
       ),
     },

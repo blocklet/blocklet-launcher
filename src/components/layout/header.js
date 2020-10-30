@@ -19,7 +19,6 @@ const HeaderLayout = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 30px;
 
   .logo {
     font-size: 24px;

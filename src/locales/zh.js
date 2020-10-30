@@ -13,9 +13,17 @@ module.exports = flat({
   abtnode: {
     tableTitle: 'list',
     add: '添加 ABT Node',
+    info: 'ABT Node 信息',
   },
   generate: {
     add: '生成安装按钮',
-    address: '生成使用地址',
+    link: '生成使用地址',
+  },
+  blocklet: {
+    meta: {
+      info: 'Blocklet Meta 信息',
+    },
+    selectnode: '选择 ABT Node',
+    select: '进入',
   },
 });

@@ -1,3 +1,4 @@
+import isUrl from 'is-url';
 const formatError = (error) => {
   if (Array.isArray(error.errors)) {
     return error.errors.map((x) => x.message).join('\n');
@@ -8,4 +9,4 @@ const formatError = (error) => {
 
 const isObjectFn = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
 
-export { isObjectFn, formatError };
+export { isObjectFn, formatError, isUrl };

@@ -63,7 +63,7 @@ export default function SimpleTabs({ params }) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One {params.info}
+        Item One {params.url}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

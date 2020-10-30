@@ -13,9 +13,17 @@ module.exports = flat({
   abtnode: {
     tableTitle: 'list',
     add: 'Add ABT Node',
+    info: 'ABT Node Info',
   },
   generate: {
     add: 'Generate Install Button',
-    address: 'Generate Install Address',
+    link: 'Generate Install Link',
+  },
+  blocklet: {
+    meta: {
+      info: 'Blocklet Meta Info',
+    },
+    selectnode: 'Select ABT Node',
+    select: 'Select',
   },
 });

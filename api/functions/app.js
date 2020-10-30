@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fallback = require('express-history-api-fallback');
 
-const { handlers } = require('../libs/auth');
+const abtnode = require('../routes/abtnode');
 
 const netlifyPrefix = '/.netlify/functions/app';
 const isProduction = process.env.NODE_ENV === 'production';
@@ -46,9 +46,7 @@ app.use(
 
 const router = express.Router();
 
-handlers.attach(Object.assign({ app: router }, require('../routes/auth/login')));
-handlers.attach(Object.assign({ app: router }, require('../routes/auth/poke')));
-require('../routes/session').init(router);
+abtnode.init(app);
 
 if (isProduction) {
   if (isNetlify) {

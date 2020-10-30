@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 
@@ -9,9 +9,15 @@ import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TablbeList from '../components/abtnode/list';
 import useSettingConfirm from '../components/confirm_config';
+import { isUrl } from '../libs/utils';
+import api from '../libs/api';
 
-import { isObjectFn } from '../libs/utils';
+import NodeClient from '@abtnode/client';
+// from abtnode
+// action="node-register"&endpoint={abtnode_endpoint}
 
+// from blocklet
+// action="blocklet-install"&mete_url={blocklet_meta_url}
 export default function IndexPage() {
   const { t, changeLocale } = useContext(LocaleContext);
   let urlParams = new URLSearchParams(window.location.search);
@@ -22,12 +28,34 @@ export default function IndexPage() {
   const [abtnodes, setAbtnodes] = useLocalStorage('abtnodes');
   const [currentSetting, setCurrentSetting] = useState(null);
   const [settings, setSettings] = useState(useSettingConfirm());
+  const rows = Array.isArray(abtnodes) ? abtnodes : [];
 
-  settings.inputUrlToGenerateLinkSetting.onConfirm = () => {
-    settings.generateLinkSetting.params = {
-      info: 'wwwwwwwww',
-    };
+  const getNodeInfo = async (url) => {
+    const client = new NodeClient(`${url}/api/gql`);
+    try {
+      const nodeInfo = await client.getNodeInfo();
+      settings.showABTNodeInfoSetting.params = {
+        name: url,
+        info: nodeInfo.info,
+      };
+      setSettings(settings);
+    } catch (error) {
+      Promise.reject(error.messgae);
+    }
+  };
 
+  const getBlockletMeta = async (meta_url) => {
+    try {
+      const metaInfo = await api.get('api/meta/info', { params: { meta_url } });
+      settings.showBlockletMetaInfoSetting.params = metaInfo.data.info;
+      setSettings(settings);
+    } catch (error) {
+      Promise.reject(error.messgae);
+    }
+  };
+
+  settings.inputUrlToGenerateLinkSetting.onConfirm = (params) => {
+    settings.generateLinkSetting.params = params;
     setSettings(settings);
     setCurrentSetting('generateLinkSetting');
   };
@@ -42,10 +70,53 @@ export default function IndexPage() {
     setCurrentSetting('inputUrlToGenerateLinkSetting');
   };
 
-  settings.addABTNodeSetting.onConfirm = () => {
-    setCurrentSetting(null);
+  settings.addABTNodeSetting.onConfirm = async ({ url }) => {
+    try {
+      await getNodeInfo(url);
+      setCurrentSetting('showABTNodeInfoSetting');
+    } catch (error) {
+      setCurrentSetting(null);
+    }
   };
   settings.addABTNodeSetting.onCancel = () => {
+    setCurrentSetting(null);
+  };
+
+  settings.showABTNodeInfoSetting.onConfirm = async (params) => {
+    if (abtnodes) {
+      const index = abtnodes.findIndex((x) => x.name === params.name);
+      if (index > -1) {
+        abtnodes[index].info = params.info;
+      } else {
+        abtnodes.push(params);
+      }
+      setAbtnodes(abtnodes);
+    } else {
+      setAbtnodes([params]);
+    }
+    setCurrentSetting(null);
+  };
+  settings.showABTNodeInfoSetting.onCancel = () => {
+    setCurrentSetting(null);
+  };
+
+  settings.showBlockletMetaInfoSetting.onConfirm = () => {
+    settings.selectNodeListSetting.params = {
+      rows,
+      meta_url: urlParams.get('meta_url'),
+    };
+    setSettings(settings);
+
+    setCurrentSetting('selectNodeListSetting');
+  };
+  settings.showBlockletMetaInfoSetting.onCancel = () => {
+    setCurrentSetting(null);
+  };
+
+  settings.selectNodeListSetting.onConfirm = () => {
+    setCurrentSetting(null);
+  };
+  settings.selectNodeListSetting.onCancel = () => {
     setCurrentSetting(null);
   };
 
@@ -53,18 +124,35 @@ export default function IndexPage() {
     setCurrentSetting('addABTNodeSetting');
   };
 
-  const onDelete = (id) => {
-    delete abtnodes[id];
-    setAbtnodes({
-      ...abtnodes,
-    });
+  const onDelete = (name) => {
+    const index = abtnodes.findIndex((x) => x.name === name);
+    abtnodes.splice(index, 1);
+
+    setAbtnodes(abtnodes);
   };
 
   const onGenerateInstallUrl = () => {
     setCurrentSetting('inputUrlToGenerateLinkSetting');
   };
 
-  const rows = isObjectFn(abtnodes) ? Object.values(abtnodes) : [];
+  useEffect(() => {
+    if (urlParams.get('action') === 'node-register' && isUrl(urlParams.get('endpoint'))) {
+      getNodeInfo(urlParams.get('endpoint'))
+        .then(() => {
+          setCurrentSetting('showABTNodeInfoSetting');
+        })
+        .catch(console.error);
+    }
+
+    if (urlParams.get('action') === 'blocklet-install' && isUrl(urlParams.get('meta_url'))) {
+      getBlockletMeta(urlParams.get('meta_url'))
+        .then(() => {
+          setCurrentSetting('showBlockletMetaInfoSetting');
+        })
+        .catch(console.error);
+    }
+  }, []); // eslint-disable-line
+
   return (
     <Layout title="Home">
       <Action>
