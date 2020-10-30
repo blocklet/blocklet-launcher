@@ -47,9 +47,11 @@
     "morgan": "^1.9.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
+    "react-dev-utils": "^11.0.0",
     "react-dom": "^16.13.0",
     "react-json-tree": "^0.13.0",
     "react-router-dom": "^5.1.2",
+    "react-scripts": "^4.0.0",
     "react-use": "^13.26.3",
     "serverless-http": "^2.0.2",
     "styled-components": "^5.0.1"

@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
@@ -18,6 +19,7 @@ import api from '../libs/api';
 
 // from blocklet
 // action="blocklet-install"&mete_url={blocklet_meta_url}
+
 export default function IndexPage() {
   const { t, changeLocale } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
@@ -30,7 +32,7 @@ export default function IndexPage() {
   const [settings, setSettings] = useState(useSettingConfirm());
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
 
-  const getNodeInfo = async url => {
+  const getNodeInfo = async (url) => {
     const client = new NodeClient(`${url}/api/gql`);
     try {
       const nodeInfo = await client.getNodeInfo();
@@ -44,7 +46,7 @@ export default function IndexPage() {
     }
   };
 
-  const getBlockletMeta = async url => {
+  const getBlockletMeta = async (url) => {
     try {
       const metaInfo = await api.get('api/meta/info', { params: { meta_url: url } });
       settings.showBlockletMetaInfoSetting.params = metaInfo.data.info;
@@ -54,7 +56,7 @@ export default function IndexPage() {
     }
   };
 
-  settings.inputUrlToGenerateLinkSetting.onConfirm = params => {
+  settings.inputUrlToGenerateLinkSetting.onConfirm = (params) => {
     settings.generateLinkSetting.params = params;
     setSettings(settings);
     setCurrentSetting('generateLinkSetting');
@@ -82,9 +84,9 @@ export default function IndexPage() {
     setCurrentSetting(null);
   };
 
-  settings.showABTNodeInfoSetting.onConfirm = async params => {
+  settings.showABTNodeInfoSetting.onConfirm = async (params) => {
     if (abtnodes) {
-      const index = abtnodes.findIndex(x => x.name === params.name);
+      const index = abtnodes.findIndex((x) => x.name === params.name);
       if (index > -1) {
         abtnodes[index].info = params.info;
       } else {
@@ -124,8 +126,8 @@ export default function IndexPage() {
     setCurrentSetting('addABTNodeSetting');
   };
 
-  const onDelete = name => {
-    const index = abtnodes.findIndex(x => x.name === name);
+  const onDelete = (name) => {
+    const index = abtnodes.findIndex((x) => x.name === name);
     abtnodes.splice(index, 1);
 
     setAbtnodes(abtnodes);
@@ -141,7 +143,10 @@ export default function IndexPage() {
         .then(() => {
           setCurrentSetting('showABTNodeInfoSetting');
         })
-        .catch(console.error);
+        .catch((err) => {
+          setCurrentSetting(null);
+          console.error(err.message);
+        });
     }
 
     if (urlParams.get('action') === 'blocklet-install' && isUrl(urlParams.get('meta_url'))) {
@@ -149,7 +154,10 @@ export default function IndexPage() {
         .then(() => {
           setCurrentSetting('showBlockletMetaInfoSetting');
         })
-        .catch(console.error);
+        .catch((err) => {
+          setCurrentSetting(null);
+          console.error(err.message);
+        });
     }
   }, []); // eslint-disable-line
 
@@ -191,7 +199,7 @@ export default function IndexPage() {
 
 const Main = styled.main`
   a {
-    color: ${props => props.theme.colors.green};
+    color: ${(props) => props.theme.colors.green};
     text-decoration: none;
   }
 

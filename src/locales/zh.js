@@ -9,15 +9,18 @@ module.exports = flat({
     next: '下一步',
     prev: '上一步',
     confirm: '确认',
+    requiredError: '请输入正确的 {type}',
   },
   abtnode: {
     tableTitle: 'list',
     add: '添加 ABT Node',
     info: 'ABT Node 信息',
+    placeholder: '请输入 ABT Node URL',
   },
   generate: {
     add: '生成安装按钮',
     link: '生成使用地址',
+    placeholder: '请输入 Blocklet Meta URL',
   },
   blocklet: {
     meta: {

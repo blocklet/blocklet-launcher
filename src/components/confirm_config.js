@@ -13,11 +13,14 @@ export default function useSettingConfig() {
 
   const inputUrlToGenerateLinkSetting = {
     title: `${t('generate.add')}`,
-    description: (params, setParams) => <GenerateInput params={params} setParams={setParams} />,
+    description: (params, setParams, setError) => (
+      <GenerateInput params={params} setParams={setParams} setError={setError} />
+    ),
     confirm: t('common.next'),
     cancel: t('common.cancel'),
     params: {
       url: '',
+      __disableConfirm: true,
     },
     onConfirm: () => {},
     onCancel: () => {},
@@ -27,7 +30,9 @@ export default function useSettingConfig() {
 
   const generateLinkSetting = {
     title: `${t('generate.link')}`,
-    description: (params, setParams) => <GenerateLink params={params} setParams={setParams} />,
+    description: (params, setParams, setError) => (
+      <GenerateLink params={params} setParams={setParams} setError={setError} />
+    ),
     confirm: t('common.confirm'),
     cancel: t('common.prev'),
     params: {},
@@ -39,10 +44,14 @@ export default function useSettingConfig() {
 
   const addABTNodeSetting = {
     title: `${t('abtnode.add')}`,
-    description: (params, setParams) => <AddABTNode params={params} setParams={setParams} />,
+    description: (params, setParams, setError) => (
+      <AddABTNode params={params} setParams={setParams} setError={setError} />
+    ),
     confirm: t('common.confirm'),
     cancel: t('common.cancel'),
-    params: {},
+    params: {
+      __disableConfirm: true,
+    },
     onConfirm: () => {},
     onCancel: () => {},
     color: 'primary',
@@ -51,7 +60,7 @@ export default function useSettingConfig() {
 
   const showABTNodeInfoSetting = {
     title: `${t('abtnode.info')}`,
-    description: (params, setParams) => <Info params={params} setParams={setParams} />,
+    description: (params, setParams, setError) => <Info params={params} setParams={setParams} setError={setError} />,
     confirm: t('common.confirm'),
     cancel: t('common.cancel'),
     params: {},
@@ -63,7 +72,7 @@ export default function useSettingConfig() {
 
   const showBlockletMetaInfoSetting = {
     title: `${t('blocklet.meta.info')}`,
-    description: (params, setParams) => <Info params={params} setParams={setParams} />,
+    description: (params, setParams, setError) => <Info params={params} setParams={setParams} setError={setError} />,
     confirm: t('common.confirm'),
     cancel: t('common.cancel'),
     params: {},
@@ -75,7 +84,9 @@ export default function useSettingConfig() {
 
   const selectNodeListSetting = {
     title: `${t('blocklet.selectnode')}`,
-    description: (params, setParams) => <NodeList params={params} setParams={setParams} />,
+    description: (params, setParams, setError) => (
+      <NodeList params={params} setParams={setParams} setError={setError} />
+    ),
     confirm: t('common.confirm'),
     cancel: t('common.cancel'),
     params: {},

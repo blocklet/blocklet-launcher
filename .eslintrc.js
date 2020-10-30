@@ -32,7 +32,7 @@ module.exports = {
         ignoreRegExpLiterals: true,
       },
     ],
-    'arrow-parens': ['error', 'as-needed'],
+    'arrow-parens': ['off', 'as-needed'],
     'comma-dangle': [
       'error',
       {

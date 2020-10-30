@@ -3,8 +3,9 @@ import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import { isUrl } from '../../libs/utils';
 
-export default function NodeAdd({ params, setParams }) {
+export default function NodeAdd({ params, setParams, setError }) {
   const { t } = useContext(LocaleContext);
 
   return (
@@ -16,9 +17,19 @@ export default function NodeAdd({ params, setParams }) {
         name="remark"
         fullWidth
         autoFocus
-        style={{ marginBottom: 32 }}
         value={params.url}
-        onChange={e => setParams({ ...params, url: e.target.value })}
+        onChange={(e) => {
+          let disable = true;
+          if (isUrl(e.target.value)) {
+            setError('');
+            disable = false;
+          } else {
+            disable = true;
+            setError(t('common.requiredError', { type: 'url' }));
+          }
+
+          setParams({ ...params, url: e.target.value, __disableConfirm: disable });
+        }}
       />
     </Typography>
   );
@@ -27,6 +38,7 @@ export default function NodeAdd({ params, setParams }) {
 NodeAdd.propTypes = {
   params: PropTypes.object,
   setParams: PropTypes.func,
+  setError: PropTypes.func,
 };
 
 NodeAdd.defaultProps = {
@@ -34,4 +46,5 @@ NodeAdd.defaultProps = {
     url: '',
   },
   setParams: () => {},
+  setError: () => {},
 };
