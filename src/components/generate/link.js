@@ -27,7 +27,7 @@ function TabPanel(props) {
 }
 
 TabPanel.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
@@ -63,7 +63,9 @@ export default function SimpleTabs({ params }) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One {params.url}
+        Item One
+        {' '}
+        {params.url}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
@@ -71,3 +73,13 @@ export default function SimpleTabs({ params }) {
     </div>
   );
 }
+
+SimpleTabs.propTypes = {
+  params: PropTypes.object,
+};
+
+SimpleTabs.defaultProps = {
+  params: {
+    url: '',
+  },
+};

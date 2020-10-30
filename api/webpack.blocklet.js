@@ -1,4 +1,4 @@
-module.exports = (webpack) => ({
+module.exports = webpack => ({
   optimization: {
     nodeEnv: false, // @link https://github.com/webpack/webpack/issues/7470#issuecomment-394259698
   },

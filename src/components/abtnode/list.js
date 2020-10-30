@@ -13,14 +13,14 @@ export default function TableList({ rows, onDelete }) {
   const columns = [
     {
       title: 'abtnode instances',
-      render: (d) => d.name,
+      render: d => d.name,
     },
     {
       title: t('common.actions'),
       width: '10%',
       sorting: false,
       align: 'center',
-      render: (d) => (
+      render: d => (
         <Button
           rounded
           edge="end"

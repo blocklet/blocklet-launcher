@@ -32,39 +32,31 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.19.0",
     "body-parser": "^1.19.0",
-    "chalk": "^2.4.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
-    "core-js": "2.5.7",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "express-bearer-token": "^2.4.0",
     "express-history-api-fallback": "^2.2.1",
     "flat": "^5.0.2",
     "http-proxy-middleware": "^0.19.1",
     "is-url": "^1.2.4",
-    "lodash": "^4.17.11",
     "material-table": "^1.69.1",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
-    "multibase": "^0.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-helmet": "^5.2.1",
-    "react-hook-form": "5.7.2",
     "react-json-tree": "^0.13.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.3",
     "react-use": "^13.26.3",
     "serverless-http": "^2.0.2",
-    "store": "^2.0.12",
     "styled-components": "^5.0.1"
   },
   "scripts": {
     "lint": "eslint src api",
+    "lint:fix": "eslint --fix src api",
     "precommit": "yarn lint",
     "prepush": "yarn lint",
     "clean": "rm -rf build api/dist",
@@ -104,6 +96,8 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.5",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.0",
     "mutationobserver-shim": "^0.3.7",
     "netlify-lambda": "^1.4.13",
     "nodemon": "^1.19.1",
@@ -131,5 +125,20 @@
       "dev": "npm run start"
     }
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "lint-staged": {
+    "*.{js,jsx,mjs,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{css,less,scss,json,graphql}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn precommit",
+      "pre-push": "lint-staged && yarn prepush"
+    }
+  }
 }

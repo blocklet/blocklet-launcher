@@ -6,9 +6,8 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { LocaleProvider } from '@arcblock/ux/lib/Locale/context';
-import { translations } from './locales';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { translations } from './locales';
 
 import HomePage from './pages/index';
 

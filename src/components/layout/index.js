@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Container from '@material-ui/core/Container';
 import Header from './header';
 
 export default function Layout({ title, children }) {
   return (
     <Div>
-      <Header />
+      <Header title={title} />
       <Main>{children}</Main>
     </Div>
   );
@@ -27,6 +26,6 @@ const Div = styled.div`
   box-sizing: border-box;
 `;
 
-const Main = styled(Container)`
+const Main = styled.main`
   padding: 0;
 `;

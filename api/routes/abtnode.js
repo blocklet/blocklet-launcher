@@ -1,9 +1,9 @@
 const axios = require('axios');
+
 module.exports = {
   init(app) {
     app.get('/api/meta/info', async (req, res) => {
       const url = req.query.meta_url;
-      console.log(url);
       try {
         const result = await axios.get(url);
         res.json({

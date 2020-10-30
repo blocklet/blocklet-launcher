@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 
 import Typography from '@material-ui/core/Typography';
@@ -18,8 +19,20 @@ export default function GenerateInput({ params, setParams }) {
         autoFocus
         style={{ marginBottom: 32 }}
         value={params.url}
-        onChange={(e) => setParams({ ...params, url: e.target.value })}
+        onChange={e => setParams({ ...params, url: e.target.value })}
       />
     </Typography>
   );
 }
+
+GenerateInput.propTypes = {
+  params: PropTypes.object,
+  setParams: PropTypes.func,
+};
+
+GenerateInput.defaultProps = {
+  params: {
+    url: '',
+  },
+  setParams: () => {},
+};

@@ -13,14 +13,14 @@ export default function TableList({ params: { rows } }) {
   const columns = [
     {
       title: 'abtnode instances',
-      render: (d) => d.name,
+      render: d => d.name,
     },
     {
       title: t('common.actions'),
       width: '10%',
       sorting: false,
       align: 'center',
-      render: (d) => (
+      render: () => (
         <Button rounded edge="end" size="small" className="rule-action" color="primary" onClick={() => {}}>
           {t('blocklet.select')}
         </Button>
@@ -83,10 +83,7 @@ const Main = styled.div`
 `;
 
 TableList.propTypes = {
-  rows: PropTypes.array.isRequired,
-  onDelete: PropTypes.func,
+  params: PropTypes.array.isRequired,
 };
 
-TableList.defaultProps = {
-  onDelete: () => {},
-};
+TableList.defaultProps = {};

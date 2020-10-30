@@ -5,6 +5,7 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Button from '@arcblock/ux/lib/Button';
 
+import NodeClient from '@abtnode/client';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TablbeList from '../components/abtnode/list';
@@ -12,7 +13,6 @@ import useSettingConfirm from '../components/confirm_config';
 import { isUrl } from '../libs/utils';
 import api from '../libs/api';
 
-import NodeClient from '@abtnode/client';
 // from abtnode
 // action="node-register"&endpoint={abtnode_endpoint}
 
@@ -20,7 +20,7 @@ import NodeClient from '@abtnode/client';
 // action="blocklet-install"&mete_url={blocklet_meta_url}
 export default function IndexPage() {
   const { t, changeLocale } = useContext(LocaleContext);
-  let urlParams = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('__blang__') != null) {
     changeLocale(urlParams.get('__blang__'));
   }
@@ -30,7 +30,7 @@ export default function IndexPage() {
   const [settings, setSettings] = useState(useSettingConfirm());
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
 
-  const getNodeInfo = async (url) => {
+  const getNodeInfo = async url => {
     const client = new NodeClient(`${url}/api/gql`);
     try {
       const nodeInfo = await client.getNodeInfo();
@@ -44,9 +44,9 @@ export default function IndexPage() {
     }
   };
 
-  const getBlockletMeta = async (meta_url) => {
+  const getBlockletMeta = async url => {
     try {
-      const metaInfo = await api.get('api/meta/info', { params: { meta_url } });
+      const metaInfo = await api.get('api/meta/info', { params: { meta_url: url } });
       settings.showBlockletMetaInfoSetting.params = metaInfo.data.info;
       setSettings(settings);
     } catch (error) {
@@ -54,7 +54,7 @@ export default function IndexPage() {
     }
   };
 
-  settings.inputUrlToGenerateLinkSetting.onConfirm = (params) => {
+  settings.inputUrlToGenerateLinkSetting.onConfirm = params => {
     settings.generateLinkSetting.params = params;
     setSettings(settings);
     setCurrentSetting('generateLinkSetting');
@@ -82,9 +82,9 @@ export default function IndexPage() {
     setCurrentSetting(null);
   };
 
-  settings.showABTNodeInfoSetting.onConfirm = async (params) => {
+  settings.showABTNodeInfoSetting.onConfirm = async params => {
     if (abtnodes) {
-      const index = abtnodes.findIndex((x) => x.name === params.name);
+      const index = abtnodes.findIndex(x => x.name === params.name);
       if (index > -1) {
         abtnodes[index].info = params.info;
       } else {
@@ -124,8 +124,8 @@ export default function IndexPage() {
     setCurrentSetting('addABTNodeSetting');
   };
 
-  const onDelete = (name) => {
-    const index = abtnodes.findIndex((x) => x.name === name);
+  const onDelete = name => {
+    const index = abtnodes.findIndex(x => x.name === name);
     abtnodes.splice(index, 1);
 
     setAbtnodes(abtnodes);
@@ -154,7 +154,7 @@ export default function IndexPage() {
   }, []); // eslint-disable-line
 
   return (
-    <Layout title="Home">
+    <Layout title="My ABT Node Instances">
       <Action>
         <Button rounded color="primary" variant="contained" onClick={onAdd}>
           {t('abtnode.add')}
@@ -191,7 +191,7 @@ export default function IndexPage() {
 
 const Main = styled.main`
   a {
-    color: ${(props) => props.theme.colors.green};
+    color: ${props => props.theme.colors.green};
     text-decoration: none;
   }
 
