@@ -13,7 +13,7 @@ export default function TableList({ params: { rows } }) {
   const columns = [
     {
       title: 'abtnode instances',
-      render: d => d.name,
+      render: (d) => d.name,
     },
     {
       title: t('common.actions'),
@@ -83,7 +83,7 @@ const Main = styled.div`
 `;
 
 TableList.propTypes = {
-  params: PropTypes.array.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 TableList.defaultProps = {};

@@ -6,12 +6,26 @@ module.exports = {
       const url = req.query.meta_url;
       try {
         const result = await axios.get(url);
-        res.json({
-          code: 'ok',
-          info: result.data,
-        });
+
+        if (result.data && typeof result.data === 'object') {
+          res.json({
+            code: 'ok',
+            status: 0,
+            info: result.data,
+          });
+        } else {
+          res.json({
+            code: 'error',
+            status: -1,
+            info: result.data,
+          });
+        }
       } catch (err) {
-        console.error(err);
+        res.json({
+          code: 'error',
+          info: err.message,
+          status: -1,
+        });
       }
     });
   },

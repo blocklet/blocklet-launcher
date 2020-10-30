@@ -49,7 +49,7 @@ module.exports = {
         props: false,
       },
     ],
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-console': process.env.NODE_ENV === 'production' ? ['error', { allow: ['warn', 'error', 'log'] }] : 'off',
   },
   globals: {},
 };

@@ -42,17 +42,21 @@ export default function IndexPage() {
       };
       setSettings(settings);
     } catch (error) {
-      Promise.reject(error.messgae);
+      throw new Error(error.messgae);
     }
   };
 
   const getBlockletMeta = async (url) => {
     try {
       const metaInfo = await api.get('api/meta/info', { params: { meta_url: url } });
-      settings.showBlockletMetaInfoSetting.params = metaInfo.data.info;
-      setSettings(settings);
+      if (metaInfo.data.status === 0) {
+        settings.showBlockletMetaInfoSetting.params = metaInfo.data.info;
+        setSettings(settings);
+      } else {
+        throw new Error(metaInfo.info);
+      }
     } catch (error) {
-      Promise.reject(error.messgae);
+      throw new Error(error.messgae);
     }
   };
 
@@ -129,8 +133,7 @@ export default function IndexPage() {
   const onDelete = (name) => {
     const index = abtnodes.findIndex((x) => x.name === name);
     abtnodes.splice(index, 1);
-
-    setAbtnodes(abtnodes);
+    setAbtnodes([...abtnodes]);
   };
 
   const onGenerateInstallUrl = () => {
@@ -143,9 +146,8 @@ export default function IndexPage() {
         .then(() => {
           setCurrentSetting('showABTNodeInfoSetting');
         })
-        .catch((err) => {
+        .catch(() => {
           setCurrentSetting(null);
-          console.error(err.message);
         });
     }
 
@@ -154,9 +156,8 @@ export default function IndexPage() {
         .then(() => {
           setCurrentSetting('showBlockletMetaInfoSetting');
         })
-        .catch((err) => {
+        .catch(() => {
           setCurrentSetting(null);
-          console.error(err.message);
         });
     }
   }, []); // eslint-disable-line
