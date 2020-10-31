@@ -6,7 +6,7 @@ import GenerateInput from './generate/input';
 import GenerateLink from './generate/link';
 import AddABTNode from './abtnode/add';
 import Info from './info';
-import NodeList from './blocklet/list';
+import NodeSelect from './blocklet/select';
 
 export default function useSettingConfig() {
   const { t } = useContext(LocaleContext);
@@ -35,7 +35,9 @@ export default function useSettingConfig() {
     ),
     confirm: t('common.confirm'),
     cancel: t('common.prev'),
-    params: {},
+    params: {
+      __disableConfirm: false,
+    },
     onConfirm: () => {},
     onCancel: () => {},
     color: 'primary',
@@ -63,19 +65,9 @@ export default function useSettingConfig() {
     description: (params, setParams, setError) => <Info params={params} setParams={setParams} setError={setError} />,
     confirm: t('common.confirm'),
     cancel: t('common.cancel'),
-    params: {},
-    onConfirm: () => {},
-    onCancel: () => {},
-    color: 'primary',
-    open: true,
-  };
-
-  const showBlockletMetaInfoSetting = {
-    title: `${t('blocklet.meta.info')}`,
-    description: (params, setParams, setError) => <Info params={params} setParams={setParams} setError={setError} />,
-    confirm: t('common.confirm'),
-    cancel: t('common.cancel'),
-    params: {},
+    params: {
+      __disableConfirm: false,
+    },
     onConfirm: () => {},
     onCancel: () => {},
     color: 'primary',
@@ -85,11 +77,13 @@ export default function useSettingConfig() {
   const selectNodeListSetting = {
     title: `${t('blocklet.selectnode')}`,
     description: (params, setParams, setError) => (
-      <NodeList params={params} setParams={setParams} setError={setError} />
+      <NodeSelect params={params} setParams={setParams} setError={setError} />
     ),
     confirm: t('common.confirm'),
     cancel: t('common.cancel'),
-    params: {},
+    params: {
+      __disableConfirm: false,
+    },
     onConfirm: () => {},
     onCancel: () => {},
     color: 'primary',
@@ -101,7 +95,6 @@ export default function useSettingConfig() {
     generateLinkSetting,
     addABTNodeSetting,
     showABTNodeInfoSetting,
-    showBlockletMetaInfoSetting,
     selectNodeListSetting,
   };
 }

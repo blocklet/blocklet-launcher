@@ -5,13 +5,13 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Button from '@arcblock/ux/lib/Button';
-
 import NodeClient from '@abtnode/client';
+import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TablbeList from '../components/abtnode/list';
 import useSettingConfirm from '../components/confirm_config';
-import { isUrl } from '../libs/utils';
+import { isUrl, formatToDatetime } from '../libs/utils';
 import api from '../libs/api';
 
 // from abtnode
@@ -23,26 +23,55 @@ import api from '../libs/api';
 export default function IndexPage() {
   const { t, changeLocale } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('__blang__') != null) {
-    changeLocale(urlParams.get('__blang__'));
-  }
 
-  const [abtnodes, setAbtnodes] = useLocalStorage('abtnodes');
+  const [abtnodes, setAbtnodes] = useLocalStorage('abtnodes', []);
   const [currentSetting, setCurrentSetting] = useState(null);
   const [settings, setSettings] = useState(useSettingConfirm());
+  const [loading, setLoading] = useState(false);
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
 
+  useEffect(() => {
+    if (urlParams.get('__blang__')) {
+      changeLocale(urlParams.get('__blang__'));
+    }
+  });
+
   const getNodeInfo = async (url) => {
-    const client = new NodeClient(`${url}/api/gql`);
+    const normalizedURL = url.endsWith('/') ? url : `${url}/`;
+    const client = new NodeClient(`${normalizedURL}api/gql`);
     try {
       const nodeInfo = await client.getNodeInfo();
       settings.showABTNodeInfoSetting.params = {
-        name: url,
+        url,
         info: nodeInfo.info,
+        list: [
+          {
+            key: t('abtnode.table.name'),
+            value: nodeInfo.info.name,
+          },
+          {
+            key: t('abtnode.table.description'),
+            value: nodeInfo.info.description,
+          },
+          {
+            key: t('abtnode.table.did'),
+            value: nodeInfo.info.did,
+          },
+          {
+            key: t('abtnode.table.createdAt'),
+            value: formatToDatetime(nodeInfo.info.createdAt),
+          },
+          {
+            key: t('abtnode.table.initialized'),
+            value: nodeInfo.info.initialized ? t('common.yes') : t('common.no'),
+          },
+        ],
       };
       setSettings(settings);
+      setLoading(false);
     } catch (error) {
-      throw new Error(error.messgae);
+      setLoading(false);
+      throw new Error(error.message);
     }
   };
 
@@ -50,13 +79,19 @@ export default function IndexPage() {
     try {
       const metaInfo = await api.get('api/meta/info', { params: { meta_url: url } });
       if (metaInfo.data.status === 0) {
-        settings.showBlockletMetaInfoSetting.params = metaInfo.data.info;
+        settings.selectNodeListSetting.params = {
+          url,
+          info: metaInfo.data.info,
+          nodes: rows,
+        };
         setSettings(settings);
       } else {
+        setLoading(false);
         throw new Error(metaInfo.info);
       }
     } catch (error) {
-      throw new Error(error.messgae);
+      setLoading(false);
+      throw new Error(error.message);
     }
   };
 
@@ -80,49 +115,50 @@ export default function IndexPage() {
     try {
       await getNodeInfo(url);
       setCurrentSetting('showABTNodeInfoSetting');
-    } catch (error) {
-      setCurrentSetting(null);
+    } catch {
+      settings.showABTNodeInfoSetting.params = {
+        url,
+        status: 'error',
+      };
+      setSettings(settings);
+      setCurrentSetting('showABTNodeInfoSetting');
     }
   };
   settings.addABTNodeSetting.onCancel = () => {
+    setLoading(false);
     setCurrentSetting(null);
   };
 
   settings.showABTNodeInfoSetting.onConfirm = async (params) => {
-    if (abtnodes) {
-      const index = abtnodes.findIndex((x) => x.name === params.name);
-      if (index > -1) {
-        abtnodes[index].info = params.info;
+    if (params.status !== 'error') {
+      if (abtnodes) {
+        const index = abtnodes.findIndex((x) => x.url === params.url);
+        if (index > -1) {
+          abtnodes[index].info = params.info;
+        } else {
+          abtnodes.push(params);
+        }
+        setAbtnodes([...abtnodes]);
       } else {
-        abtnodes.push(params);
+        setAbtnodes([params]);
       }
-      setAbtnodes(abtnodes);
-    } else {
-      setAbtnodes([params]);
     }
+
     setCurrentSetting(null);
   };
   settings.showABTNodeInfoSetting.onCancel = () => {
+    setLoading(false);
     setCurrentSetting(null);
   };
 
-  settings.showBlockletMetaInfoSetting.onConfirm = () => {
-    settings.selectNodeListSetting.params = {
-      rows,
-      meta_url: urlParams.get('meta_url'),
-    };
-    setSettings(settings);
-
-    setCurrentSetting('selectNodeListSetting');
-  };
-  settings.showBlockletMetaInfoSetting.onCancel = () => {
-    setCurrentSetting(null);
-  };
-
-  settings.selectNodeListSetting.onConfirm = () => {
+  settings.selectNodeListSetting.onConfirm = (data) => {
+    if (data.select) {
+      setLoading(false);
+    }
     setCurrentSetting(null);
   };
   settings.selectNodeListSetting.onCancel = () => {
+    setLoading(false);
     setCurrentSetting(null);
   };
 
@@ -130,8 +166,8 @@ export default function IndexPage() {
     setCurrentSetting('addABTNodeSetting');
   };
 
-  const onDelete = (name) => {
-    const index = abtnodes.findIndex((x) => x.name === name);
+  const onDelete = (url) => {
+    const index = abtnodes.findIndex((x) => x.url === url);
     abtnodes.splice(index, 1);
     setAbtnodes([...abtnodes]);
   };
@@ -142,22 +178,34 @@ export default function IndexPage() {
 
   useEffect(() => {
     if (urlParams.get('action') === 'node-register' && isUrl(urlParams.get('endpoint'))) {
+      setLoading(true);
       getNodeInfo(urlParams.get('endpoint'))
         .then(() => {
           setCurrentSetting('showABTNodeInfoSetting');
         })
         .catch(() => {
-          setCurrentSetting(null);
+          settings.showABTNodeInfoSetting.params = {
+            url: urlParams.get('endpoint'),
+            status: 'error',
+          };
+          setSettings(settings);
+          setCurrentSetting('showABTNodeInfoSetting');
         });
     }
 
     if (urlParams.get('action') === 'blocklet-install' && isUrl(urlParams.get('meta_url'))) {
+      setLoading(true);
       getBlockletMeta(urlParams.get('meta_url'))
         .then(() => {
-          setCurrentSetting('showBlockletMetaInfoSetting');
+          setCurrentSetting('selectNodeListSetting');
         })
         .catch(() => {
-          setCurrentSetting(null);
+          settings.selectNodeListSetting.params = {
+            status: 'error',
+            url: urlParams.get('meta_url'),
+          };
+          setSettings(settings);
+          setCurrentSetting('selectNodeListSetting');
         });
     }
   }, []); // eslint-disable-line
@@ -180,6 +228,7 @@ export default function IndexPage() {
       <Main>
         <TablbeList rows={rows} onDelete={onDelete} />
 
+        {loading && <Loading />}
         {currentSetting && settings[currentSetting] && (
           <Confirm
             title={settings[currentSetting].title}

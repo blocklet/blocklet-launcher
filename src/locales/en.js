@@ -10,12 +10,24 @@ module.exports = flat({
     prev: 'Prev',
     confirm: 'Confirm',
     requiredError: 'Please provide a valid {type}',
+    copy: 'Copy To Clipboard',
+    yes: 'YES',
+    no: 'NO',
   },
   abtnode: {
     tableTitle: 'list',
     add: 'Add ABT Node',
     info: 'ABT Node Info',
     placeholder: 'Please Enter ABT Node URL',
+    table: {
+      name: 'Title',
+      description: 'Description',
+      url: 'URL',
+      createdAt: 'CreatedAt',
+      initialized: 'Initialized',
+      did: 'DID',
+    },
+    fail: 'The request for ABT Node failed. Please try again',
   },
   generate: {
     add: 'Generate Install Button',
@@ -25,8 +37,14 @@ module.exports = flat({
   blocklet: {
     meta: {
       info: 'Blocklet Meta Info',
+      title: 'Title',
+      description: 'Description',
+      version: 'Version',
     },
+    basicInfo: 'Basic Info',
+    action: 'Action',
     selectnode: 'Select ABT Node',
     select: 'Select',
+    fail: 'The request for Blocklet Meta URL failed. Please try again',
   },
 });

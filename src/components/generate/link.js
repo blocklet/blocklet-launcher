@@ -1,27 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import styled from 'styled-components';
+import CodeBlock from '@arcblock/ux/lib/CodeBlock';
+import ClickToCopy from '@arcblock/ux/lib/ClickToCopy';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}>
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`} {...other}>
+      {value === index && <Typography>{children}</Typography>}
     </div>
   );
 }
@@ -34,8 +28,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `tab-${index}`,
+    'aria-controls': `tabpanel-${index}`,
   };
 }
 
@@ -49,26 +43,43 @@ const useStyles = makeStyles(() => ({
 export default function SimpleTabs({ params }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const { t } = useContext(LocaleContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const imgUrl = 'https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png';
+  const linkUrl = `https://labs.play-with-docker.com/?stack=${params.url}`;
+
+  const markdown = `[![Install On ABT Node](${imgUrl})](${linkUrl})`;
+
+  const html = `<a href="${linkUrl}"><img src="${imgUrl}" alt="Install On ABT Node"></a>`;
+
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="inherit" style={{ height: 'auto' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+      <AppBar position="static" color="inherit" style={{ height: 'auto', boxShadow: 'none' }}>
+        <Tabs value={value} onChange={handleChange} style={{ boxShadow: 'none' }}>
           <Tab label="Markdown" {...a11yProps(0)} />
           <Tab label="HTML" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        Item One
-        {' '}
-        {params.url}
+
+      <TabPanel value={value} index={0} style={{ padding: 0 }} component="div">
+        <Div>
+          <img src={imgUrl} alt="Install On ABT Node" />
+
+          <ClickToCopy content={markdown}>{t('common.copy')}</ClickToCopy>
+        </Div>
+        <CodeBlockDiv language="javascript">{markdown}</CodeBlockDiv>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Div>
+          <img src={imgUrl} alt="Install On ABT Node" />
+
+          <ClickToCopy content={html}>{t('common.copy')}</ClickToCopy>
+        </Div>
+        <CodeBlockDiv>{html}</CodeBlockDiv>
       </TabPanel>
     </div>
   );
@@ -83,3 +94,14 @@ SimpleTabs.defaultProps = {
     url: '',
   },
 };
+
+const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+`;
+
+const CodeBlockDiv = styled(CodeBlock)`
+  overflow: auto;
+`;
