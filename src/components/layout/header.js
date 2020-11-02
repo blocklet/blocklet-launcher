@@ -8,7 +8,7 @@ export default function Header({ title }) {
     <HeaderLayout>
       <div className="logo">{title}</div>
       <Div>
-        <LocaleSelector size={26} showText={false} className="locale-addon" />
+        <LocaleSelector size={26} showText={false} className="locale-addon" popperProps={{ placement: 'bottom-end' }} />
       </Div>
     </HeaderLayout>
   );
@@ -33,4 +33,8 @@ const HeaderLayout = styled.header`
 
 const Div = styled.div`
   display: flex;
+
+  .locale-addon > div {
+    z-index: 11;
+  }
 `;

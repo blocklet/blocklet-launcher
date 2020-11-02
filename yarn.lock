@@ -86,10 +86,10 @@
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
 
-"@arcblock/ux@^0.78.14":
-  version "0.78.14"
-  resolved "https://registry.yarnpkg.com/@arcblock/ux/-/ux-0.78.14.tgz#85131a14296567fb32268f57b46bc768f0c81bab"
-  integrity sha512-uPERizUa0drdQx+WLoxnedkZ6hqnYNfTobiCnexD5MRUiDBbs9d37N9H+uC1se42GqCZLVUCDBPnLc3EUtDfYw==
+"@arcblock/ux@^0.78.15":
+  version "0.78.15"
+  resolved "https://registry.yarnpkg.com/@arcblock/ux/-/ux-0.78.15.tgz#2bef9f7a3dc298595e489a92f9aafb9a7088d66a"
+  integrity sha512-V4rWOXEpi4vnG/nW+WavZeZtWsvjmGO8kK1y/FForENF1P4B8bbNSSlfw2wQ2EVBjKERWniqTX2gIZ0yqcHv4A==
   dependencies:
     "@arcblock/react-hooks" "^0.78.0"
     "@babel/plugin-syntax-dynamic-import" "^7.8.3"
