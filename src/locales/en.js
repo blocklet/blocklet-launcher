@@ -27,7 +27,7 @@ module.exports = flat({
       initialized: 'Initialized',
       did: 'DID',
     },
-    fail: 'The request for ABT Node failed. Please try again',
+    fail: 'The request failed. Please try again',
   },
   generate: {
     add: 'Generate Install Button',
@@ -43,8 +43,8 @@ module.exports = flat({
     },
     basicInfo: 'Basic Info',
     action: 'Action',
-    selectnode: 'Select ABT Node',
+    selectnode: 'Install Blocklet To My ABT Node',
     select: 'Select',
-    fail: 'The request for Blocklet Meta URL failed. Please try again',
+    fail: 'The request failed. Please try again',
   },
 });

@@ -16,15 +16,20 @@ export default function TableList({ rows, onDelete }) {
   const columns = [
     {
       title: t('abtnode.table.name'),
-      render: (d) => d.info.name,
-    },
-    {
-      title: t('abtnode.table.url'),
-      render: (d) => d.url,
+      render: (d) => (
+        <>
+          <div>{d.info.name}</div>
+          <a href={d.url}>{d.url}</a>
+        </>
+      ),
     },
     {
       title: t('abtnode.table.description'),
       render: (d) => d.info.description,
+    },
+    {
+      title: t('abtnode.table.did'),
+      render: (d) => d.info.did,
     },
     {
       title: t('abtnode.table.createdAt'),
@@ -33,7 +38,9 @@ export default function TableList({ rows, onDelete }) {
     {
       title: t('abtnode.table.initialized'),
       width: '8%',
-      render: (d) => (d.info.initialized ? <Tag type="primary">{t('common.yes')}</Tag> : <Tag type="error">{t('common.no')}</Tag>),
+      render: (d) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
+        d.info.initialized ? <Tag type="primary">{t('common.yes')}</Tag> : <Tag type="error">{t('common.no')}</Tag>,
     },
     {
       title: t('common.actions'),

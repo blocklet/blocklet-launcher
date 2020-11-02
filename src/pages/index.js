@@ -83,6 +83,7 @@ export default function IndexPage() {
           url,
           info: metaInfo.data.info,
           nodes: rows,
+          select: rows.length ? rows[0].url : '',
         };
         setSettings(settings);
       } else {

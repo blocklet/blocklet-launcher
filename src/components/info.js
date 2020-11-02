@@ -20,7 +20,7 @@ export default function Info({ params: { list = [], url, status } }) {
     <Typography component="div">
       <List component="nav">
         <ListLi>
-          <ListItemTextKey primary="URL:" />
+          <ListItemTextKey primary={t('abtnode.table.url')} />
           <ListItemTextValue primary={url} />
         </ListLi>
         {list &&

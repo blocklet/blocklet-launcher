@@ -71,7 +71,7 @@ export default function SimpleTabs({ params }) {
 
           <ClickToCopy content={markdown}>{t('common.copy')}</ClickToCopy>
         </Div>
-        <CodeBlockDiv language="javascript">{markdown}</CodeBlockDiv>
+        <CodeBlockDiv language="kotlin">{markdown}</CodeBlockDiv>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Div>
@@ -79,7 +79,7 @@ export default function SimpleTabs({ params }) {
 
           <ClickToCopy content={html}>{t('common.copy')}</ClickToCopy>
         </Div>
-        <CodeBlockDiv>{html}</CodeBlockDiv>
+        <CodeBlockDiv language="kotlin">{html}</CodeBlockDiv>
       </TabPanel>
     </div>
   );

@@ -50,6 +50,7 @@ module.exports = {
       },
     ],
     'no-console': process.env.NODE_ENV === 'production' ? ['error', { allow: ['warn', 'error', 'log'] }] : 'off',
+    'no-confusing-arrow': 'off',
   },
   globals: {},
 };
