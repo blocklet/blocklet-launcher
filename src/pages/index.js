@@ -154,8 +154,9 @@ export default function IndexPage() {
 
   settings.selectNodeListSetting.onConfirm = (data) => {
     if (data.select) {
-      setLoading(false);
+      window.location.href = `${data.select}/blocklets?url=${urlParams.get('meta_url')}`;
     }
+    setLoading(false);
     setCurrentSetting(null);
   };
   settings.selectNodeListSetting.onCancel = () => {

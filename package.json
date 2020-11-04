@@ -1,6 +1,6 @@
 {
   "name": "install-on-abtnode",
-  "title": "Install On ABTNODE",
+  "title": "Install On ABT Node",
   "version": "1.0.0",
   "description": "A simple blocklet that helps you install blocklet on abtnode",
   "keywords": [
@@ -65,15 +65,8 @@
     "start:client": "PUBLIC_URL=\"\" react-app-rewired start",
     "start:server": "nodemon api/index.js -w api",
     "build": "yarn clean && npm-run-all build:*",
-    "build:client": "PUBLIC_URL=\"/z8ia1C4xp1vVwH2VpAhkyknR4gSZBfXemJBZn\" react-app-rewired build && rm -f _blocklet/build/static/**/*.{js,css}.map",
-    "build:server": "netlify-lambda build api/functions",
-    "bundle": "yarn clean && npm-run-all bundle:*",
-    "bundle:client": "REACT_APP_API_PREFIX=\"\" REACT_APP_APP_NAME=\"Blockchain Boarding Gate\" yarn build:client",
-    "bundle:server": "NODE_ENV=production abtnode bundle -w api/webpack.blocklet.js",
-    "bundle-server": "DEBUG=@abtnode/* NODE_ENV=development abtnode bundle -w api/webpack.blocklet.js",
-    "prepublishOnly": "npm run bundle && rm -f _blocklet/build/**/**/*.js.map",
-    "test": "react-app-rewired test --env=jsdom --passWithNoTests",
-    "eject": "react-app-rewired eject"
+    "build:client": "PUBLIC_URL=\"/z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF\" react-app-rewired build && rm -f _blocklet/build/static/**/*.{js,css}.map",
+    "build:server": "NODE_ENV=production abtnode bundle -w api/webpack.blocklet.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -100,7 +93,7 @@
     "husky": "^4.3.0",
     "lint-staged": "^10.5.0",
     "mutationobserver-shim": "^0.3.7",
-    "netlify-lambda": "^1.4.13",
+    "netlify-lambda": "^1.6.3",
     "nodemon": "^1.19.1",
     "npm-run-all": "^4.1.5",
     "react-app-rewired": "^2.1.6"
@@ -119,7 +112,7 @@
     "doc_url": "",
     "install-scripts": {},
     "hooks": {
-      "pre-deploy": "npm run bundle"
+      "pre-deploy": "npm run build"
     },
     "hookFiles": [],
     "scripts": {

@@ -10,10 +10,9 @@ const bodyParser = require('body-parser');
 const fallback = require('express-history-api-fallback');
 
 const abtnode = require('../routes/abtnode');
+const session = require('../routes/session');
 
-const netlifyPrefix = '/.netlify/functions/app';
 const isProduction = process.env.NODE_ENV === 'production';
-const isNetlify = process.env.NETLIFY && JSON.parse(process.env.NETLIFY);
 
 // Create and config express application
 const app = express();
@@ -47,26 +46,25 @@ app.use(
 const router = express.Router();
 
 abtnode.init(app);
+session.init(router);
 
 if (isProduction) {
-  if (isNetlify) {
-    app.use(netlifyPrefix, router);
-  } else {
-    const staticDir = process.env.BLOCKLET_APP_ID ? './' : '../../';
+  const staticDir = process.env.BLOCKLET_APP_ID ? './' : '../../';
 
-    app.use(compression());
-    app.use(router);
-    if (process.env.BLOCKLET_DID) {
-      app.use(`/${process.env.BLOCKLET_DID}`, router);
-    }
-
-    const staticDirNew = path.resolve(__dirname, staticDir, 'build');
-    app.use(express.static(staticDirNew, { maxAge: '365d', index: false }));
-    if (process.env.BLOCKLET_DID) {
-      app.use(`/${process.env.BLOCKLET_DID}`, express.static(staticDirNew, { maxAge: '365d', index: false }));
-    }
-    app.use(fallback('index.html', { root: staticDirNew }));
+  app.use(compression());
+  app.use(router);
+  if (process.env.BLOCKLET_DID) {
+    app.use(`/${process.env.BLOCKLET_DID}`, router);
   }
+
+  const staticDirNew = path.resolve(__dirname, staticDir, 'build');
+  app.use(express.static(staticDirNew, { maxAge: '365d', index: false }));
+  if (process.env.BLOCKLET_DID) {
+    app.use(`/${process.env.BLOCKLET_DID}`, express.static(staticDirNew, { maxAge: '365d', index: false }));
+  }
+
+  app.use(fallback('index.html', { root: staticDirNew }));
+
   app.use((req, res) => {
     res.status(404).send('404 NOT FOUND');
   });
@@ -76,8 +74,6 @@ if (isProduction) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
   });
-} else if (isNetlify) {
-  app.use(netlifyPrefix, router);
 } else {
   app.use(router);
 }
