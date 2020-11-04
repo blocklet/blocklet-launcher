@@ -49,11 +49,10 @@ export default function SimpleTabs({ params }) {
     setValue(newValue);
   };
 
-  const imgUrl = 'https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png';
-  const linkUrl = `https://labs.play-with-docker.com/?stack=${params.url}`;
+  const imgUrl = 'https://img.shields.io/badge/-Install%20On%20ABT%20Node-blue';
+  const linkUrl = `https://img.shields.io/badge/-Install%20On%20ABT%20Node-blue?link=${params.url}`;
 
   const markdown = `[![Install On ABT Node](${imgUrl})](${linkUrl})`;
-
   const html = `<a href="${linkUrl}"><img src="${imgUrl}" alt="Install On ABT Node"></a>`;
 
   return (
