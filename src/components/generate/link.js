@@ -50,7 +50,7 @@ export default function SimpleTabs({ params }) {
   };
 
   const imgUrl = 'https://img.shields.io/badge/-Install%20On%20ABT%20Node-blue';
-  const linkUrl = `https://img.shields.io/badge/-Install%20On%20ABT%20Node-blue?link=${params.url}`;
+  const linkUrl = `${window.location.origin}?action=blocklet-install&mete_url=${params.url}`;
 
   const markdown = `[![Install On ABT Node](${imgUrl})](${linkUrl})`;
   const html = `<a href="${linkUrl}"><img src="${imgUrl}" alt="Install On ABT Node"></a>`;
