@@ -2,7 +2,7 @@ const flat = require('flat');
 
 module.exports = flat({
   common: {
-    noData: '无数据',
+    noData: '无 ABT Node 数据',
     actions: '操作',
     delete: '删除',
     cancel: '关闭',

@@ -66,6 +66,7 @@ export default function IndexPage() {
             value: nodeInfo.info.initialized ? t('common.yes') : t('common.no'),
           },
         ],
+        did: nodeInfo.info.did,
       };
       setSettings(settings);
       setLoading(false);
@@ -133,7 +134,7 @@ export default function IndexPage() {
   settings.showABTNodeInfoSetting.onConfirm = async (params) => {
     if (params.status !== 'error') {
       if (abtnodes) {
-        const index = abtnodes.findIndex((x) => x.url === params.url);
+        const index = abtnodes.findIndex((x) => x.did === params.did);
         if (index > -1) {
           abtnodes[index].info = params.info;
         } else {
@@ -168,8 +169,8 @@ export default function IndexPage() {
     setCurrentSetting('addABTNodeSetting');
   };
 
-  const onDelete = (url) => {
-    const index = abtnodes.findIndex((x) => x.url === url);
+  const onDelete = (did) => {
+    const index = abtnodes.findIndex((x) => x.did === did);
     abtnodes.splice(index, 1);
     setAbtnodes([...abtnodes]);
   };

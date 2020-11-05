@@ -55,7 +55,7 @@ export default function TableList({ rows, onDelete }) {
           className="rule-action"
           color="danger"
           onClick={() => {
-            onDelete(d.name);
+            onDelete(d.did);
           }}>
           {t('common.delete')}
         </Button>

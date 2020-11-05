@@ -16,6 +16,10 @@ export default function TableList({ params: { info, url, nodes = [], select = ''
     return t('blocklet.fail');
   }
 
+  if (!nodes.length) {
+    return t('common.noData');
+  }
+
   return (
     <Main>
       <Card>
