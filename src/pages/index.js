@@ -40,7 +40,19 @@ export default function IndexPage() {
     const normalizedURL = url.endsWith('/') ? url : `${url}/`;
     const client = new NodeClient(`${normalizedURL}api/gql`);
     try {
-      const nodeInfo = await client.getNodeInfo();
+      const { getNodeInfo: nodeInfo } = await client.doRawQuery(`{
+        getNodeInfo {
+          code
+          info {
+            createdAt
+            description
+            did
+            initialized
+            name
+            version
+          }
+        }
+      }`);
       settings.showABTNodeInfoSetting.params = {
         url,
         info: nodeInfo.info,
