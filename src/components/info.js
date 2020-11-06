@@ -10,8 +10,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-export default function Info({ params: { list = [], url, status } }) {
+export default function Info({ params: { list = [], status } }) {
   const { t } = useContext(LocaleContext);
+
   if (status === 'error') {
     return t('abtnode.fail');
   }
@@ -19,10 +20,6 @@ export default function Info({ params: { list = [], url, status } }) {
   return (
     <Typography component="div">
       <List component="nav">
-        <ListLi>
-          <ListItemTextKey primary={t('abtnode.table.url')} />
-          <ListItemTextValue primary={url} />
-        </ListLi>
         {list &&
           Array.isArray(list) &&
           list.map((x) => (

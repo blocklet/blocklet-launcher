@@ -4,15 +4,12 @@ import styled from 'styled-components';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
-import Button from '@arcblock/ux/lib/Button';
-import NodeClient from '@abtnode/client';
 import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TablbeList from '../components/abtnode/list';
 import useSettingConfirm from '../components/confirm_config';
 import { isUrl, formatToDatetime } from '../libs/utils';
-import api from '../libs/api';
 
 // from abtnode
 // action="node-register"&endpoint={abtnode_endpoint}
@@ -36,113 +33,6 @@ export default function IndexPage() {
     }
   });
 
-  const getNodeInfo = async (url) => {
-    const normalizedURL = url.endsWith('/') ? url : `${url}/`;
-    const client = new NodeClient(`${normalizedURL}api/gql`);
-    try {
-      const { getNodeInfo: nodeInfo } = await client.doRawQuery(`{
-        getNodeInfo {
-          code
-          info {
-            createdAt
-            description
-            did
-            initialized
-            name
-            version
-          }
-        }
-      }`);
-      settings.showABTNodeInfoSetting.params = {
-        url,
-        info: nodeInfo.info,
-        list: [
-          {
-            key: t('abtnode.table.name'),
-            value: nodeInfo.info.name,
-          },
-          {
-            key: t('abtnode.table.description'),
-            value: nodeInfo.info.description,
-          },
-          {
-            key: t('abtnode.table.did'),
-            value: nodeInfo.info.did,
-          },
-          {
-            key: t('abtnode.table.createdAt'),
-            value: formatToDatetime(nodeInfo.info.createdAt),
-          },
-          {
-            key: t('abtnode.table.initialized'),
-            value: nodeInfo.info.initialized ? t('common.yes') : t('common.no'),
-          },
-        ],
-        did: nodeInfo.info.did,
-      };
-      setSettings(settings);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      throw new Error(error.message);
-    }
-  };
-
-  const getBlockletMeta = async (url) => {
-    try {
-      const metaInfo = await api.get('api/meta/info', { params: { meta_url: url } });
-      if (metaInfo.data.status === 0) {
-        settings.selectNodeListSetting.params = {
-          url,
-          info: metaInfo.data.info,
-          nodes: rows,
-          select: rows.length ? rows[0].url : '',
-        };
-        setSettings(settings);
-      } else {
-        setLoading(false);
-        throw new Error(metaInfo.info);
-      }
-    } catch (error) {
-      setLoading(false);
-      throw new Error(error.message);
-    }
-  };
-
-  settings.inputUrlToGenerateLinkSetting.onConfirm = (params) => {
-    settings.generateLinkSetting.params = params;
-    setSettings(settings);
-    setCurrentSetting('generateLinkSetting');
-  };
-  settings.inputUrlToGenerateLinkSetting.onCancel = () => {
-    setCurrentSetting(null);
-  };
-
-  settings.generateLinkSetting.onConfirm = () => {
-    setCurrentSetting(null);
-  };
-  settings.generateLinkSetting.onCancel = () => {
-    setCurrentSetting('inputUrlToGenerateLinkSetting');
-  };
-
-  settings.addABTNodeSetting.onConfirm = async ({ url }) => {
-    try {
-      await getNodeInfo(url);
-      setCurrentSetting('showABTNodeInfoSetting');
-    } catch {
-      settings.showABTNodeInfoSetting.params = {
-        url,
-        status: 'error',
-      };
-      setSettings(settings);
-      setCurrentSetting('showABTNodeInfoSetting');
-    }
-  };
-  settings.addABTNodeSetting.onCancel = () => {
-    setLoading(false);
-    setCurrentSetting(null);
-  };
-
   settings.showABTNodeInfoSetting.onConfirm = async (params) => {
     if (params.status !== 'error') {
       if (abtnodes) {
@@ -160,6 +50,7 @@ export default function IndexPage() {
 
     setCurrentSetting(null);
   };
+
   settings.showABTNodeInfoSetting.onCancel = () => {
     setLoading(false);
     setCurrentSetting(null);
@@ -167,7 +58,8 @@ export default function IndexPage() {
 
   settings.selectNodeListSetting.onConfirm = (data) => {
     if (data.select) {
-      window.location.href = `${data.select}/blocklets?url=${urlParams.get('meta_url')}`;
+      const url = data.select.endsWith('/') ? `${data.select}blocklets` : `${data.select}/blocklets`;
+      window.location.href = `${url}?action=install&url=${urlParams.get('meta_url')}`;
     }
     setLoading(false);
     setCurrentSetting(null);
@@ -177,69 +69,81 @@ export default function IndexPage() {
     setCurrentSetting(null);
   };
 
-  const onAdd = () => {
-    setCurrentSetting('addABTNodeSetting');
-  };
-
   const onDelete = (did) => {
     const index = abtnodes.findIndex((x) => x.did === did);
     abtnodes.splice(index, 1);
     setAbtnodes([...abtnodes]);
   };
 
-  const onGenerateInstallUrl = () => {
-    setCurrentSetting('inputUrlToGenerateLinkSetting');
+  const showABTNodeInfo = () => {
+    let info = {};
+    try {
+      info = JSON.parse(urlParams.get('info'));
+      settings.showABTNodeInfoSetting.params = {
+        info,
+        list: [
+          {
+            key: t('abtnode.table.url'),
+            value: info.url,
+          },
+          {
+            key: t('abtnode.table.name'),
+            value: info.name,
+          },
+          {
+            key: t('abtnode.table.description'),
+            value: info.description,
+          },
+          {
+            key: t('abtnode.table.did'),
+            value: info.did,
+          },
+          {
+            key: t('abtnode.table.createdAt'),
+            value: formatToDatetime(info.createdAt),
+          },
+        ],
+        did: info.did,
+      };
+      setSettings(settings);
+      setLoading(false);
+      setCurrentSetting('showABTNodeInfoSetting');
+    } catch (error) {
+      console.error(error);
+      settings.showABTNodeInfoSetting.params = {
+        status: 'error',
+      };
+      setSettings(settings);
+      setCurrentSetting('showABTNodeInfoSetting');
+    }
+  };
+
+  const showListInfo = () => {
+    settings.selectNodeListSetting.params = {
+      nodes: rows,
+      select: rows.length ? rows[0].info.url : '',
+    };
+    setSettings(settings);
+    setLoading(false);
+    setCurrentSetting('selectNodeListSetting');
   };
 
   useEffect(() => {
-    if (urlParams.get('action') === 'node-register' && isUrl(urlParams.get('endpoint'))) {
+    if (urlParams.get('action') === 'node-register' && urlParams.get('info')) {
       setLoading(true);
-      getNodeInfo(urlParams.get('endpoint'))
-        .then(() => {
-          setCurrentSetting('showABTNodeInfoSetting');
-        })
-        .catch(() => {
-          settings.showABTNodeInfoSetting.params = {
-            url: urlParams.get('endpoint'),
-            status: 'error',
-          };
-          setSettings(settings);
-          setCurrentSetting('showABTNodeInfoSetting');
-        });
+
+      showABTNodeInfo();
     }
 
     if (urlParams.get('action') === 'blocklet-install' && isUrl(urlParams.get('meta_url'))) {
       setLoading(true);
-      getBlockletMeta(urlParams.get('meta_url'))
-        .then(() => {
-          setCurrentSetting('selectNodeListSetting');
-        })
-        .catch(() => {
-          settings.selectNodeListSetting.params = {
-            status: 'error',
-            url: urlParams.get('meta_url'),
-          };
-          setSettings(settings);
-          setCurrentSetting('selectNodeListSetting');
-        });
+
+      showListInfo();
     }
   }, []); // eslint-disable-line
 
   return (
     <Layout title="My ABT Node Instances">
-      <Action>
-        <Button rounded color="primary" variant="contained" onClick={onAdd}>
-          {t('abtnode.add')}
-        </Button>
-        <Button
-          className="generate-url-btn"
-          rounded
-          color="secondary"
-          variant="contained"
-          onClick={onGenerateInstallUrl}>
-          {t('generate.add')}
-        </Button>
-      </Action>
       <Main>
         <TablbeList rows={rows} onDelete={onDelete} />
 
@@ -290,14 +194,5 @@ const Main = styled.main`
     &:last-of-type {
       padding-right: 0;
     }
-  }
-`;
-
-const Action = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  .generate-url-btn {
-    margin-left: 10px;
   }
 `;

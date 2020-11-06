@@ -17,7 +17,7 @@ module.exports = flat({
   abtnode: {
     tableTitle: 'list',
     add: 'Add ABT Node',
-    info: 'ABT Node Info',
+    info: 'Save ABT Node Info',
     placeholder: 'Please Enter ABT Node URL',
     table: {
       name: 'Title',

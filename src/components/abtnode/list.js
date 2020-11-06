@@ -2,7 +2,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Tag from '@arcblock/ux/lib/Tag';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import MaterialTable from 'material-table';
@@ -19,7 +18,7 @@ export default function TableList({ rows, onDelete }) {
       render: (d) => (
         <>
           <div>{d.info.name}</div>
-          <a href={d.url}>{d.url}</a>
+          <a href={d.info.url}>{d.info.url}</a>
         </>
       ),
     },
@@ -34,13 +33,6 @@ export default function TableList({ rows, onDelete }) {
     {
       title: t('abtnode.table.createdAt'),
       render: (d) => formatToDatetime(d.info.createdAt),
-    },
-    {
-      title: t('abtnode.table.initialized'),
-      width: '8%',
-      render: (d) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
-        d.info.initialized ? <Tag type="primary">{t('common.yes')}</Tag> : <Tag type="error">{t('common.no')}</Tag>,
     },
     {
       title: t('common.actions'),

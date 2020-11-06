@@ -9,7 +9,7 @@ import List from '@material-ui/core/List';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-export default function TableList({ params: { info, url, nodes = [], select = '', status }, setParams }) {
+export default function TableList({ params: { nodes = [], select = '', status }, setParams }) {
   const { t } = useContext(LocaleContext);
 
   if (status === 'error') {
@@ -28,12 +28,12 @@ export default function TableList({ params: { info, url, nodes = [], select = ''
             value={select}
             style={{ width: '100%' }}
             onChange={(e) => {
-              setParams({ info, url, nodes, select: e.target.value });
+              setParams({ nodes, select: e.target.value });
             }}
             defaultValue={select}
             displayEmpty>
             {nodes.map((x) => (
-              <MenuItem key={x.info.name} value={x.url}>
+              <MenuItem key={x.info.name} value={x.info.url}>
                 {x.info.name}
               </MenuItem>
             ))}

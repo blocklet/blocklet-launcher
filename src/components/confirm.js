@@ -34,7 +34,7 @@ export default function ConfirmDialog({
   const { t: changeLocale } = useLocaleContext();
   const theme = useTheme();
 
-  const onCallback = async cb => {
+  const onCallback = async (cb) => {
     if (typeof cb === 'function') {
       setLoading(true);
       try {
@@ -59,7 +59,7 @@ export default function ConfirmDialog({
 
   return (
     <StyledDialog
-      fullScreen={isBreakpointsDownSm}
+      fullScreen={false}
       open={Boolean(open)}
       style={{ minWidth: isBreakpointsDownSm ? 400 : theme.breakpoints.values.sm }}>
       <DialogTitle>{t}</DialogTitle>
@@ -73,7 +73,7 @@ export default function ConfirmDialog({
       </DialogContent>
       <DialogActions style={{ padding: '8px 24px 24px' }}>
         <Button
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             onCallback(onCancel);
           }}
@@ -83,7 +83,7 @@ export default function ConfirmDialog({
           {cancel || changeLocale('common.cancel')}
         </Button>
         <Button
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             onCallback(onConfirm);
           }}

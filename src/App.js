@@ -10,6 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { translations } from './locales';
 
 import HomePage from './pages/index';
+import InstallPage from './pages/install';
 
 const theme = create({
   typography: {
@@ -40,6 +41,7 @@ const App = () => (
           <div className="wrapper">
             <Switch>
               <Route exact path="/" component={HomePage} />
+              <Route exact path="/install" component={InstallPage} />
               <Redirect to="/" />
             </Switch>
           </div>
