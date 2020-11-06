@@ -9,7 +9,7 @@ import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TablbeList from '../components/abtnode/list';
 import useSettingConfirm from '../components/confirm_config';
-import { isUrl, formatToDatetime } from '../libs/utils';
+import { formatToDatetime } from '../libs/utils';
 
 // from abtnode
 // action="node-register"&endpoint={abtnode_endpoint}
@@ -135,7 +135,7 @@ export default function IndexPage() {
       showABTNodeInfo();
     }
 
-    if (urlParams.get('action') === 'blocklet-install' && isUrl(urlParams.get('meta_url'))) {
+    if (urlParams.get('action') === 'blocklet-install' && urlParams.get('meta_url')) {
       setLoading(true);
 
       showListInfo();
