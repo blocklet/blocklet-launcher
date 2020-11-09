@@ -13,6 +13,14 @@ module.exports = flat({
     copy: '复制到剪切板',
     yes: 'YES',
     no: 'NO',
+    delConfirm: '我了解结果，确认删除',
+    notice: '请确认下面的信息',
+    click: '点击复制',
+    delInfo: {
+      title: '删除 ABT Node',
+      description: '此操作无法撤消。这将永久删除名字为 {name} 的ABT Node',
+      confirm_desc: '请输入 {did} 以确认删除',
+    },
   },
   abtnode: {
     tableTitle: 'list',
@@ -28,6 +36,7 @@ module.exports = flat({
       did: 'DID',
     },
     fail: '获取失败， 请重新尝试',
+    exist: 'ABT Node 已经被注册',
   },
   generate: {
     add: '生成安装按钮',

@@ -1,5 +1,5 @@
 /* eslint-disable operator-linebreak */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,10 +7,32 @@ import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import MaterialTable from 'material-table';
 import Button from '@arcblock/ux/lib/Button';
 import Icons from '../table_icons';
+import DelConfirm from '../delete_confirm';
 import { formatToDatetime } from '../../libs/utils';
 
 export default function TableList({ rows, onDelete }) {
   const { t } = useContext(LocaleContext);
+  const [delConfirmSetting, setDelConfirmSetting] = useState(null);
+
+  const onDeleteFn = ({ did, info }) => {
+    const setting = {
+      keyName: did,
+      title: t('common.delInfo.title'),
+      description: `${t('common.delInfo.description', { name: info.name })}`,
+      confirmPlaceholder: t('common.delInfo.confirm_desc', { did }),
+      confirm: t('common.delConfirm'),
+      cancel: t('common.cancel'),
+      onConfirm: () => {
+        onDelete(did);
+        setDelConfirmSetting(null);
+      },
+      onCancel: () => {
+        setDelConfirmSetting(null);
+      },
+    };
+
+    setDelConfirmSetting(setting);
+  };
 
   const columns = [
     {
@@ -47,7 +69,7 @@ export default function TableList({ rows, onDelete }) {
           className="rule-action"
           color="danger"
           onClick={() => {
-            onDelete(d.did);
+            onDeleteFn(d);
           }}>
           {t('common.delete')}
         </Button>
@@ -76,6 +98,20 @@ export default function TableList({ rows, onDelete }) {
         }}
         columns={columns}
       />
+
+      {delConfirmSetting && (
+        <DelConfirm
+          keyName={delConfirmSetting.keyName}
+          title={delConfirmSetting.title}
+          description={delConfirmSetting.description}
+          confirmPlaceholder={delConfirmSetting.confirmPlaceholder}
+          confirm={delConfirmSetting.confirm}
+          cancel={delConfirmSetting.cancel}
+          params={delConfirmSetting.params}
+          onConfirm={delConfirmSetting.onConfirm}
+          onCancel={delConfirmSetting.onCancel}
+        />
+      )}
     </Main>
   );
 }

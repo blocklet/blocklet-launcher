@@ -79,6 +79,7 @@ export default function IndexPage() {
     let info = {};
     try {
       info = JSON.parse(urlParams.get('info'));
+      const index = rows.findIndex((x) => x.did === info.did);
       settings.showABTNodeInfoSetting.params = {
         info,
         list: [
@@ -104,6 +105,7 @@ export default function IndexPage() {
           },
         ],
         did: info.did,
+        isExist: index > -1,
       };
       setSettings(settings);
       setLoading(false);

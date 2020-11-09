@@ -53,13 +53,13 @@ export default function ConfirmDialog({
     setLoading(false);
     setParams(initialParams);
     setError('');
-  }, [t, initialParams]);
+  }, [initialParams]);
 
   const isBreakpointsDownSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <StyledDialog
-      fullScreen={false}
+      fullScreen={isBreakpointsDownSm}
       open={Boolean(open)}
       style={{ minWidth: isBreakpointsDownSm ? 400 : theme.breakpoints.values.sm }}>
       <DialogTitle>{t}</DialogTitle>

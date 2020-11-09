@@ -13,6 +13,14 @@ module.exports = flat({
     copy: 'Copy To Clipboard',
     yes: 'YES',
     no: 'NO',
+    delConfirm: 'I understand the consequences, delete',
+    notice: 'Unexpected bad things will happen if you don’t read this!',
+    click: 'Click to copy',
+    delInfo: {
+      title: 'Delete ABT Node',
+      description: 'This will permanently delete ABT Node with name {name}',
+      confirm_desc: 'Please input {did} to confirm',
+    },
   },
   abtnode: {
     tableTitle: 'list',
@@ -28,6 +36,7 @@ module.exports = flat({
       did: 'DID',
     },
     fail: 'The request failed. Please try again',
+    exist: 'This node is already registered',
   },
   generate: {
     add: 'Generate Install Button',
