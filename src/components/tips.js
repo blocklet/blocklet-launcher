@@ -15,7 +15,9 @@ export default function RegisterNode() {
       <DescriptionDiv>
         <>
           {steps.map((step) => (
-            <div className="step">{step}</div>
+            <div className="step" key={step}>
+              {step}
+            </div>
           ))}
         </>
         <Typography component="h6" variant="h6" className="tips">

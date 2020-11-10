@@ -13,7 +13,7 @@ function DangerItem({ title, description, children }) {
         <Typography component="h3" variant="h6" color="textPrimary" gutterBottom>
           {t}
         </Typography>
-        <Typography component="p" variant="body1" color="textSecondary">
+        <Typography component="div" variant="body1" color="textSecondary">
           {d}
         </Typography>
       </Typography>

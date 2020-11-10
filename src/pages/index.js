@@ -19,7 +19,7 @@ import { formatToDatetime } from '../libs/utils';
 // action="blocklet-install"&mete_url={blocklet_meta_url}
 
 export default function IndexPage() {
-  const { t, changeLocale } = useContext(LocaleContext);
+  const { t, changeLocale, locale } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
 
   const [abtnodes, setAbtnodes] = useLocalStorage('abtnodes', []);
@@ -29,9 +29,7 @@ export default function IndexPage() {
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
 
   useEffect(() => {
-    if (urlParams.get('__blang__')) {
-      changeLocale(urlParams.get('__blang__'));
-    }
+    changeLocale(urlParams.get('__blang__') || locale);
   });
 
   settings.showABTNodeInfoSetting.onConfirm = async (params) => {
