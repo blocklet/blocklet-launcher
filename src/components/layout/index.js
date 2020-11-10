@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import Container from '@material-ui/core/Container';
 import Header from './header';
 
 export default function Layout({ title, children }) {
@@ -20,12 +20,12 @@ Layout.propTypes = {
 
 Layout.defaultProps = {};
 
-const Div = styled.div`
+const Div = styled(Container)`
   height: 100vh;
-  padding: 0 20px;
   box-sizing: border-box;
 `;
 
 const Main = styled.main`
   padding: 0;
+  height: calc(100vh - 80px);
 `;

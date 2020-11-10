@@ -56,4 +56,15 @@ module.exports = flat({
     select: '进入',
     fail: '获取失败， 请重新尝试',
   },
+  tips: {
+    title: '没有找到你的 ABT Node？ 按照下面的步骤添加它：',
+    steps: {
+      one: '登录你的 ABT Node',
+      two: '进入设置页面',
+      three: '点击 "注册 ABT Node"',
+      four: '你的 ABT Node 会展示在这里',
+    },
+    setup: '如果还没有设置 ABT Node，',
+    visit: '点击查看如何设置ABT节点的详细信息。',
+  },
 });
