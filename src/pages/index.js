@@ -1,6 +1,5 @@
 /* eslint-disable arrow-parens */
 import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
@@ -8,7 +7,7 @@ import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TablbeList from '../components/abtnode/list';
-import TableTips from '../components/tips';
+import TableTips from '../components/abtnode/tips';
 import useSettingConfirm from '../components/confirm_config';
 import { formatToDatetime } from '../libs/utils';
 
@@ -142,64 +141,23 @@ export default function IndexPage() {
   }, []); // eslint-disable-line
 
   return (
-    <Layout title="My ABT Node Instances">
-      <Main>
-        <TablbeList rows={rows} onDelete={onDelete} />
+    <Layout title="Install On ABT Node">
+      {rows.length ? <TablbeList rows={rows} onDelete={onDelete} /> : <TableTips />}
 
-        {loading && <Loading />}
-        {currentSetting && settings[currentSetting] && (
-          <Confirm
-            title={settings[currentSetting].title}
-            description={settings[currentSetting].description}
-            confirm={settings[currentSetting].confirm}
-            color={settings[currentSetting].color}
-            cancel={settings[currentSetting].cancel}
-            params={settings[currentSetting].params}
-            onConfirm={settings[currentSetting].onConfirm}
-            onCancel={settings[currentSetting].onCancel}
-            open={settings[currentSetting].open}
-          />
-        )}
-
-        <TableTips />
-      </Main>
+      {loading && <Loading />}
+      {currentSetting && settings[currentSetting] && (
+        <Confirm
+          title={settings[currentSetting].title}
+          description={settings[currentSetting].description}
+          confirm={settings[currentSetting].confirm}
+          color={settings[currentSetting].color}
+          cancel={settings[currentSetting].cancel}
+          params={settings[currentSetting].params}
+          onConfirm={settings[currentSetting].onConfirm}
+          onCancel={settings[currentSetting].onCancel}
+          open={settings[currentSetting].open}
+        />
+      )}
     </Layout>
   );
 }
-
-const Main = styled.main`
-  a {
-    color: ${(props) => props.theme.colors.green};
-    text-decoration: none;
-  }
-
-  > .MuiPaper-root {
-    box-shadow: none !important;
-    border: none !important;
-    border-radius: 0 !important;
-    background-color: transparent;
-  }
-
-  .MuiToolbar-root {
-    background: transparent;
-    padding-left: 0px;
-  }
-
-  .MuiTableHead-root th {
-    background: transparent;
-    min-width: 100px;
-  }
-
-  .MuiTableCell-root {
-    padding-right: 16px;
-    &:last-of-type {
-      padding-right: 0;
-    }
-  }
-
-  .danger-zone {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 720px;
-  }
-`;

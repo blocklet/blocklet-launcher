@@ -82,6 +82,11 @@ export default function TableList({ rows, onDelete }) {
 }
 
 const Main = styled.div`
+  a {
+    color: ${(props) => props.theme.colors.green};
+    text-decoration: none;
+  }
+
   .MuiPaper-root {
     box-shadow: none !important;
     border: none !important;

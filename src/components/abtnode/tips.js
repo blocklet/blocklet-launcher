@@ -3,7 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Typography from '@material-ui/core/Typography';
-import { DangerZone, DangerItem } from './danger_zone';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 
 export default function RegisterNode() {
   const { t } = useLocaleContext();
@@ -13,34 +14,51 @@ export default function RegisterNode() {
 
     return (
       <DescriptionDiv>
-        <>
+        <ol>
           {steps.map((step) => (
-            <div className="step" key={step}>
+            <li className="step" key={step}>
               {step}
-            </div>
+            </li>
           ))}
-        </>
-        <Typography component="h6" variant="h6" className="tips">
+        </ol>
+
+        <Typography component="span" variant="span" className="tips">
           {t('tips.setup')}
         </Typography>
-        <Typography component="h6" variant="h6" className="tips">
+        <a href="https://www.arcblock.io/en/get-started" rel="noreferrer" target="_blank">
           {t('tips.visit')}
-        </Typography>
+        </a>
       </DescriptionDiv>
     );
   };
   return (
-    <React.Fragment>
-      <DangerZone className="danger-zone">
-        <DangerItem title={t('tips.title')} description={description} />
-      </DangerZone>
-    </React.Fragment>
+    <Div>
+      <Alert severity="info" className="info">
+        <AlertTitle>{t('tips.title')}</AlertTitle>
+        <Typography>{description()}</Typography>
+      </Alert>
+    </Div>
   );
 }
 
+const Div = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .info {
+    width: 560px;
+  }
+`;
+
 const DescriptionDiv = styled.div`
+  li {
+    list-style: inherit;
+  }
+
   .step {
-    margin: 5px 0 5px 20px;
+    margin: 5px 0;
   }
 
   .tips {
