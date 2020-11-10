@@ -25,7 +25,7 @@ module.exports = flat({
   abtnode: {
     tableTitle: 'list',
     add: '添加 ABT Node',
-    info: '保存 ABT Node 信息',
+    info: '注册 ABT Node',
     placeholder: '请输入 ABT Node URL',
     table: {
       name: '名称',

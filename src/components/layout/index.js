@@ -23,6 +23,16 @@ Layout.defaultProps = {};
 const Div = styled(Container)`
   height: 100vh;
   box-sizing: border-box;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+    .logo {
+      font-size: 18px !important;
+
+      img {
+        height: 36px;
+      }
+    }
+  }
 `;
 
 const Main = styled.main`

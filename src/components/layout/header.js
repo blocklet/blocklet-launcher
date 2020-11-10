@@ -52,11 +52,6 @@ const HeaderLayout = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
   }
 `;
 
