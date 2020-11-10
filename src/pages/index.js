@@ -8,6 +8,7 @@ import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TablbeList from '../components/abtnode/list';
+import TableTips from '../components/tips';
 import useSettingConfirm from '../components/confirm_config';
 import { formatToDatetime } from '../libs/utils';
 
@@ -161,6 +162,8 @@ export default function IndexPage() {
             open={settings[currentSetting].open}
           />
         )}
+
+        <TableTips />
       </Main>
     </Layout>
   );
@@ -194,5 +197,11 @@ const Main = styled.main`
     &:last-of-type {
       padding-right: 0;
     }
+  }
+
+  .danger-zone {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 720px;
   }
 `;

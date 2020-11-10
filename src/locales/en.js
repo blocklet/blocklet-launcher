@@ -47,4 +47,15 @@ module.exports = flat({
     select: 'Select',
     fail: 'The request failed. Please try again',
   },
+  tips: {
+    title: "Don't see your ABT Node here? Follow the steps below to add it:",
+    steps: {
+      one: '1、login to your ABT Node',
+      two: '2、Go to the "Settings" page',
+      three: '3、Click on "Register this ABT Node"',
+      four: '4、Your ABT Node will now appear below.',
+    },
+    setup: "Haven't setup ABT Node? Getting started is easy!",
+    visit: 'Visit ... for more information on how to set up your ABT Node.',
+  },
 });

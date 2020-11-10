@@ -68,6 +68,7 @@ export default function TableList({ rows, onDelete }) {
           maxBodyHeight: '100%',
           paging: false,
           search: false,
+          minBodyHeight: 300,
         }}
         localization={{
           body: {
