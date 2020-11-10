@@ -1,4 +1,5 @@
 /* eslint-disable operator-linebreak */
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -40,7 +41,9 @@ export default function TableList({ rows, onDelete }) {
       render: (d) => (
         <>
           <div>{d.info.name}</div>
-          <a href={d.info.url}>{d.info.url}</a>
+          <a href={d.info.url} target="_blank">
+            {d.info.url}
+          </a>
         </>
       ),
     },

@@ -7,7 +7,7 @@ import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
-import TablbeList from '../components/abtnode/list';
+import TableList from '../components/abtnode';
 import useSettingConfirm from '../components/confirm_config';
 import { formatToDatetime } from '../libs/utils';
 
@@ -147,7 +147,7 @@ export default function IndexPage() {
   return (
     <Layout title="My ABT Node Instances">
       <Main>
-        <TablbeList rows={rows} onDelete={onDelete} />
+        <TableList rows={rows} onDelete={onDelete} />
 
         {loading && <Loading />}
         {currentSetting && settings[currentSetting] && (
