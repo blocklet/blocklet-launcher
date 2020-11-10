@@ -53,6 +53,17 @@ const HeaderLayout = styled.header`
     justify-content: space-between;
     align-items: center;
   }
+
+  .locale-addon {
+    margin-right: 8px;
+    .locales {
+      background: #222;
+
+      .MuiListItem-root {
+        color: #fff;
+      }
+    }
+  }
 `;
 
 const Div = styled.div`

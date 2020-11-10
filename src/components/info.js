@@ -10,7 +10,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-export default function Info({ params: { list = [], status, isExist } }) {
+export default function Info({ params: { list = [], status, isExist, info } }) {
   const { t } = useContext(LocaleContext);
 
   if (status === 'error') {
@@ -18,7 +18,7 @@ export default function Info({ params: { list = [], status, isExist } }) {
   }
 
   if (isExist) {
-    return t('abtnode.exist');
+    return t('abtnode.exist', { name: info.name });
   }
 
   return (

@@ -67,6 +67,7 @@ export default function TableList({ rows, onDelete }) {
                 <DeleteIcon style={{ color: 'red' }} />
               </IconButton>
             }
+            className="card-header"
             title={row.info.name}
             subheader={
               <a href={row.info.url} target="_blank">
@@ -108,6 +109,13 @@ const Main = styled.div``;
 
 const CardBox = styled(Card)`
   margin: 20px 0;
+
+  .card-header {
+    .MuiCardHeader-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
 `;
 
 const ListLi = styled(ListItem)`
@@ -116,12 +124,11 @@ const ListLi = styled(ListItem)`
 `;
 
 const ListItemTextKey = styled(ListItemText)`
-  width: 120px;
+  width: 80px;
   flex: none !important;
 
   .MuiListItemText-primary {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 16px;
   }
 `;
 

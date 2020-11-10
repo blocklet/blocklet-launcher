@@ -1,6 +1,7 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable object-curly-newline */
 import React from 'react';
+
 import { create } from '@arcblock/ux/lib/Theme';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';

@@ -23,7 +23,7 @@ module.exports = flat({
     },
   },
   abtnode: {
-    tableTitle: 'list',
+    tableTitle: 'ABT Node 列表',
     add: '添加 ABT Node',
     info: '注册 ABT Node',
     placeholder: '请输入 ABT Node URL',
@@ -36,7 +36,7 @@ module.exports = flat({
       did: 'DID',
     },
     fail: '获取失败， 请重新尝试',
-    exist: 'ABT Node 已经被注册',
+    exist: '{name} 已经被注册',
   },
   generate: {
     add: '生成安装按钮',
@@ -57,7 +57,7 @@ module.exports = flat({
     fail: '获取失败， 请重新尝试',
   },
   tips: {
-    title: '没有找到你的 ABT Node？ 按照下面的步骤添加它：',
+    title: '没有看到你的 ABT Node？ 按照下面的步骤添加它：',
     steps: {
       one: '登录你的 ABT Node',
       two: '进入设置页面',

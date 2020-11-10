@@ -57,13 +57,14 @@ export default function TableList({ rows, onDelete }) {
     },
     {
       title: t('abtnode.table.createdAt'),
+      width: '18%',
       render: (d) => formatToDatetime(d.info.createdAt),
     },
     {
       title: t('common.actions'),
-      width: '10%',
       sorting: false,
       align: 'center',
+      width: '3%',
       render: (d) => (
         <Button
           rounded
@@ -132,10 +133,10 @@ const Main = styled.div`
     border-radius: 0 !important;
     background: transparent;
   }
+
   .MuiToolbar-root {
     background: transparent;
     padding-left: 0;
-    display: none;
   }
 
   .MuiTableHead-root th {

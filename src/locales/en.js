@@ -23,7 +23,7 @@ module.exports = flat({
     },
   },
   abtnode: {
-    tableTitle: 'list',
+    tableTitle: 'ABT Node List',
     add: 'Add ABT Node',
     info: 'Register ABT Node',
     placeholder: 'Please Enter ABT Node URL',
@@ -31,12 +31,12 @@ module.exports = flat({
       name: 'Title',
       description: 'Description',
       url: 'URL',
-      createdAt: 'Created Date',
+      createdAt: 'Create Time',
       initialized: 'Initialized',
       did: 'DID',
     },
     fail: 'The request failed. Please try again',
-    exist: 'This node is already registered',
+    exist: 'This node with name({name}) is already registered',
   },
   generate: {
     add: 'Generate Install Button',

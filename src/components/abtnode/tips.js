@@ -42,10 +42,9 @@ export default function RegisterNode() {
 }
 
 const Div = styled.div`
-  height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  padding-top: 10vh;
 
   .info {
     width: 560px;

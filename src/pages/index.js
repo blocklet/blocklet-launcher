@@ -1,6 +1,8 @@
 /* eslint-disable arrow-parens */
 import React, { useContext, useState, useEffect } from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Loading from '../components/loading';
@@ -26,6 +28,8 @@ export default function IndexPage() {
   const [settings, setSettings] = useState(useSettingConfirm());
   const [loading, setLoading] = useState(false);
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
+
+  moment.locale(locale === 'zh' ? 'zh-cn' : locale);
 
   useEffect(() => {
     changeLocale(urlParams.get('__blang__') || locale);
