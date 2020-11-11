@@ -1,35 +1,55 @@
 # Install On ABT Node
 
-> A simple blocklet that helps you to install blocket on ABT Node
+[![docs](https://img.shields.io/badge/powered%20by-arcblock-green.svg)](https://docs.arcblock.io)
 
-## Getting started
+A simple blocklet that helps you to install blocket on ABT Node
 
-### Configuration
+[![docs](https://img.shields.io/badge/-run%20online-blue.svg)](https://install.arcblock.io/)
 
-Put following contents in `.env`:
+## Table of Contents
 
-```ini
-SKIP_PREFLIGHT_CHECK=true
+- [Table of Contents](#Table-of-Contents)
+- [Visuals](#Visuals)
+- [Installation](#Introduction)
+- [Usage](#Usage)
+- [License](#License)
 
-# server side
-BLOCKLET_PORT="3030"
-BLOCKLET_APP_ID="zNKn6o1t7CPMWU4wrbNnLuzKvoPWMVyhVgaf"
-BLOCKLET_DATA_DIR="/tmp/abtnode/install-on-abtnode"
+## Visuals
 
-REACT_APP_BASE_URL="http://192.168.1.2:3030"
-REACT_APP_APP_NAME="Install on ABT Node"
+![empty page](/screenshots/empty.jpg)
+![index page](/screenshots/index.jpg)
+
+## Installation
+
+- Download the repo
+
+```
+git clone git@github.com:blocklet/install-on-abtnode.git
+yarn install
 ```
 
-### Start hacking
+## Usage
 
-```shell
-mkdir -p /tmp/abtnode/install-on-abtnode
-npm run start:server
-npm run start:client
+### Development to local ABT Node
+
+```
+yarn start:client
+
+or
+
+abtnode init
+abtnode start
+abtnode dev .
 ```
 
 ### Deploy to local ABT Node
 
-```shell
+```
+abtnode init
+abtnode start
 abtnode deploy .
 ```
+
+## License
+
+[MIT](LICENSE)
