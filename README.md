@@ -4,6 +4,16 @@
 
 A simple blocklet that helps you to install blocket on ABT Node
 
+[![docs](https://img.shields.io/badge/-run%20online-blue.svg)](https://install.arcblock.io/)
+
+## Table of Contents
+
+- [Table of Contents](#Table-of-Contents)
+- [Visuals](#Visuals)
+- [Installation](#Introduction)
+- [Usage](#Usage)
+- [License](#License)
+
 ## Visuals
 
 ![index page](/screenshots/index.png)
@@ -17,13 +27,19 @@ git clone git@github.com:blocklet/install-on-abtnode.git
 yarn install
 ```
 
-- Start the service
+## Usage
+
+### Development to local ABT Node
 
 ```
 yarn start:client
-```
 
-## Usage
+or
+
+abtnode init
+abtnode start
+abtnode dev .
+```
 
 ### Deploy to local ABT Node
 
