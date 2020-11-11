@@ -16,7 +16,8 @@ A simple blocklet that helps you to install blocket on ABT Node
 
 ## Visuals
 
-![index page](/screenshots/index.png)
+![empty page](/screenshots/empty.jpg)
+![index page](/screenshots/index.jpg)
 
 ## Installation
 
