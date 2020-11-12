@@ -14,6 +14,11 @@ init:
 	@npm install -g yarn @abtnode/cli
 	@yarn
 
+github-action-init:
+	@echo "Install npm dependencies required for this repo..."
+	@sudo npm install -g @abtnode/cli
+	@yarn
+
 clean:
 	@echo "All cache and build are cleaned."
 	@rm -rf .blocklet
