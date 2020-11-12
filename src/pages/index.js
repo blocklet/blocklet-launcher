@@ -1,13 +1,15 @@
 /* eslint-disable arrow-parens */
 import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
-import TablbeList from '../components/abtnode/list';
+import TableList from '../components/abtnode';
+import TableTips from '../components/abtnode/tips';
 import useSettingConfirm from '../components/confirm_config';
 import { formatToDatetime } from '../libs/utils';
 
@@ -18,7 +20,7 @@ import { formatToDatetime } from '../libs/utils';
 // action="blocklet-install"&mete_url={blocklet_meta_url}
 
 export default function IndexPage() {
-  const { t, changeLocale } = useContext(LocaleContext);
+  const { t, changeLocale, locale } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
 
   const [abtnodes, setAbtnodes] = useLocalStorage('abtnodes', []);
@@ -27,10 +29,10 @@ export default function IndexPage() {
   const [loading, setLoading] = useState(false);
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
 
+  moment.locale(locale === 'zh' ? 'zh-cn' : locale);
+
   useEffect(() => {
-    if (urlParams.get('__blang__')) {
-      changeLocale(urlParams.get('__blang__'));
-    }
+    changeLocale(urlParams.get('__blang__') || locale);
   });
 
   settings.showABTNodeInfoSetting.onConfirm = async (params) => {
@@ -79,6 +81,7 @@ export default function IndexPage() {
     let info = {};
     try {
       info = JSON.parse(urlParams.get('info'));
+      const index = rows.findIndex((x) => x.did === info.did);
       settings.showABTNodeInfoSetting.params = {
         info,
         list: [
@@ -104,6 +107,7 @@ export default function IndexPage() {
           },
         ],
         did: info.did,
+        isExist: index > -1,
       };
       setSettings(settings);
       setLoading(false);
@@ -143,56 +147,23 @@ export default function IndexPage() {
   }, []); // eslint-disable-line
 
   return (
-    <Layout title="My ABT Node Instances">
-      <Main>
-        <TablbeList rows={rows} onDelete={onDelete} />
+    <Layout title="Install On ABT Node">
+      {rows.length ? <TableList rows={rows} onDelete={onDelete} /> : <TableTips />}
 
-        {loading && <Loading />}
-        {currentSetting && settings[currentSetting] && (
-          <Confirm
-            title={settings[currentSetting].title}
-            description={settings[currentSetting].description}
-            confirm={settings[currentSetting].confirm}
-            color={settings[currentSetting].color}
-            cancel={settings[currentSetting].cancel}
-            params={settings[currentSetting].params}
-            onConfirm={settings[currentSetting].onConfirm}
-            onCancel={settings[currentSetting].onCancel}
-            open={settings[currentSetting].open}
-          />
-        )}
-      </Main>
+      {loading && <Loading />}
+      {currentSetting && settings[currentSetting] && (
+        <Confirm
+          title={settings[currentSetting].title}
+          description={settings[currentSetting].description}
+          confirm={settings[currentSetting].confirm}
+          color={settings[currentSetting].color}
+          cancel={settings[currentSetting].cancel}
+          params={settings[currentSetting].params}
+          onConfirm={settings[currentSetting].onConfirm}
+          onCancel={settings[currentSetting].onCancel}
+          open={settings[currentSetting].open}
+        />
+      )}
     </Layout>
   );
 }
-
-const Main = styled.main`
-  a {
-    color: ${(props) => props.theme.colors.green};
-    text-decoration: none;
-  }
-
-  > .MuiPaper-root {
-    box-shadow: none !important;
-    border: none !important;
-    border-radius: 0 !important;
-    background-color: transparent;
-  }
-
-  .MuiToolbar-root {
-    background: transparent;
-    padding-left: 0px;
-  }
-
-  .MuiTableHead-root th {
-    background: transparent;
-    min-width: 100px;
-  }
-
-  .MuiTableCell-root {
-    padding-right: 16px;
-    &:last-of-type {
-      padding-right: 0;
-    }
-  }
-`;

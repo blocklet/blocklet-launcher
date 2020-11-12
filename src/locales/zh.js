@@ -13,11 +13,19 @@ module.exports = flat({
     copy: '复制到剪切板',
     yes: 'YES',
     no: 'NO',
+    delConfirm: '我了解结果，确认删除',
+    notice: '请确认下面的信息',
+    click: '点击复制',
+    delInfo: {
+      title: '删除 ABT Node',
+      description: '此操作无法撤消。这将永久删除名字为 {name} 的ABT Node',
+      confirm_desc: '请输入 {did} 以确认删除',
+    },
   },
   abtnode: {
-    tableTitle: 'list',
+    tableTitle: 'ABT Node 列表',
     add: '添加 ABT Node',
-    info: '保存 ABT Node 信息',
+    info: '注册 ABT Node',
     placeholder: '请输入 ABT Node URL',
     table: {
       name: '名称',
@@ -28,6 +36,7 @@ module.exports = flat({
       did: 'DID',
     },
     fail: '获取失败， 请重新尝试',
+    exist: '{name} 已经被注册',
   },
   generate: {
     add: '生成安装按钮',
@@ -46,5 +55,16 @@ module.exports = flat({
     selectnode: '安装 Blocklet 到我的ABT Node ',
     select: '进入',
     fail: '获取失败， 请重新尝试',
+  },
+  tips: {
+    title: '没有看到你的 ABT Node？ 按照下面的步骤添加它：',
+    steps: {
+      one: '登录你的 ABT Node',
+      two: '进入设置页面',
+      three: '点击 "注册 ABT Node"',
+      four: '你的 ABT Node 会展示在这里',
+    },
+    setup: '如果还没有设置 ABT Node，',
+    visit: '点击查看如何设置ABT节点的详细信息。',
   },
 });

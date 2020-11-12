@@ -98,6 +98,7 @@
     "group": "static",
     "color": "primary",
     "main": "build",
+    "logo": "logo.png",
     "provider": "arcblock",
     "support": "support@arcblock.io",
     "community": "https://community.arcblockio.cn",

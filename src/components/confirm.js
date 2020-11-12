@@ -53,17 +53,17 @@ export default function ConfirmDialog({
     setLoading(false);
     setParams(initialParams);
     setError('');
-  }, [t, initialParams]);
+  }, [initialParams]);
 
-  const isBreakpointsDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isBreakpointsDownXs = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <StyledDialog
-      fullScreen={false}
+      fullScreen={isBreakpointsDownXs}
       open={Boolean(open)}
-      style={{ minWidth: isBreakpointsDownSm ? 400 : theme.breakpoints.values.sm }}>
+      style={{ minWidth: isBreakpointsDownXs ? 400 : theme.breakpoints.values.sm }}>
       <DialogTitle>{t}</DialogTitle>
-      <DialogContent style={{ minWidth: isBreakpointsDownSm ? 400 : theme.breakpoints.values.sm }}>
+      <DialogContent style={{ minWidth: isBreakpointsDownXs ? 400 : theme.breakpoints.values.sm }}>
         <DialogContentText component="div">{d}</DialogContentText>
         {!!error && (
           <Alert severity="error" style={{ width: '100%', marginTop: 8 }}>

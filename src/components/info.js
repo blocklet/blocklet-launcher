@@ -10,11 +10,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-export default function Info({ params: { list = [], status } }) {
+export default function Info({ params: { list = [], status, isExist, info } }) {
   const { t } = useContext(LocaleContext);
 
   if (status === 'error') {
     return t('abtnode.fail');
+  }
+
+  if (isExist) {
+    return t('abtnode.exist', { name: info.name });
   }
 
   return (
