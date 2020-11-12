@@ -60,9 +60,9 @@
     "start": "npm-run-all --parallel start:*",
     "start:client": "PUBLIC_URL=\"\" react-app-rewired start",
     "start:server": "nodemon api/index.js -w api",
-    "build": "yarn clean && npm run build:client && rm -f .blocklet/bundle/build/static/**/*.{js,css}.map",
+    "build": "yarn clean && npm run build:client && npm run build:server &&  rm -f .blocklet/bundle/build/static/**/*.{js,css}.map",
     "build:client": "PUBLIC_URL=\"/z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF\" react-app-rewired build",
-    "build:server": "NODE_ENV=production an bundle -w api/webpack.blocklet.js"
+    "build:server": "NODE_ENV=production abtnode bundle -w api/webpack.blocklet.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -106,8 +106,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && yarn precommit",
-      "pre-push": "lint-staged && yarn prepush"
+      "pre-commit": "yarn precommit",
+      "pre-push": "yarn prepush"
     }
   }
 }
