@@ -60,9 +60,9 @@
     "start": "npm-run-all --parallel start:*",
     "start:client": "PUBLIC_URL=\"\" react-app-rewired start",
     "start:server": "nodemon api/index.js -w api",
-    "build": "yarn clean && npm run build:client && rm -f .blocklet/bundle/build/static/**/*.{js,css}.map",
+    "build": "yarn clean && npm run build:client && rm -f build/static/**/*.{js,css}.map && npm run build:server",
     "build:client": "PUBLIC_URL=\"/z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF\" react-app-rewired build",
-    "build:server": "NODE_ENV=production an bundle -w api/webpack.blocklet.js"
+    "build:server": "NODE_ENV=production abtnode bundle -w api/webpack.blocklet.js"
   },
   "eslintConfig": {
     "extends": "react-app"
