@@ -1,31 +1,22 @@
 name: install-on-abtnode
 description: A simple blocklet that helps you install blocklet on abtnode
-group: static
 version: 1.1.0
-main: build
 title: Install On ABT Node
-publicUrl: /
-adminUrl: ''
-configUrl: ''
-docUrl: ''
-logo: logo.png
-charging:
-  price: 0
-color: primary
-community: 'https://community.arcblockio.cn'
 keywords:
   - dapp
   - forge
 repository:
   type: git
   url: 'https://github.com/blocklet/install-on-abtnode'
-support: support@arcblock.io
-hooks:
-  pre-deploy: npm run build
-hookFiles: []
+group: static
+main: build
+publicUrl: /
+color: primary
 capabilities:
   dynamicPathPrefix: true
-scripts:
-  dev: npm run start
-specVersion: 1.0.0
+hooks:
+  pre-deploy: 'npm run build'
+charging:
+  price: 0
 did: z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF
+specVersion: 1.0.0
