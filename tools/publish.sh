@@ -9,6 +9,7 @@ git config --local user.email "wangshijun2010@gmail.com"
 npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 
 echo "publishing to npm..."
+echo "SKIP_PREFLIGHT_CHECK=true" > .env
 npm run build
 npm publish .blocklet/bundle
 
