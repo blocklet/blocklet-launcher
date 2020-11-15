@@ -92,7 +92,6 @@ export default function ConfirmDialog({
           // eslint-disable-next-line no-underscore-dangle
           disabled={params.__disableConfirm || loading}
           variant="contained"
-          autoFocus
           rounded>
           {loading && <CircularProgress size={16} />}
           {confirm}

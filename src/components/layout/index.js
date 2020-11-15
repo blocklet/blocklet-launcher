@@ -15,7 +15,7 @@ export default function Layout({ title, children }) {
   const Box = isBreakpointsDownXs ? Typography : Paper;
   return (
     <Div>
-      <Box component="div" style={{ padding: isBreakpointsDownXs ? '0 16px' : '0 32px' }}>
+      <Box component="div" className="box" style={{ padding: isBreakpointsDownXs ? '0' : '0 32px' }}>
         <Header title={title} />
         <Main>{children}</Main>
       </Box>
@@ -34,6 +34,10 @@ const Div = styled(Container)`
   height: 100vh;
   padding: 15vh 0;
   box-sizing: border-box;
+
+  .box {
+    margin: 0 16px;
+  }
 
   @media (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
     padding: 0;
