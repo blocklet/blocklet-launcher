@@ -1,36 +1,26 @@
 name: install-on-abtnode
-title: Install On ABT Node
-version: 1.1.0
 description: A simple blocklet that helps you install blocklet on abtnode
-keywords:
-  - dapp
-  - forge
-files:
-  - build
-  - screenshots
-  - logo.png
-  - blocklet.md
-  - blocklet.js
-  - README.md
-repository:
-  type: git
-  url: 'git+https://github.com/blocklet/install-on-abtnode.git'
-license: Apache-2.0
 group: static
+version: 1.1.2
 main: build
-did: z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF
-specVersion: 1.0.1
+title: Install On ABT Node
 community: ''
 documentation: ''
 homepage: ''
-interfaces:
-  - type: web
-    name: publicUrl
-    path: /
-    prefix: '*'
-    port: BLOCKLET_PORT
-    protocol: tcp
-environments: []
+keywords:
+  - dapp
+  - forge
 screenshots: []
+repository:
+  type: git
+  url: 'git+https://github.com/blocklet/install-on-abtnode.git'
+environments: []
 scripts:
   preDeploy: npm run build
+specVersion: 1.0.1
+color: primary
+capabilities:
+  dynamicPathPrefix: true
+charging:
+  price: 0
+did: z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF
