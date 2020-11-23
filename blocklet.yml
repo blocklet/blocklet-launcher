@@ -15,6 +15,13 @@ repository:
   type: git
   url: 'git+https://github.com/blocklet/install-on-abtnode.git'
 environments: []
+interfaces:
+  - type: web
+    name: publicUrl
+    path: /
+    prefix: '*'
+    port: BLOCKLET_PORT
+    protocol: tcp
 scripts:
   preDeploy: npm run build
 specVersion: 1.0.1
