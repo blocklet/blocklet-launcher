@@ -61,7 +61,7 @@
     "build": "yarn clean && npm run build:client && rm -f build/static/**/*.{js,css}.map",
     "build:client": "PUBLIC_URL=\"/z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF\" react-app-rewired build",
     "release": "npm run clean && npm run build",
-    "deploy": "npm run release && abtnode deploy .blocklet/bundle --skip-hooks"
+    "deploy": "npm run release && blocklet deploy .blocklet/bundle --skip-hooks"
   },
   "eslintConfig": {
     "extends": "react-app"
