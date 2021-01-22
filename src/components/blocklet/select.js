@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import InfoRow from '@arcblock/ux/lib/InfoRow';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 
 import List from '@material-ui/core/List';
@@ -35,17 +35,19 @@ export default function TableList({ params: { nodes = [], select = '', status },
             displayEmpty>
             {nodes.map((x) => (
               <MenuItem key={x.did} value={x.did}>
-                <Item>
-                  <div>
+                <Box>
+                  <Item>
                     <Name>{x.info.name}</Name>
-                    <Info>
-                      <p>{`${t('abtnode.table.description')}: ${x.info.description}`}</p>
-                      <p>{`${t('abtnode.table.url')}: ${x.info.url}`}</p>
-                      <p>{`${t('abtnode.table.did')}: ${x.info.did}`}</p>
-                    </Info>
-                  </div>
-                  <Time>{formatToDatetime(x.info.createdAt)}</Time>
-                </Item>
+
+                    <Time>{t('abtnode.addTime', { time: formatToDatetime(x.info.createdAt) })}</Time>
+                  </Item>
+
+                  <Info>
+                    <Row name={t('blocklet.meta.description')}>{x.info.description}</Row>
+                    <Row name={t('abtnode.table.url')}>{x.info.url}</Row>
+                    <Row name={t('abtnode.table.did')}>{x.info.did}</Row>
+                  </Info>
+                </Box>
               </MenuItem>
             ))}
           </Select>
@@ -90,7 +92,9 @@ const Card = styled.div`
     font-weight: bold;
   }
 `;
-
+const Box = styled.div`
+  width: 100%;
+`;
 const Name = styled.div`
   font-weight: bold;
 `;
@@ -101,11 +105,16 @@ const Item = styled.div`
   width: 100%;
 `;
 const Info = styled.div`
-  font-size: 14px;
   margin-top: 10px;
   p {
+    font-size: 14px;
+
     margin: 5px 0;
   }
+`;
+
+const Row = styled(InfoRow)`
+  margin-bottom: 0px;
 `;
 const Time = styled.div`
   font-size: 14px;
