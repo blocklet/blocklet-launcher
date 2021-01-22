@@ -8,6 +8,7 @@ import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import List from '@material-ui/core/List';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { formatToDatetime } from '../../libs/utils';
 
 export default function TableList({ params: { nodes = [], select = '', status }, setParams }) {
   const { t } = useContext(LocaleContext);
@@ -33,8 +34,18 @@ export default function TableList({ params: { nodes = [], select = '', status },
             defaultValue={select}
             displayEmpty>
             {nodes.map((x) => (
-              <MenuItem key={x.info.name} value={x.info.url}>
-                {x.info.name}
+              <MenuItem key={x.did} value={x.did}>
+                <Item>
+                  <div>
+                    <Name>{x.info.name}</Name>
+                    <Info>
+                      <p>{`${t('abtnode.table.description')}: ${x.info.description}`}</p>
+                      <p>{`${t('abtnode.table.url')}: ${x.info.url}`}</p>
+                      <p>{`${t('abtnode.table.did')}: ${x.info.did}`}</p>
+                    </Info>
+                  </div>
+                  <Time>{formatToDatetime(x.info.createdAt)}</Time>
+                </Item>
               </MenuItem>
             ))}
           </Select>
@@ -78,6 +89,26 @@ const Card = styled.div`
     font-size: 18px;
     font-weight: bold;
   }
+`;
+
+const Name = styled.div`
+  font-weight: bold;
+`;
+
+const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+const Info = styled.div`
+  font-size: 14px;
+  margin-top: 10px;
+  p {
+    margin: 5px 0;
+  }
+`;
+const Time = styled.div`
+  font-size: 14px;
 `;
 
 TableList.propTypes = {
