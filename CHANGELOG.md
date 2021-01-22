@@ -1,6 +1,8 @@
+## 1.1.4 (一月 22, 2021)
+
+- fix: improve select node ux (#12)
+
 ## 1.1.3 (November 24, 2020)
-
-
 
 ## 1.1.2 (November 20, 2020)
 
