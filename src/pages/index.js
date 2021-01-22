@@ -17,7 +17,7 @@ import { formatToDatetime } from '../libs/utils';
 // action="node-register"&endpoint={abtnode_endpoint}
 
 // from blocklet
-// action="blocklet-install"&mete_url={blocklet_meta_url}
+// action=blocklet-install&meta_url=https%3A%2F%2Fblocklet.arcblock.io%2Fblocklet%2Fz8iZybVvuEz4N9wf3CfGGP5uERMFhziuxGEqe.json
 
 export default function IndexPage() {
   const { t, changeLocale, locale } = useContext(LocaleContext);
@@ -60,8 +60,12 @@ export default function IndexPage() {
 
   settings.selectNodeListSetting.onConfirm = (data) => {
     if (data.select) {
-      const url = data.select.endsWith('/') ? `${data.select}blocklets` : `${data.select}/blocklets`;
-      window.location.href = `${url}?action=install&url=${urlParams.get('meta_url')}`;
+      const node = rows.find((x) => x.did === data.select);
+      if (node) {
+        const selectUrl = node.info.url;
+        const url = selectUrl.endsWith('/') ? `${selectUrl}blocklets` : `${selectUrl}/blocklets`;
+        window.location.href = `${url}?action=install&url=${urlParams.get('meta_url')}`;
+      }
     }
     setLoading(false);
     setCurrentSetting(null);
@@ -125,7 +129,7 @@ export default function IndexPage() {
   const showListInfo = () => {
     settings.selectNodeListSetting.params = {
       nodes: rows,
-      select: rows.length ? rows[0].info.url : '',
+      select: rows.length ? rows[0].did : '',
     };
     setSettings(settings);
     setLoading(false);

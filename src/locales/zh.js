@@ -37,6 +37,7 @@ module.exports = flat({
     },
     fail: '获取失败， 请重新尝试',
     exist: '{name} 已经被注册',
+    addTime: '添加于 {time}',
   },
   generate: {
     add: '生成安装按钮',

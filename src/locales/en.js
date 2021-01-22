@@ -37,6 +37,7 @@ module.exports = flat({
     },
     fail: 'The request failed. Please try again',
     exist: 'This node with name({name}) is already registered',
+    addTime: 'Added at {time}',
   },
   generate: {
     add: 'Generate Install Button',

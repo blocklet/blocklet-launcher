@@ -2,12 +2,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import InfoRow from '@arcblock/ux/lib/InfoRow';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 
 import List from '@material-ui/core/List';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { formatToDatetime } from '../../libs/utils';
 
 export default function TableList({ params: { nodes = [], select = '', status }, setParams }) {
   const { t } = useContext(LocaleContext);
@@ -33,8 +34,26 @@ export default function TableList({ params: { nodes = [], select = '', status },
             defaultValue={select}
             displayEmpty>
             {nodes.map((x) => (
-              <MenuItem key={x.info.name} value={x.info.url}>
-                {x.info.name}
+              <MenuItem key={x.did} value={x.did}>
+                <Box>
+                  <Item>
+                    <Name>{x.info.name}</Name>
+
+                    <Time>{t('abtnode.addTime', { time: formatToDatetime(x.info.createdAt) })}</Time>
+                  </Item>
+
+                  <Info>
+                    <Row nameWidth={35} name={t('blocklet.meta.description')}>
+                      {x.info.description}
+                    </Row>
+                    <Row nameWidth={35} name={t('abtnode.table.url')}>
+                      {x.info.url}
+                    </Row>
+                    <Row nameWidth={35} name={t('abtnode.table.did')}>
+                      {x.info.did}
+                    </Row>
+                  </Info>
+                </Box>
               </MenuItem>
             ))}
           </Select>
@@ -78,6 +97,32 @@ const Card = styled.div`
     font-size: 18px;
     font-weight: bold;
   }
+`;
+const Box = styled.div`
+  width: 100%;
+`;
+const Name = styled.div`
+  font-weight: bold;
+`;
+
+const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+const Info = styled.div`
+  margin-top: 10px;
+  p {
+    font-size: 14px;
+    margin: 5px 8px 5px 0 !important;
+  }
+`;
+
+const Row = styled(InfoRow)`
+  margin-bottom: 0px;
+`;
+const Time = styled.div`
+  font-size: 14px;
 `;
 
 TableList.propTypes = {
