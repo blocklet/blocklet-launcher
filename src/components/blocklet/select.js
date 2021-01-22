@@ -43,9 +43,15 @@ export default function TableList({ params: { nodes = [], select = '', status },
                   </Item>
 
                   <Info>
-                    <Row name={t('blocklet.meta.description')}>{x.info.description}</Row>
-                    <Row name={t('abtnode.table.url')}>{x.info.url}</Row>
-                    <Row name={t('abtnode.table.did')}>{x.info.did}</Row>
+                    <Row nameWidth={35} name={t('blocklet.meta.description')}>
+                      {x.info.description}
+                    </Row>
+                    <Row nameWidth={35} name={t('abtnode.table.url')}>
+                      {x.info.url}
+                    </Row>
+                    <Row nameWidth={35} name={t('abtnode.table.did')}>
+                      {x.info.did}
+                    </Row>
                   </Info>
                 </Box>
               </MenuItem>
@@ -108,8 +114,7 @@ const Info = styled.div`
   margin-top: 10px;
   p {
     font-size: 14px;
-
-    margin: 5px 0;
+    margin: 5px 8px 5px 0 !important;
   }
 `;
 
