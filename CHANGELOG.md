@@ -1,3 +1,7 @@
+## 1.1.6 (二月 09, 2021)
+
+- chore: publish script
+
 ## 1.1.5 (二月 09, 2021)
 
 - fix: info row with is incorrect in select options
