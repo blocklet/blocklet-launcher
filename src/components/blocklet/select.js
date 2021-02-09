@@ -43,13 +43,13 @@ export default function TableList({ params: { nodes = [], select = '', status },
                   </Item>
 
                   <Info>
-                    <Row nameWidth={35} name={t('blocklet.meta.description')}>
+                    <Row nameWidth={80} name={t('blocklet.meta.description')}>
                       {x.info.description}
                     </Row>
-                    <Row nameWidth={35} name={t('abtnode.table.url')}>
+                    <Row nameWidth={80} name={t('abtnode.table.url')}>
                       {x.info.url}
                     </Row>
-                    <Row nameWidth={35} name={t('abtnode.table.did')}>
+                    <Row nameWidth={80} name={t('abtnode.table.did')}>
                       {x.info.did}
                     </Row>
                   </Info>
