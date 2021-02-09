@@ -1,3 +1,7 @@
+## 1.1.5 (二月 09, 2021)
+
+- fix: info row with is incorrect in select options
+
 ## 1.1.4 (一月 22, 2021)
 
 - fix: improve select node ux (#12)
