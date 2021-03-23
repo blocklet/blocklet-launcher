@@ -1,3 +1,7 @@
+## 1.1.7 (March 24, 2021)
+
+- build: update the prefix of static resource url
+
 ## 1.1.6 (二月 09, 2021)
 
 - chore: publish script
