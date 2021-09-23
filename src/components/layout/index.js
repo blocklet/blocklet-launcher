@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
@@ -6,11 +6,19 @@ import Container from '@material-ui/core/Container';
 import useTheme from '@material-ui/core/styles/useTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Typography from '@material-ui/core/Typography';
+import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
+
 import Header from './header';
 
 export default function Layout({ title, children }) {
   const theme = useTheme();
   const isBreakpointsDownXs = useMediaQuery(theme.breakpoints.down('xs'));
+  const { changeLocale, locale } = useContext(LocaleContext);
+  const urlParams = new URLSearchParams(window.location.search);
+
+  useEffect(() => {
+    changeLocale(urlParams.get('__blang__') || locale);
+  });
 
   const Box = isBreakpointsDownXs ? Typography : Paper;
   return (

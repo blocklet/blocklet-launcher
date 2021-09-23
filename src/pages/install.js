@@ -6,13 +6,14 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Button from '@arcblock/ux/lib/Button';
 import NodeClient from '@abtnode/client';
+import { formatToDatetime } from '@arcblock/ux/lib/Util';
 import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
-import TablbeList from '../components/abtnode/list';
+import TableList from '../components/abtnode/list';
 import useSettingConfirm from '../components/confirm_config';
-import { isUrl, formatToDatetime } from '../libs/utils';
 import api from '../libs/api';
+import { isUrl } from '../libs/utils';
 
 // from abtnode
 // action="node-register"&endpoint={abtnode_endpoint}
@@ -21,7 +22,7 @@ import api from '../libs/api';
 // action="blocklet-install"&mete_url={blocklet_meta_url}
 
 export default function IndexPage() {
-  const { t, changeLocale } = useContext(LocaleContext);
+  const { t } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
 
   const [abtnodes, setAbtnodes] = useLocalStorage('abtnodes', []);
@@ -29,12 +30,6 @@ export default function IndexPage() {
   const [settings, setSettings] = useState(useSettingConfirm());
   const [loading, setLoading] = useState(false);
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
-
-  useEffect(() => {
-    if (urlParams.get('__blang__')) {
-      changeLocale(urlParams.get('__blang__'));
-    }
-  });
 
   const getNodeInfo = async (url) => {
     const normalizedURL = url.endsWith('/') ? url : `${url}/`;
@@ -241,7 +236,7 @@ export default function IndexPage() {
         </Button>
       </Action>
       <Main>
-        <TablbeList rows={rows} onDelete={onDelete} />
+        <TableList rows={rows} onDelete={onDelete} />
 
         {loading && <Loading />}
         {currentSetting && settings[currentSetting] && (
