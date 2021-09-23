@@ -16,6 +16,11 @@ module.exports = flat({
     delConfirm: '我了解结果，确认删除',
     notice: '请确认下面的信息',
     click: '点击复制',
+    name: '名称',
+    description: '简介',
+    createdAt: '创建时间',
+    action: '操作',
+    select: '选择',
     delInfo: {
       title: '删除 ABT Node',
       description: '此操作无法撤消。这将永久删除名字为 {name} 的ABT Node',
@@ -53,9 +58,9 @@ module.exports = flat({
     },
     basicInfo: '基本信息',
     action: '操作',
-    selectnode: '安装 Blocklet 到我的ABT Node ',
+    selectnode: '安装 Blocklet 到我的 ABT Node ',
     select: '进入',
-    fail: '获取失败， 请重新尝试',
+    fail: '获取失败，请重新尝试',
   },
   tips: {
     title: '没有看到你的 ABT Node？ 按照下面的步骤添加它：',
@@ -67,5 +72,8 @@ module.exports = flat({
     },
     setup: '如果还没有设置 ABT Node，',
     visit: '点击查看如何设置ABT节点的详细信息。',
+  },
+  launch: {
+    title: '选择节点',
   },
 });

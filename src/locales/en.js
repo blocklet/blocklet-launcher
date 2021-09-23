@@ -3,7 +3,7 @@ const flat = require('flat');
 module.exports = flat({
   common: {
     noData: 'no ABT Node Data',
-    actions: 'actions',
+    actions: 'Actions',
     delete: 'Delete',
     cancel: 'Cancel',
     next: 'Next',
@@ -16,6 +16,10 @@ module.exports = flat({
     delConfirm: 'I understand the consequences, delete',
     notice: 'Unexpected bad things will happen if you don’t read this!',
     click: 'Click to copy',
+    name: 'Title',
+    description: 'Description',
+    createdAt: 'Create Time',
+    select: 'Select',
     delInfo: {
       title: 'Delete ABT Node',
       description: 'This will permanently delete ABT Node with name {name}',
@@ -67,5 +71,8 @@ module.exports = flat({
     },
     setup: "Haven't setup ABT Node? ",
     visit: 'Visit for more information on how to set up your ABT Node.',
+  },
+  launch: {
+    title: 'Select ABT Node',
   },
 });

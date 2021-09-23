@@ -12,22 +12,6 @@ const formatError = (error) => {
 
 const isObjectFn = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
 
-function formatToDate(date) {
-  if (!date) {
-    return '-';
-  }
-
-  return moment(date).format('ll');
-}
-
-function formatToDatetime(date) {
-  if (!date) {
-    return '-';
-  }
-
-  return moment(date).format('lll');
-}
-
 function formatTime(date, format = 'lll') {
   if (!date) {
     return '-';
@@ -36,4 +20,4 @@ function formatTime(date, format = 'lll') {
   return moment(date).format(format);
 }
 
-export { isObjectFn, formatError, isUrl, formatToDate, formatToDatetime, formatTime };
+export { isObjectFn, formatError, isUrl, formatTime };
