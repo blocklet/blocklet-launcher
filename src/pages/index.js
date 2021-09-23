@@ -1,17 +1,15 @@
 /* eslint-disable arrow-parens */
 import React, { useContext, useState, useEffect } from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import moment from 'moment';
 import 'moment/locale/zh-cn';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
+import { formatToDatetime } from '@arcblock/ux/lib/Util';
 import Loading from '../components/loading';
 import Confirm from '../components/confirm';
 import Layout from '../components/layout/index';
 import TableList from '../components/abtnode';
-import TableTips from '../components/abtnode/tips';
 import useSettingConfirm from '../components/confirm_config';
-import { formatToDatetime } from '../libs/utils';
 
 // from abtnode
 // action="node-register"&endpoint={abtnode_endpoint}
@@ -20,7 +18,7 @@ import { formatToDatetime } from '../libs/utils';
 // action=blocklet-install&meta_url=https%3A%2F%2Fblocklet.arcblock.io%2Fblocklet%2Fz8iZybVvuEz4N9wf3CfGGP5uERMFhziuxGEqe.json
 
 export default function IndexPage() {
-  const { t, changeLocale, locale } = useContext(LocaleContext);
+  const { t } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
 
   const [abtnodes, setAbtnodes] = useLocalStorage('abtnodes', []);
@@ -28,12 +26,6 @@ export default function IndexPage() {
   const [settings, setSettings] = useState(useSettingConfirm());
   const [loading, setLoading] = useState(false);
   const rows = Array.isArray(abtnodes) ? abtnodes : [];
-
-  moment.locale(locale === 'zh' ? 'zh-cn' : locale);
-
-  useEffect(() => {
-    changeLocale(urlParams.get('__blang__') || locale);
-  });
 
   settings.showABTNodeInfoSetting.onConfirm = async (params) => {
     if (params.status !== 'error') {
@@ -152,7 +144,7 @@ export default function IndexPage() {
 
   return (
     <Layout title="Install On ABT Node">
-      {rows.length ? <TableList rows={rows} onDelete={onDelete} /> : <TableTips />}
+      <TableList rows={rows} onDelete={onDelete} />
 
       {loading && <Loading />}
       {currentSetting && settings[currentSetting] && (

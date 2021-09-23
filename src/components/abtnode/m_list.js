@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
+import { formatToDatetime } from '@arcblock/ux/lib/Util';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -16,7 +17,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 
 import DelConfirm from '../delete_confirm';
-import { formatToDatetime } from '../../libs/utils';
 
 export default function TableList({ rows, onDelete }) {
   const { t } = useContext(LocaleContext);

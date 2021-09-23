@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import MaterialTable from 'material-table';
 import Button from '@arcblock/ux/lib/Button';
+import { formatToDatetime } from '@arcblock/ux/lib/Util';
 import Icons from '../table_icons';
 import DelConfirm from '../delete_confirm';
-import { formatToDatetime } from '../../libs/utils';
 
 export default function TableList({ rows, onDelete }) {
   const { t } = useContext(LocaleContext);

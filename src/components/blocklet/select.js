@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import InfoRow from '@arcblock/ux/lib/InfoRow';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
+import { formatToDatetime } from '@arcblock/ux/lib/Util';
 
 import List from '@material-ui/core/List';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { formatToDatetime } from '../../libs/utils';
 
 export default function TableList({ params: { nodes = [], select = '', status }, setParams }) {
   const { t } = useContext(LocaleContext);

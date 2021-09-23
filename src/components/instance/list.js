@@ -1,0 +1,65 @@
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
+import { formatToDatetime } from '@arcblock/ux/lib/Util';
+import DIDAddress from '@arcblock/did-connect/lib/Address';
+
+import Table from '../table';
+
+export default function List({ actionColumn, abtnodes }) {
+  const { t } = useContext(LocaleContext);
+
+  const options = {
+    print: false,
+    download: false,
+    filter: false,
+    sort: false,
+    selectToolbarPlacement: 'none',
+    selectableRowsOnClick: true,
+    selectableRowsHideCheckboxes: true,
+    filterType: 'dropdown',
+    responsive: 'vertical',
+    pagination: false,
+  };
+
+  const columns = [
+    {
+      name: 'name',
+      label: t('common.name'),
+    },
+    {
+      name: 'description',
+      label: t('common.description'),
+    },
+    {
+      name: 'did',
+      label: 'DID',
+      options: {
+        customBodyRender: (value) => <DIDAddress>{value}</DIDAddress>,
+      },
+    },
+    {
+      name: 'createdAt',
+      label: t('common.createdAt'),
+      options: {
+        customBodyRender: (value) => formatToDatetime(value),
+      },
+    },
+  ];
+
+  if (actionColumn) {
+    columns.push(actionColumn);
+  }
+
+  return <Table data={abtnodes} columns={columns} options={options} />;
+}
+
+List.propTypes = {
+  actionColumn: PropTypes.object,
+  abtnodes: PropTypes.arrayOf(PropTypes.object),
+};
+
+List.defaultProps = {
+  actionColumn: null,
+  abtnodes: [],
+};
