@@ -20,6 +20,7 @@ module.exports = flat({
     description: 'Description',
     createdAt: 'Create Time',
     select: 'Select',
+    launchedAt: 'Launched At',
     delInfo: {
       title: 'Delete ABT Node',
       description: 'This will permanently delete ABT Node with name {name}',
@@ -74,5 +75,15 @@ module.exports = flat({
   },
   launch: {
     title: 'Select ABT Node',
+    invalidParam: 'Invalid Parameter',
+    loadingError: 'Loading nodes error',
+  },
+  connectLauncher: {
+    authMessages: {
+      title: 'Connect ABT Launcher',
+      scan: 'Please use the DID wallet to scan the QR code below to complete the connection',
+      confirm: 'Confirm connect in the DID wallet',
+      success: 'Connect successful',
+    },
   },
 });
