@@ -14,6 +14,7 @@ export default function List({ actionColumn, abtnodes }) {
     download: false,
     filter: false,
     sort: false,
+    selectableRows: 'single',
     selectToolbarPlacement: 'none',
     selectableRowsOnClick: true,
     selectableRowsHideCheckboxes: true,
@@ -28,10 +29,6 @@ export default function List({ actionColumn, abtnodes }) {
       label: t('common.name'),
     },
     {
-      name: 'description',
-      label: t('common.description'),
-    },
-    {
       name: 'did',
       label: 'DID',
       options: {
@@ -39,8 +36,12 @@ export default function List({ actionColumn, abtnodes }) {
       },
     },
     {
-      name: 'createdAt',
-      label: t('common.createdAt'),
+      name: 'url',
+      label: 'URL',
+    },
+    {
+      name: 'launchedAt',
+      label: t('common.launchedAt'),
       options: {
         customBodyRender: (value) => formatToDatetime(value),
       },

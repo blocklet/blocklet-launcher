@@ -32,6 +32,7 @@ interfaces:
     protocol: tcp
 scripts:
   preDeploy: npm run build
+  dev: npm run start
 specVersion: 1.0.1
 did: z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF
 timeout:

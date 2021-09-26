@@ -1,16 +1,20 @@
-import React, { createContext, useContext } from 'react';
-import useLocalStorage from 'react-use/lib/useLocalStorage';
+import React, { createContext, useContext, useState } from 'react';
 
 const ABTNodeContext = createContext({});
 const { Provider } = ABTNodeContext;
 
 // eslint-disable-next-line react/prop-types
 function ABTNodeProvider({ children }) {
-  const [abtnodes] = useLocalStorage('abtnodes', []);
-  let rows = Array.isArray(abtnodes) ? abtnodes : [];
-  rows = rows.map((item) => item.info);
+  const [abtnodes, setAbtNodes] = useState([]);
 
-  return <Provider value={{ abtnodes: rows }}>{children}</Provider>;
+  const abtnode = {
+    abtnodes,
+    add(value) {
+      setAbtNodes(value);
+    },
+  };
+
+  return <Provider value={{ abtnode }}>{children}</Provider>;
 }
 
 function useABTNodeContext() {
