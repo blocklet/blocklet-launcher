@@ -9,12 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 
 import Header from './header';
+import { useTitleContext } from '../../contexts/title';
 
-export default function Layout({ title, children }) {
+export default function Layout({ children }) {
   const theme = useTheme();
   const isBreakpointsDownXs = useMediaQuery(theme.breakpoints.down('xs'));
   const { changeLocale, locale } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
+  const { pageHeader } = useTitleContext();
 
   useEffect(() => {
     changeLocale(urlParams.get('__blang__') || locale);
@@ -24,7 +26,7 @@ export default function Layout({ title, children }) {
   return (
     <Div>
       <Box component="div" className="box" style={{ padding: isBreakpointsDownXs ? '0' : '0 32px' }}>
-        <Header title={title} />
+        <Header title={pageHeader} />
         <Main>{children}</Main>
       </Box>
     </Div>
@@ -32,7 +34,6 @@ export default function Layout({ title, children }) {
 }
 
 Layout.propTypes = {
-  title: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
 };
 

@@ -20,4 +20,8 @@ function formatTime(date, format = 'lll') {
   return moment(date).format(format);
 }
 
-export { isObjectFn, formatError, isUrl, formatTime };
+function getWebWalletUrl() {
+  return window.localStorage.getItem('wallet_url') || 'https://web.abtwallet.io/';
+}
+
+export { getWebWalletUrl, isObjectFn, formatError, isUrl, formatTime };

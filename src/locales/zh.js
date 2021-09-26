@@ -21,6 +21,7 @@ module.exports = flat({
     createdAt: '创建时间',
     action: '操作',
     select: '选择',
+    launchedAt: '创建时间',
     delInfo: {
       title: '删除 ABT Node',
       description: '此操作无法撤消。这将永久删除名字为 {name} 的ABT Node',
@@ -74,6 +75,16 @@ module.exports = flat({
     visit: '点击查看如何设置ABT节点的详细信息。',
   },
   launch: {
-    title: '选择节点',
+    title: '请选择节点',
+    invalidParam: '无效的参数',
+    loadingError: '加载节点列表失败',
+  },
+  connectLauncher: {
+    authMessages: {
+      title: '连接 ABT Launcher',
+      scan: '请使用 DID 钱包扫码下面的二维码完成连接',
+      confirm: '在 DID 钱包中确认连接',
+      success: '连接成功',
+    },
   },
 });

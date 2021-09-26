@@ -12,10 +12,12 @@ import { setDateTool } from '@arcblock/ux/lib/Util';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
-import HomePage from './pages/index';
+// import HomePage from './pages/index';
 import LaunchPage from './pages/launch';
-import InstallPage from './pages/install';
+// import InstallPage from './pages/install';
 import { ABTNodeProvider } from './contexts/abtnode';
+import Layout from './components/layout';
+import { TitleProvider } from './contexts/title';
 
 const theme = create({
   typography: {
@@ -47,12 +49,14 @@ const InnerApp = () => {
       <CssBaseline />
       <GlobalStyle />
       <div className="wrapper">
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/launch" component={LaunchPage} />
-          <Route exact path="/install" component={InstallPage} />
-          <Redirect to="/" />
-        </Switch>
+        <TitleProvider>
+          <Layout>
+            <Switch>
+              <Route exact path="/launch" component={LaunchPage} />
+              <Redirect to="/" />
+            </Switch>
+          </Layout>
+        </TitleProvider>
       </div>
     </ABTNodeProvider>
   );
