@@ -22,7 +22,15 @@ community: ''
 documentation: ''
 homepage: ''
 screenshots: []
-environments: []
+environments:
+  - name: LAUNCHER_URL
+    description: The address of ABT Node Launcher
+    required: true
+    secure: false
+  - name: LAUNCHER_INSTANCE_API
+    description: The API for getting ABT Node instances
+    required: true
+    secure: false
 interfaces:
   - type: web
     name: publicUrl
