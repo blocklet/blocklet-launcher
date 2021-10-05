@@ -1,3 +1,10 @@
+## 1.1.8 (October 05, 2021)
+
+- add create abtnode link when there is no abtnode
+- feat: load abtnode list from launcher
+- blocklet launcher: launch blocklet to local abtnodes
+- [skip ci] Update README.md
+
 ## 1.1.7 (March 24, 2021)
 
 - build: update the prefix of static resource url
