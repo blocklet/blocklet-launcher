@@ -79,6 +79,7 @@ module.exports = flat({
     invalidParam: '无效的参数',
     loadingError: '加载节点列表失败',
     connectLauncherButton: '连接 Launcher',
+    createNode: '创建 ABT Node',
   },
   connectLauncher: {
     authMessages: {
