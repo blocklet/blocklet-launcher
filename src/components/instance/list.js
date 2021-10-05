@@ -6,7 +6,7 @@ import DIDAddress from '@arcblock/did-connect/lib/Address';
 
 import Table from '../table';
 
-export default function List({ actionColumn, abtnodes }) {
+export default function List({ actionColumn, abtnodes, ...props }) {
   const { t } = useContext(LocaleContext);
 
   const options = {
@@ -52,7 +52,7 @@ export default function List({ actionColumn, abtnodes }) {
     columns.push(actionColumn);
   }
 
-  return <Table data={abtnodes} columns={columns} options={options} />;
+  return <Table {...props} data={abtnodes} columns={columns} options={options} />;
 }
 
 List.propTypes = {

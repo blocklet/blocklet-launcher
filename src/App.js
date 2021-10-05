@@ -12,9 +12,7 @@ import { setDateTool } from '@arcblock/ux/lib/Util';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
-// import HomePage from './pages/index';
 import LaunchPage from './pages/launch';
-// import InstallPage from './pages/install';
 import { ABTNodeProvider } from './contexts/abtnode';
 import Layout from './components/layout';
 import { TitleProvider } from './contexts/title';
@@ -53,7 +51,7 @@ const InnerApp = () => {
           <Layout>
             <Switch>
               <Route exact path="/launch" component={LaunchPage} />
-              <Redirect to="/" />
+              <Redirect to="/launch" />
             </Switch>
           </Layout>
         </TitleProvider>
