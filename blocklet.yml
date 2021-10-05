@@ -1,6 +1,6 @@
 name: install-on-abtnode
 title: Install On ABT Node
-version: 1.1.7
+version: 1.1.8
 description: A simple blocklet that helps you install blocklet on abtnode
 keywords:
   - dapp
@@ -27,10 +27,12 @@ environments:
     description: The address of ABT Node Launcher
     required: true
     secure: false
+    default: ''
   - name: LAUNCHER_INSTANCE_API
     description: The API for getting ABT Node instances
     required: true
     secure: false
+    default: ''
 interfaces:
   - type: web
     name: publicUrl
@@ -41,7 +43,7 @@ interfaces:
 scripts:
   preDeploy: npm run build
   dev: npm run start
-specVersion: 1.0.1
+specVersion: 1.1.1
 did: z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF
 timeout:
   start: 10
@@ -50,3 +52,8 @@ requirements:
   os: '*'
   cpu: '*'
 children: []
+charging:
+  price: 0
+  tokens: []
+  shares: []
+capabilities: {}
