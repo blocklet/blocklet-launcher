@@ -77,6 +77,7 @@ module.exports = flat({
     title: 'Select ABT Node',
     invalidParam: 'Invalid Parameter',
     loadingError: 'Loading nodes error',
+    connectLauncherButton: 'Connect Launcher',
   },
   connectLauncher: {
     authMessages: {

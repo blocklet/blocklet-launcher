@@ -11,6 +11,8 @@ export default function Table(args) {
 }
 
 const Container = styled.div`
+  width: 100%;
+
   .MuiPaper-root {
     background-color: transparent;
     box-shadow: none;

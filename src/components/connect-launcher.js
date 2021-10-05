@@ -4,17 +4,13 @@ import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Connect from '@arcblock/did-connect/lib/Connect';
 import api from '../libs/api';
 import { getWebWalletUrl } from '../libs/utils';
-import storage from '../libs/storage';
 
 function ConnectLauncher({ onSuccess, onClose }) {
-  const launcherUrl = 'https://abt-node-launcher-pft-192-168-0-10.ip.abtnet.io/';
+  const { launcherUrl } = window.env;
   const { locale, t } = useContext(LocaleContext);
 
   const handleSuccess = ({ did }) => {
-    const tmp = { userDid: did };
-
-    storage.setItem('launcher_credential', tmp);
-    onSuccess(tmp);
+    onSuccess({ userDid: did });
   };
 
   const handleClose = () => {
