@@ -78,6 +78,7 @@ module.exports = flat({
     title: '请选择节点',
     invalidParam: '无效的参数',
     loadingError: '加载节点列表失败',
+    connectLauncherButton: '连接 Launcher',
   },
   connectLauncher: {
     authMessages: {
