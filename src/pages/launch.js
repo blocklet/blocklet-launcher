@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import isEmpty from 'is-empty';
 import styled from 'styled-components';
 import useSessionStorage from 'react-use/lib/useSessionStorage';
+import ExternalLink from '@material-ui/core/Link';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
@@ -14,9 +15,9 @@ import api from '../libs/api';
 import { useTitleContext } from '../contexts/title';
 
 function LaunchPage() {
-  const { t } = useContext(LocaleContext);
+  const { t, locale } = useContext(LocaleContext);
   const { set: setTitle } = useTitleContext();
-  const [abtnodes, setAbtnodes] = useState();
+  const [abtnodes, setAbtnodes] = useState([]);
   const [open, setOpen] = useState(false);
   const query = useQuery();
   const [launcherCredential, setLauncherCredential] = useSessionStorage('launcher_credential', {});
@@ -41,7 +42,7 @@ function LaunchPage() {
 
     try {
       const { data } = await api.get(
-        // TODO: 动态动 Launcher 获取
+        // TODO: 动态动 Launcher 获取?
         `${window.env.launcherInstanceUrl}?userDid=${userDid}`
       );
 
@@ -82,7 +83,7 @@ function LaunchPage() {
     }
 
     handleSuccess(launcherCredential);
-  }, []);
+  }, [locale]);
 
   const actionColumn = {
     name: '_',
@@ -94,12 +95,7 @@ function LaunchPage() {
         url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletUrl)));
 
         return (
-          <Button
-            variant="contained"
-            rounded
-            onClick={() => {
-              window.location.href = url.href;
-            }}>
+          <Button variant="contained" rounded component={ExternalLink} href={url.href}>
             {t('common.select')}
           </Button>
         );
@@ -107,18 +103,26 @@ function LaunchPage() {
     },
   };
 
+  const launchUrlObject = new URL(window.env.launcherUrl);
+  launchUrlObject.searchParams.append('blocklet_meta_url', blockletUrl);
+
   return (
     <>
       {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
       {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
       {fetchNodesState.loading && !fetchNodesState.error && <Spinner />}
       {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(launcherCredential) && (
-        <Button variant="contained" color="primary" onClick={handleConnectLauncher}>
+        <Button rounded variant="contained" onClick={handleConnectLauncher}>
           {t('launch.connectLauncherButton')}
         </Button>
       )}
-      {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
+      {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length > 0 && (
         <List abtnodes={abtnodes} actionColumn={actionColumn} />
+      )}
+      {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length === 0 && (
+        <Button rounded variant="contained" component={ExternalLink} href={launchUrlObject.toString()}>
+          {t('launch.createNode')}
+        </Button>
       )}
     </>
   );
