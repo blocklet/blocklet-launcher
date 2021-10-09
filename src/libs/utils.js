@@ -24,4 +24,6 @@ function getWebWalletUrl() {
   return window.localStorage.getItem('wallet_url') || 'https://web.abtwallet.io/';
 }
 
-export { getWebWalletUrl, isObjectFn, formatError, isUrl, formatTime };
+const getEnvironment = (name) => (window.blocklet ? window.blocklet[name] : window.env[name]);
+
+export { getWebWalletUrl, isObjectFn, formatError, isUrl, formatTime, getEnvironment };
