@@ -3,6 +3,7 @@ import isEmpty from 'is-empty';
 import styled from 'styled-components';
 import useSessionStorage from 'react-use/lib/useSessionStorage';
 import ExternalLink from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
@@ -120,9 +121,17 @@ function LaunchPage() {
         <List abtnodes={abtnodes} actionColumn={actionColumn} />
       )}
       {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length === 0 && (
-        <Button rounded variant="contained" component={ExternalLink} href={launchUrlObject.toString()}>
-          {t('launch.createNode')}
-        </Button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography style={{ fontSize: '1.2em' }}>{t('launch.noInstance')}</Typography>
+          <Button
+            style={{ marginTop: '10px' }}
+            rounded
+            variant="contained"
+            component={ExternalLink}
+            href={launchUrlObject.toString()}>
+            {t('launch.createNode')}
+          </Button>
+        </div>
       )}
     </>
   );
