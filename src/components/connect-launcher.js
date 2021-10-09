@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Connect from '@arcblock/did-connect/lib/Connect';
 import api from '../libs/api';
-import { getWebWalletUrl } from '../libs/utils';
+import { getEnvironment, getWebWalletUrl } from '../libs/utils';
 
 function ConnectLauncher({ onSuccess, onClose }) {
-  const { launcherUrl } = window.env;
+  const launcherUrl = getEnvironment('LAUNCHER_URL');
   const { locale, t } = useContext(LocaleContext);
 
   const handleSuccess = ({ did }) => {
@@ -34,7 +34,7 @@ function ConnectLauncher({ onSuccess, onClose }) {
       }}
       popup
       open
-      prefix="/.service/@abtnode/auth-service/api/did" // TODO: 从 Launcher 获取 auth 地址
+      prefix="/.service/@abtnode/auth-service/api/did"
     />
   );
 }

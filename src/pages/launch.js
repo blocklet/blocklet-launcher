@@ -14,6 +14,7 @@ import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
 import { useTitleContext } from '../contexts/title';
+import { getEnvironment } from '../libs/utils';
 
 function LaunchPage() {
   const { t, locale } = useContext(LocaleContext);
@@ -42,10 +43,7 @@ function LaunchPage() {
     setLauncherCredential({ userDid });
 
     try {
-      const { data } = await api.get(
-        // TODO: 动态动 Launcher 获取?
-        `${window.env.launcherInstanceUrl}?userDid=${userDid}`
-      );
+      const { data } = await api.get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${userDid}`);
 
       setFetchNodesState((pre) => {
         pre.loading = false;
@@ -104,7 +102,7 @@ function LaunchPage() {
     },
   };
 
-  const launchUrlObject = new URL(window.env.launcherUrl);
+  const launchUrlObject = new URL(getEnvironment('LAUNCHER_URL'));
   launchUrlObject.searchParams.append('blocklet_meta_url', blockletUrl);
 
   return (

@@ -16,6 +16,7 @@ import LaunchPage from './pages/launch';
 import { ABTNodeProvider } from './contexts/abtnode';
 import Layout from './components/layout';
 import { TitleProvider } from './contexts/title';
+import { getEnvironment } from './libs/utils';
 
 const theme = create({
   typography: {
@@ -73,8 +74,7 @@ const App = () => (
 const WrappedApp = withRouter(App);
 
 export default () => {
-  // eslint-disable-next-line no-nested-ternary
-  const prefix = window.blocklet ? window.blocklet.prefix : window.env ? window.env.apiPrefix : '';
+  const prefix = getEnvironment('apiPrefix') || '';
 
   return (
     <Router basename={prefix}>
