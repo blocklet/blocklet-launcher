@@ -8,7 +8,7 @@ export default function Header({ title }) {
     <HeaderLayout>
       <div className="header">
         <div className="logo">
-          <img src="./images/logo.png" alt="install on ABT Node" />
+          <img src={`${window.origin}/images/logo.png`} alt="Install on ABT Node" />
           {title}
         </div>
         <Div>

@@ -3,9 +3,10 @@ import MUIDataTable from 'mui-datatables';
 import styled from 'styled-components';
 
 export default function Table(args) {
+  const { style, className, ...props } = args;
   return (
-    <Container>
-      <MUIDataTable {...args} />
+    <Container style={style} className={className}>
+      <MUIDataTable {...props} />
     </Container>
   );
 }
