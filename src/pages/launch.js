@@ -116,7 +116,17 @@ function LaunchPage() {
         </Button>
       )}
       {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length > 0 && (
-        <List abtnodes={abtnodes} actionColumn={actionColumn} />
+        <>
+          <Button
+            style={{ alignSelf: 'end' }}
+            rounded
+            variant="contained"
+            component={ExternalLink}
+            href={launchUrlObject.toString()}>
+            {t('launch.createNode')}
+          </Button>
+          <List style={{ marginTop: '10px' }} abtnodes={abtnodes} actionColumn={actionColumn} />
+        </>
       )}
       {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length === 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -145,6 +155,8 @@ export default function Page() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  margin-top: 30px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  height: 100%;
 `;
