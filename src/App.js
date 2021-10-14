@@ -6,7 +6,7 @@ import moment from 'moment';
 import { create } from '@arcblock/ux/lib/Theme';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, useLocation } from 'react-router-dom';
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { setDateTool } from '@arcblock/ux/lib/Util';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,6 +39,7 @@ const GlobalStyle = createGlobalStyle`
 
 const InnerApp = () => {
   const { locale } = useLocaleContext();
+  const location = useLocation();
 
   moment.locale(locale === 'zh' ? 'zh-cn' : locale);
   setDateTool(moment);
@@ -52,7 +53,7 @@ const InnerApp = () => {
           <Layout>
             <Switch>
               <Route exact path="/launch" component={LaunchPage} />
-              <Redirect to="/launch" />
+              <Redirect to={`/launch${location.search}`} />
             </Switch>
           </Layout>
         </TitleProvider>
