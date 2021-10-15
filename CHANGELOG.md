@@ -1,3 +1,7 @@
+## 1.1.8 (十月 15, 2021)
+
+- feat: use action-workflow
+
 ## 1.1.7 (March 24, 2021)
 
 - build: update the prefix of static resource url
