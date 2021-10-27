@@ -13,12 +13,10 @@ import useQuery from '../hooks/query';
 import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
-import { useTitleContext } from '../contexts/title';
 import { getEnvironment } from '../libs/utils';
 
 function LaunchPage() {
   const { t, locale } = useContext(LocaleContext);
-  const { set: setTitle } = useTitleContext();
   const [abtnodes, setAbtnodes] = useState([]);
   const [open, setOpen] = useState(false);
   const query = useQuery();
@@ -57,12 +55,7 @@ function LaunchPage() {
       }
     } catch (err) {
       console.error(err);
-      setFetchNodesState((pre) => {
-        pre.loading = false;
-        pre.error = t('launch.loadingError');
-
-        return pre;
-      });
+      setFetchNodesState({ ...fetchNodesState, loading: false, error: t('launch.loadingError') });
     }
   };
 
@@ -74,8 +67,6 @@ function LaunchPage() {
   const handleConnectLauncher = () => setOpen(true);
 
   useEffect(() => {
-    setTitle({ pHeader: t('launch.title') });
-
     if (isEmpty(launcherCredential)) {
       setOpen(true);
       return;
@@ -83,24 +74,6 @@ function LaunchPage() {
 
     handleSuccess(launcherCredential);
   }, [locale]);
-
-  const actionColumn = {
-    name: '_',
-    label: t('common.actions'),
-    options: {
-      customBodyRender: (_, { rowIndex }) => {
-        const abtnode = abtnodes[rowIndex];
-        const url = new URL('/admin/launch-blocklet', abtnode.url);
-        url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletUrl)));
-
-        return (
-          <Button variant="contained" rounded component={ExternalLink} href={url.href}>
-            {t('common.select')}
-          </Button>
-        );
-      },
-    },
-  };
 
   const launchUrlObject = new URL(getEnvironment('LAUNCHER_URL'));
   launchUrlObject.searchParams.append('blocklet_meta_url', blockletUrl);
@@ -125,7 +98,7 @@ function LaunchPage() {
             href={launchUrlObject.toString()}>
             {t('launch.createNode')}
           </Button>
-          <List style={{ marginTop: '10px' }} abtnodes={abtnodes} actionColumn={actionColumn} />
+          <List style={{ marginTop: '10px' }} abtnodes={abtnodes} />
         </>
       )}
       {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length === 0 && (
