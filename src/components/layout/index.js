@@ -1,34 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
-import useTheme from '@material-ui/core/styles/useTheme';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Typography from '@material-ui/core/Typography';
 import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
 
-import Header from './header';
-import { useTitleContext } from '../../contexts/title';
-
 export default function Layout({ children }) {
-  const theme = useTheme();
-  const isBreakpointsDownXs = useMediaQuery(theme.breakpoints.down('xs'));
   const { changeLocale, locale } = useContext(LocaleContext);
   const urlParams = new URLSearchParams(window.location.search);
-  const { pageHeader } = useTitleContext();
 
   useEffect(() => {
     changeLocale(urlParams.get('__blang__') || locale);
   });
 
-  const Box = isBreakpointsDownXs ? Typography : Paper;
   return (
     <Div>
-      <Box component="div" className="box" style={{ padding: isBreakpointsDownXs ? '0' : '0 32px' }}>
-        <Header title={pageHeader} />
-        <Main>{children}</Main>
-      </Box>
+      <Main>{children}</Main>
     </Div>
   );
 }
@@ -39,27 +25,7 @@ Layout.propTypes = {
 
 Layout.defaultProps = {};
 
-const Div = styled(Container)`
-  height: 100vh;
-  padding: 15vh 0;
-  box-sizing: border-box;
-
-  .box {
-    margin: 0 16px;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    padding: 0;
-
-    .logo {
-      font-size: 18px !important;
-
-      img {
-        height: 36px;
-      }
-    }
-  }
-`;
+const Div = styled(Container)``;
 
 const Main = styled.main`
   padding: 0;
