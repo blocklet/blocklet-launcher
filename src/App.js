@@ -15,7 +15,6 @@ import { translations } from './locales';
 import LaunchPage from './pages/launch';
 import { ABTNodeProvider } from './contexts/abtnode';
 import Layout from './components/layout';
-import { TitleProvider } from './contexts/title';
 import { getEnvironment } from './libs/utils';
 
 const theme = create({
@@ -49,14 +48,12 @@ const InnerApp = () => {
       <CssBaseline />
       <GlobalStyle />
       <div className="wrapper">
-        <TitleProvider>
-          <Layout>
-            <Switch>
-              <Route exact path="/launch" component={LaunchPage} />
-              <Redirect to={`/launch${location.search}`} />
-            </Switch>
-          </Layout>
-        </TitleProvider>
+        <Layout>
+          <Switch>
+            <Route exact path="/launch" component={LaunchPage} />
+            <Redirect to={`/launch${location.search}`} />
+          </Switch>
+        </Layout>
       </div>
     </ABTNodeProvider>
   );
