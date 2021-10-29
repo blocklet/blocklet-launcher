@@ -26,4 +26,6 @@ function getWebWalletUrl() {
 
 const getEnvironment = (name) => (window.blocklet ? window.blocklet[name] : window.env[name]);
 
-export { getWebWalletUrl, isObjectFn, formatError, isUrl, formatTime, getEnvironment };
+const getBlockletMetaUrl = (query) => (query.get('blocklet_meta_url') || query.get('meta_url') || '').trim(); // 兼容 meta_url 参数
+
+export { getWebWalletUrl, isObjectFn, formatError, isUrl, formatTime, getEnvironment, getBlockletMetaUrl };
