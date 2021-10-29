@@ -1,13 +1,17 @@
 const flat = require('flat');
 
 module.exports = flat({
+  common: {
+    select: 'Select',
+    selectAbtNode: 'Select ABT Node',
+  },
   launch: {
     title: 'Select ABT Node',
     noInstance: 'No Instance',
     invalidParam: 'Invalid Parameter',
     loadingError: 'Loading nodes error',
     connectLauncherButton: 'Connect Launcher',
-    createNode: 'Create ABT Node',
+    createNode: 'Add New',
   },
   connectLauncher: {
     authMessages: {
