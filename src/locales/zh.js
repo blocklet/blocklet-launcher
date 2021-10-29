@@ -1,13 +1,17 @@
 const flat = require('flat');
 
 module.exports = flat({
+  common: {
+    select: '选择',
+    selectAbtNode: '选择节点',
+  },
   launch: {
     title: '请选择节点',
     noInstance: '没有节点',
     invalidParam: '无效的参数',
     loadingError: '加载节点列表失败',
     connectLauncherButton: '连接 Launcher',
-    createNode: '创建 ABT Node',
+    createNode: '创建新的',
   },
   connectLauncher: {
     authMessages: {

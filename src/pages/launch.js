@@ -13,7 +13,7 @@ import useQuery from '../hooks/query';
 import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
-import { getEnvironment } from '../libs/utils';
+import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
 
 function LaunchPage() {
   const { t, locale } = useContext(LocaleContext);
@@ -26,13 +26,9 @@ function LaunchPage() {
     error: '',
   });
 
-  let blockletUrl = (query.get('blocklet_meta_url') || '').trim();
-  // 兼容 meta_url 参数
-  if (!blockletUrl) {
-    blockletUrl = (query.get('meta_url') || '').trim();
-  }
+  const blockletMetaUrl = getBlockletMetaUrl(query);
 
-  if (!blockletUrl) {
+  if (!blockletMetaUrl) {
     return <Alert severity="error">{t('launch.invalidParam')}</Alert>;
   }
 
@@ -75,9 +71,6 @@ function LaunchPage() {
     handleSuccess(launcherCredential);
   }, [locale]);
 
-  const launchUrlObject = new URL(getEnvironment('LAUNCHER_URL'));
-  launchUrlObject.searchParams.append('blocklet_meta_url', blockletUrl);
-
   return (
     <>
       {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
@@ -88,31 +81,29 @@ function LaunchPage() {
           {t('launch.connectLauncherButton')}
         </Button>
       )}
-      {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length > 0 && (
+      {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
         <>
-          <Button
-            style={{ alignSelf: 'end' }}
-            rounded
-            variant="contained"
-            component={ExternalLink}
-            href={launchUrlObject.toString()}>
-            {t('launch.createNode')}
-          </Button>
-          <List style={{ marginTop: '10px' }} abtnodes={abtnodes} />
+          <div className="list-toolbar">
+            <Button
+              rounded
+              color="primary"
+              variant="contained"
+              component={ExternalLink}
+              href={`/launch/new?blocklet_meta_url=${blockletMetaUrl}`}>
+              {t('launch.createNode')}
+            </Button>
+          </div>
+          <div className="list-content">
+            {abtnodes.length > 0 && (
+              <List style={{ marginTop: '10px' }} abtnodes={abtnodes} blockletMetaUrl={blockletMetaUrl} />
+            )}
+            {abtnodes.length === 0 && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography style={{ fontSize: '1.2em' }}>{t('launch.noInstance')}</Typography>
+              </div>
+            )}
+          </div>
         </>
-      )}
-      {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && abtnodes.length === 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography style={{ fontSize: '1.2em' }}>{t('launch.noInstance')}</Typography>
-          <Button
-            style={{ marginTop: '10px' }}
-            rounded
-            variant="contained"
-            component={ExternalLink}
-            href={launchUrlObject.toString()}>
-            {t('launch.createNode')}
-          </Button>
-        </div>
       )}
     </>
   );
@@ -129,7 +120,16 @@ export default function Page() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 10px;
   height: 100%;
+  width: 100%;
+
+  .list-toolbar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .list-content {
+    margin-top: 40px;
+  }
 `;

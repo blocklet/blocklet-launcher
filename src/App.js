@@ -13,6 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
 import LaunchPage from './pages/launch';
+import AddNodePage from './pages/add-node';
 import { ABTNodeProvider } from './contexts/abtnode';
 import Layout from './components/layout';
 import { getEnvironment } from './libs/utils';
@@ -24,6 +25,11 @@ const theme = create({
 });
 
 const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: #ffffff;
+    font-weight: 500;
+  }
+
   a {
     color: ${(props) => props.theme.colors.green};
     text-decoration: none;
@@ -33,6 +39,28 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     list-style: none;
+  }
+
+  .MuiButton-outlinedPrimary {
+    fill: ${(props) => props.theme.palette.primary.main};
+    color: #4E6AF6;
+    background: #F4F6FF;
+    border: 0;
+    &:hover {
+      border: 0;
+    }
+  }
+
+  .bold {
+    font-size: 18px;
+    line-height: 21px;
+    color: #222222;
+  }
+
+  .light {
+    font-size: 14px;
+    line-height: 16px;
+    color: #666666;
   }
 `;
 
@@ -45,12 +73,13 @@ const InnerApp = () => {
 
   return (
     <ABTNodeProvider>
-      <CssBaseline />
       <GlobalStyle />
+      <CssBaseline />
       <div className="wrapper">
         <Layout>
           <Switch>
             <Route exact path="/launch" component={LaunchPage} />
+            <Route exact path="/launch/new" component={AddNodePage} />
             <Redirect to={`/launch${location.search}`} />
           </Switch>
         </Layout>
