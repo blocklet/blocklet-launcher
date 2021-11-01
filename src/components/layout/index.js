@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import { Container } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 
 function CustomStepIcon({ active, completed }) {
   const urlParams = new URLSearchParams(window.location.search);
@@ -17,11 +18,7 @@ function CustomStepIcon({ active, completed }) {
 
   if (completed) {
     return (
-      <img
-        className="MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-completed"
-        src="/images/checked.svg"
-        alt="checked"
-      />
+      <img className="MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-completed" src="/images/checked.svg" alt="checked" />
     );
   }
 
@@ -31,7 +28,7 @@ function CustomStepIcon({ active, completed }) {
     );
   }
 
-  return '';
+  return <FiberManualRecordIcon color="disabled" />;
 }
 
 CustomStepIcon.propTypes = {
@@ -45,9 +42,12 @@ function Layout({ children }) {
   return (
     <Div>
       <div className="nav-sidebar">
-        <Stepper className="stepper" activeStep={1} orientation="vertical">
+        <Stepper className="stepper" activeStep={0} orientation="vertical">
           <Step key="select-node">
-            <StepLabel StepIconComponent={CustomStepIcon}>{t('common.selectAbtNode')}</StepLabel>
+            <StepLabel StepIconComponent={CustomStepIcon}>{t('launch.selectAbtNode')}</StepLabel>
+          </Step>
+          <Step key="launch-app">
+            <StepLabel StepIconComponent={CustomStepIcon}>{t('launch.launchApp')}</StepLabel>
           </Step>
         </Stepper>
       </div>
