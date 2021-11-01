@@ -3,9 +3,10 @@ const flat = require('flat');
 module.exports = flat({
   common: {
     select: 'Select',
-    selectAbtNode: 'Select ABT Node',
   },
   launch: {
+    selectAbtNode: 'Select ABT Node',
+    launchApp: 'Launch Application',
     title: 'Select ABT Node',
     noInstance: 'No Instance',
     invalidParam: 'Invalid Parameter',
