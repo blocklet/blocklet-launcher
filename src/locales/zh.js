@@ -3,9 +3,10 @@ const flat = require('flat');
 module.exports = flat({
   common: {
     select: '选择',
-    selectAbtNode: '选择节点',
   },
   launch: {
+    selectAbtNode: '选择节点',
+    launchApp: '启动应用',
     title: '请选择节点',
     noInstance: '没有节点',
     invalidParam: '无效的参数',
