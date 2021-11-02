@@ -3,6 +3,7 @@ const flat = require('flat');
 module.exports = flat({
   common: {
     select: '选择',
+    nodeList: '节点列表',
   },
   launch: {
     selectAbtNode: '选择节点',
@@ -21,5 +22,8 @@ module.exports = flat({
       confirm: '在 DID 钱包中确认连接',
       success: '连接成功',
     },
+  },
+  pageTitle: {
+    selectNode: '选择 ABT Node',
   },
 });
