@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import isEmpty from 'is-empty';
 import styled from 'styled-components';
 import useSessionStorage from 'react-use/lib/useSessionStorage';
-import ExternalLink from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
-import { LocaleContext } from '@arcblock/ux/lib/Locale/context';
-import { Alert } from '@material-ui/lab';
+import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+import ExternalLink from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
+import Alert from '@material-ui/lab/Alert';
 
 import useQuery from '../hooks/query';
 import List from '../components/instance/list';
@@ -16,7 +17,7 @@ import api from '../libs/api';
 import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
 
 function LaunchPage() {
-  const { t, locale } = useContext(LocaleContext);
+  const { t, locale } = useLocaleContext();
   const [abtnodes, setAbtnodes] = useState([]);
   const [open, setOpen] = useState(false);
   const query = useQuery();
@@ -73,38 +74,38 @@ function LaunchPage() {
 
   return (
     <>
-      {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
-      {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
-      {fetchNodesState.loading && !fetchNodesState.error && <Spinner />}
-      {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(launcherCredential) && (
-        <Button rounded variant="contained" onClick={handleConnectLauncher}>
-          {t('launch.connectLauncherButton')}
-        </Button>
-      )}
-      {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
-        <>
-          <div className="list-toolbar">
-            <Button
-              rounded
-              color="primary"
-              variant="contained"
-              component={ExternalLink}
-              href={`/launch/new?blocklet_meta_url=${blockletMetaUrl}`}>
-              {t('launch.createNode')}
-            </Button>
-          </div>
-          <div className="list-content">
-            {abtnodes.length > 0 && (
-              <List style={{ marginTop: '10px' }} abtnodes={abtnodes} blockletMetaUrl={blockletMetaUrl} />
-            )}
-            {abtnodes.length === 0 && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Typography style={{ fontSize: '1.2em' }}>{t('launch.noInstance')}</Typography>
-              </div>
-            )}
-          </div>
-        </>
-      )}
+      <Typography className="page-title" component="h2">
+        {t('pageTitle.selectNode')}
+      </Typography>
+      <div className="page-content">
+        {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
+        {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
+        {fetchNodesState.loading && !fetchNodesState.error && <Spinner />}
+        {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(launcherCredential) && (
+          <Button rounded variant="contained" onClick={handleConnectLauncher}>
+            {t('launch.connectLauncherButton')}
+          </Button>
+        )}
+        {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
+          <>
+            <div className="toolbar">
+              <Typography className="toolbar_title" component="span">
+                {t('common.nodeList')}
+              </Typography>
+              <Button
+                rounded
+                startIcon={<AddIcon />}
+                color="primary"
+                variant="outlined"
+                component={ExternalLink}
+                href={`/launch/new?blocklet_meta_url=${blockletMetaUrl}`}>
+                {t('launch.createNode')}
+              </Button>
+            </div>
+            <List className="node-list" abtnodes={abtnodes} blockletMetaUrl={blockletMetaUrl} />
+          </>
+        )}
+      </div>
     </>
   );
 }
@@ -124,12 +125,28 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
 
-  .list-toolbar {
-    display: flex;
-    justify-content: flex-end;
+  .page-title {
+    color: #222;
+    font-size: 28px;
+    text-align: center;
   }
 
-  .list-content {
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .toolbar_title {
+      color: #999999;
+      font-size: 16px;
+    }
+  }
+
+  .page-content {
+    margin-top: 116px;
+  }
+
+  .node-list {
     margin-top: 40px;
   }
 `;
