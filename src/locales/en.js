@@ -3,6 +3,7 @@ const flat = require('flat');
 module.exports = flat({
   common: {
     select: 'Select',
+    nodeList: 'Node List',
   },
   launch: {
     selectAbtNode: 'Select ABT Node',
@@ -21,5 +22,8 @@ module.exports = flat({
       confirm: 'Confirm connect in the DID wallet',
       success: 'Connect successful',
     },
+  },
+  pageTitle: {
+    selectNode: 'Select ABT Node',
   },
 });

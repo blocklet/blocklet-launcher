@@ -13,7 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
 import LaunchPage from './pages/launch';
-import AddNodePage from './pages/add-node';
+import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
 import Layout from './components/layout';
 import { getEnvironment } from './libs/utils';
@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     color: ${(props) => props.theme.colors.green};
-    text-decoration: none;
+    text-decoration: none !important;
   }
 
   ul, li {
@@ -79,7 +79,7 @@ const InnerApp = () => {
         <Layout>
           <Switch>
             <Route exact path="/launch" component={LaunchPage} />
-            <Route exact path="/launch/new" component={AddNodePage} />
+            <Route exact path="/launch/new" component={NewNodePage} />
             <Redirect to={`/launch${location.search}`} />
           </Switch>
         </Layout>
