@@ -1,39 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from '@arcblock/ux/lib/Img';
-import Button from '@arcblock/ux/lib/Button';
-import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
-import { Typography } from '@material-ui/core';
+import DidAddress from '@arcblock/did-connect/lib/Address';
+import InfoIcon from '@material-ui/icons/InfoOutlined';
+import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
 
-export default function Item({ abtnode, blockletMetaUrl }) {
-  const { t } = useLocaleContext();
+export default function Item({ abtnode, blockletMetaUrl, ...props }) {
+  const [anchorEl, setAnchorEl] = useState(null);
   const url = new URL('/admin/launch-blocklet', abtnode.url);
   url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletMetaUrl)));
 
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
   return (
-    <Container>
-      <Img size="contain" width={48} src="./images/abtnode.svg" alt="abtnode icon" />
+    <Container {...props}>
+      <div className="header">
+        <Img size="contain" width={48} src="/images/abtnode.svg" alt="abtnode icon" />
+        <InfoIcon style={{ cursor: 'pointer' }} onMouseEnter={handlePopoverOpen} color="disabled" />
+      </div>
       <Typography className="instance-name text bold">{abtnode.name || '名称'}</Typography>
-      <Typography className="instance-desc text light">
-        描述
-      </Typography>
-      <Button
-        className="instance-select"
-        variant="outlined"
-        rounded
-        color="primary"
-        component={ExternalLink}
-        href={url.href}>
-        {t('common.select')}
-      </Button>
+      <Typography className="instance-desc text light">描述</Typography>
+      <Popover
+        id="mouse-over-popover"
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        onClose={handlePopoverClose}>
+        <Card>
+          <CardContent
+            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100px' }}>
+            <DidAddress>{abtnode.did}</DidAddress>
+            <ExternalLink href={abtnode.url}>{abtnode.url}</ExternalLink>
+          </CardContent>
+        </Card>
+      </Popover>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 240px;
+  width: 100%;
   height: 253px;
   padding: 20px;
   border-radius: 8px;
@@ -42,6 +65,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+  }
 
   .text {
     display: -webkit-box;

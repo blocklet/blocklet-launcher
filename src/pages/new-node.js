@@ -2,7 +2,7 @@ import React from 'react';
 import useQuery from '../hooks/query';
 import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
 
-export default function AddNode() {
+export default function NewNode() {
   const query = useQuery();
 
   const blockletMetaUrl = getBlockletMetaUrl(query);

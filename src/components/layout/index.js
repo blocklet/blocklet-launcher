@@ -6,7 +6,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Container from '@material-ui/core/Container';
+import { Container } from '@material-ui/core';
 
 function CustomStepIcon({ active, completed }) {
   const urlParams = new URLSearchParams(window.location.search);
@@ -51,9 +51,7 @@ function Layout({ children }) {
           </Step>
         </Stepper>
       </div>
-      <Container className="content" maxWidth="lg">
-        {children}
-      </Container>
+      <Container maxWidth="lg" className="content">{children}</Container>
     </Div>
   );
 }
@@ -74,7 +72,7 @@ const Div = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 100px;
+    padding: 80px;
   }
 
   .nav-sidebar {
