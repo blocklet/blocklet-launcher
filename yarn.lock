@@ -19,15 +19,15 @@
     phoenix-channels "^1.0.0"
     react-app-polyfill "^1.0.6"
 
-"@arcblock/did-connect@^1.14.61":
-  version "1.14.61"
-  resolved "https://registry.yarnpkg.com/@arcblock/did-connect/-/did-connect-1.14.61.tgz#d05cb9b4a4f21ae34a7c743f68863f99e75db467"
-  integrity sha512-2hiy0NQgCpTD9NJGOo/BtcHtBgezPr3bEEKA84p2FxX96VOCdy3iu6VFAiXx3ePIO3qSsY91wCBNbn5j3jswpQ==
+"@arcblock/did-connect@^1.14.62":
+  version "1.14.62"
+  resolved "https://registry.yarnpkg.com/@arcblock/did-connect/-/did-connect-1.14.62.tgz#135730db399f14016f84aa1bcb70c894d492fc4a"
+  integrity sha512-dWk2xycGH86i9BgCGHq4/H7g7n2OvQTP/gqowwWann7Dk4/NeXaX+I9hndgtLB/9VQcEGStxplPRk58MjSGaDQ==
   dependencies:
     "@arcblock/event-client" "^1.0.23"
-    "@arcblock/icons" "^1.14.61"
-    "@arcblock/react-hooks" "^1.14.61"
-    "@arcblock/ux" "^1.14.61"
+    "@arcblock/icons" "^1.14.62"
+    "@arcblock/react-hooks" "^1.14.62"
+    "@arcblock/ux" "^1.14.62"
     "@fontsource/rubik" "^4.5.0"
     "@fontsource/ubuntu-mono" "^4.4.5"
     "@material-ui/core" "^4.12.3"
@@ -85,10 +85,10 @@
     "@arcblock/mcrypto" "^1.4.2"
     lodash.upperfirst "^4.3.1"
 
-"@arcblock/icons@^1.14.61":
-  version "1.14.61"
-  resolved "https://registry.yarnpkg.com/@arcblock/icons/-/icons-1.14.61.tgz#000b348489c04ec486fa5c1fed7518d8fdaaf5a7"
-  integrity sha512-pmzOvBXWkqwBVZODaYa6Hud3i8FPv+XcW41fGqjyidfhPJ4nMLJRBc8dCEjy8K500LFTXU9HNY+v6fJP7tqrhA==
+"@arcblock/icons@^1.14.62":
+  version "1.14.62"
+  resolved "https://registry.yarnpkg.com/@arcblock/icons/-/icons-1.14.62.tgz#849bb2dd1b5afa10c2b6dd93181536034f6a3c42"
+  integrity sha512-bCIIEDEJFQppacrIO47PvLxGtoAiyYNtbopIuiJJpabpEoLU1bQToMY7xNxsss7VW4iXeXzE0gfqKWGjYdJbpw==
 
 "@arcblock/mcrypto@^1.4.2":
   version "1.4.2"
@@ -105,10 +105,10 @@
     randombytes "^2.0.6"
     tweetnacl "^1.0.1"
 
-"@arcblock/react-hooks@^1.14.61":
-  version "1.14.61"
-  resolved "https://registry.yarnpkg.com/@arcblock/react-hooks/-/react-hooks-1.14.61.tgz#034c79fe89cee62b089bc6ffe3e6ac4e2f9a5fcb"
-  integrity sha512-1N+srDzWrRYyAO2Z0YRj+jx35WSG2pRHQ3h3Njz91/FDWiala2mD0nesLr0IBExd41zBJXuDWE4t1Ueh/6rmTA==
+"@arcblock/react-hooks@^1.14.62":
+  version "1.14.62"
+  resolved "https://registry.yarnpkg.com/@arcblock/react-hooks/-/react-hooks-1.14.62.tgz#c03da610995c59d0b426f4b6caa56a0a66c53316"
+  integrity sha512-6PVGSML0HkglhGRz49IBT2zG4JOLCa6exc8oZQbBCz0u+mDt1uZQlyjTGf8hqVEl58MSDnJnhmASromvoAwmyA==
   dependencies:
     core-js "^3.6.4"
     event-target-shim "^5.0.1"
@@ -125,13 +125,13 @@
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
 
-"@arcblock/ux@^1.14.61":
-  version "1.14.61"
-  resolved "https://registry.yarnpkg.com/@arcblock/ux/-/ux-1.14.61.tgz#a4dbd124e2a0e9819dc4da2e62348383b344c0f3"
-  integrity sha512-DUCq3Tqx+76ntPqxQHCPN88W5+GX7sfKaXr4+C064nXGfdSGxlkfCBp8j7uEZFdqDSdz4NEaqB73JHXFEhbt6w==
+"@arcblock/ux@^1.14.62":
+  version "1.14.62"
+  resolved "https://registry.yarnpkg.com/@arcblock/ux/-/ux-1.14.62.tgz#3b2292efc4915bffb677786e86c5330ae4405b4f"
+  integrity sha512-hrWcxcEBmGMsuFOseTsKtyGfwJVUJ71O+FJMt+vzHimKzx37FJc5QhRTc+tcOYWDJHqxyWsnFLPUw+G1fzb8dg==
   dependencies:
-    "@arcblock/icons" "^1.14.61"
-    "@arcblock/react-hooks" "^1.14.61"
+    "@arcblock/icons" "^1.14.62"
+    "@arcblock/react-hooks" "^1.14.62"
     "@babel/plugin-syntax-dynamic-import" "^7.8.3"
     "@material-ui/core" "^4.12.3"
     "@material-ui/icons" "4.11.2"

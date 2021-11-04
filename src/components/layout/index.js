@@ -2,11 +2,13 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+import PendingIcon from '@arcblock/icons/lib/Pending';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { Container } from '@material-ui/core';
+import { Done } from '@material-ui/icons';
 
 function CustomStepIcon({ active, completed }) {
   const urlParams = new URLSearchParams(window.location.search);
@@ -17,15 +19,11 @@ function CustomStepIcon({ active, completed }) {
   });
 
   if (completed) {
-    return (
-      <img className="MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-completed" src="/images/checked.svg" alt="checked" />
-    );
+    return <Done style={{ color: '#31AB86' }} />;
   }
 
   if (active) {
-    return (
-      <img className="MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-active" src="/images/unchecked.svg" alt="checked" />
-    );
+    return <PendingIcon color="#4F6AF6" />;
   }
 
   return <FiberManualRecordIcon color="disabled" />;
@@ -51,7 +49,9 @@ function Layout({ children }) {
           </Step>
         </Stepper>
       </div>
-      <Container maxWidth="lg" className="content">{children}</Container>
+      <Container maxWidth="lg" className="content">
+        {children}
+      </Container>
     </Div>
   );
 }
