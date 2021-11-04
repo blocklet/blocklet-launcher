@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import isEmpty from 'is-empty';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import useSessionStorage from 'react-use/lib/useSessionStorage';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
-import ExternalLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
@@ -21,6 +21,7 @@ function LaunchPage() {
   const [abtnodes, setAbtnodes] = useState([]);
   const [open, setOpen] = useState(false);
   const query = useQuery();
+  const history = useHistory();
   const [launcherCredential, setLauncherCredential] = useSessionStorage('launcher_credential', {});
   const [fetchNodesState, setFetchNodesState] = useState({
     loading: true,
@@ -72,6 +73,10 @@ function LaunchPage() {
     handleSuccess(launcherCredential);
   }, [locale]);
 
+  const handleCreateNode = () => {
+    history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
+  };
+
   return (
     <>
       <Typography className="page-title" component="h2">
@@ -92,12 +97,7 @@ function LaunchPage() {
               <Typography className="toolbar_title" component="span">
                 {t('common.nodeList')}
               </Typography>
-              <Button
-                rounded
-                startIcon={<AddIcon />}
-                color="primary"
-                component={ExternalLink}
-                href={`/launch/new?blocklet_meta_url=${blockletMetaUrl}`}>
+              <Button rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
                 {t('launch.createNode')}
               </Button>
             </div>
