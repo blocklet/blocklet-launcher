@@ -96,7 +96,6 @@ function LaunchPage() {
                 rounded
                 startIcon={<AddIcon />}
                 color="primary"
-                variant="outlined"
                 component={ExternalLink}
                 href={`/launch/new?blocklet_meta_url=${blockletMetaUrl}`}>
                 {t('launch.createNode')}
