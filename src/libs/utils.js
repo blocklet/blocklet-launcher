@@ -27,7 +27,11 @@ function getWebWalletUrl() {
 
 const getEnvironment = (name) => (window.blocklet ? window.blocklet[name] : window.env[name]);
 
-const getBlockletMetaUrl = (query) => (query.get('blocklet_meta_url') || query.get('meta_url') || '').trim(); // 兼容 meta_url 参数
+const getBlockletMetaUrl = (query) => {
+  // 兼容 meta_url 参数
+  const url = (query.get('blocklet_meta_url') || query.get('meta_url') || '').trim();
+  return decodeURIComponent(url);
+};
 
 export const formatRegistryLogoPath = (did, asset) => {
   if (asset.startsWith('/assets')) {
