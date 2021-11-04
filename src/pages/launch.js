@@ -142,6 +142,7 @@ const Container = styled.div`
   }
 
   .page-content {
+    height: 100%;
     margin-top: 116px;
   }
 
