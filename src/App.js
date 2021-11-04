@@ -39,11 +39,13 @@ const InnerApp = () => {
       <CssBaseline />
       <div className="wrapper">
         <Layout>
-          <Switch>
-            <Route exact path="/launch" component={LaunchPage} />
-            <Route exact path="/launch/new" component={NewNodePage} />
-            <Redirect to={`/launch${location.search}`} />
-          </Switch>
+          <BlockletMetaProvider>
+            <Switch>
+              <Route exact path="/launch" component={LaunchPage} />
+              <Route exact path="/launch/new" component={NewNodePage} />
+              <Redirect to={`/launch${location.search}`} />
+            </Switch>
+          </BlockletMetaProvider>
         </Layout>
       </div>
     </ABTNodeProvider>
@@ -54,9 +56,7 @@ const App = () => (
   <MuiThemeProvider theme={theme}>
     <ThemeProvider theme={theme}>
       <LocaleProvider translations={translations}>
-        <BlockletMetaProvider>
-          <InnerApp />
-        </BlockletMetaProvider>
+        <InnerApp />
       </LocaleProvider>
     </ThemeProvider>
   </MuiThemeProvider>
