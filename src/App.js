@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { create } from '@arcblock/ux/lib/Theme';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, useLocation } from 'react-router-dom';
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { setDateTool } from '@arcblock/ux/lib/Util';
@@ -17,52 +17,14 @@ import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
 import Layout from './components/layout';
 import { getEnvironment } from './libs/utils';
+import { BlockletMetaProvider } from './libs/context/blocklet-meta';
+import GlobalStyle from './components/layout/global-style';
 
 const theme = create({
   typography: {
     fontSize: 14,
   },
 });
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: #ffffff;
-    font-weight: 500;
-  }
-
-  a {
-    color: ${(props) => props.theme.colors.green};
-    text-decoration: none !important;
-  }
-
-  ul, li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .MuiButton-outlinedPrimary {
-    fill: ${(props) => props.theme.palette.primary.main};
-    color: #4E6AF6;
-    background: #F4F6FF;
-    border: 0;
-    &:hover {
-      border: 0;
-    }
-  }
-
-  .bold {
-    font-size: 18px;
-    line-height: 21px;
-    color: #222222;
-  }
-
-  .light {
-    font-size: 14px;
-    line-height: 16px;
-    color: #666666;
-  }
-`;
 
 const InnerApp = () => {
   const { locale } = useLocaleContext();
@@ -92,7 +54,9 @@ const App = () => (
   <MuiThemeProvider theme={theme}>
     <ThemeProvider theme={theme}>
       <LocaleProvider translations={translations}>
-        <InnerApp />
+        <BlockletMetaProvider>
+          <InnerApp />
+        </BlockletMetaProvider>
       </LocaleProvider>
     </ThemeProvider>
   </MuiThemeProvider>
