@@ -6,6 +6,7 @@ module.exports = flat({
     nodeList: '节点列表',
   },
   launch: {
+    openInRegistry: '在 Registry 中打开',
     selectAbtNode: '选择节点',
     launchApp: '启动应用',
     title: '请选择节点',

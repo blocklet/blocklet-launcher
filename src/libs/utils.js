@@ -1,4 +1,5 @@
 import isUrl from 'is-url';
+import joinUrl from 'url-join';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
@@ -28,4 +29,35 @@ const getEnvironment = (name) => (window.blocklet ? window.blocklet[name] : wind
 
 const getBlockletMetaUrl = (query) => (query.get('blocklet_meta_url') || query.get('meta_url') || '').trim(); // 兼容 meta_url 参数
 
-export { getWebWalletUrl, isObjectFn, formatError, isUrl, formatTime, getEnvironment, getBlockletMetaUrl };
+export const formatRegistryLogoPath = (did, asset) => {
+  if (asset.startsWith('/assets')) {
+    return asset;
+  }
+
+  return `/assets/${did}/${asset}`;
+};
+
+const getBlockletLogoUrl = ({ did, baseUrl, logoPath }) => {
+  if (baseUrl.startsWith('http') && logoPath) {
+    return joinUrl(baseUrl, formatRegistryLogoPath(did, logoPath));
+  }
+
+  const prefix = window.env.apiPrefix || '/';
+  let apiPrefix = prefix.replace(/^\/+/, '').replace(/\/+$/, '');
+  if (apiPrefix) {
+    apiPrefix = `/${apiPrefix}`;
+  }
+
+  return joinUrl(apiPrefix, `/blocklet/logo/${did}`);
+};
+
+export {
+  getWebWalletUrl,
+  isObjectFn,
+  formatError,
+  isUrl,
+  formatTime,
+  getEnvironment,
+  getBlockletMetaUrl,
+  getBlockletLogoUrl,
+};
