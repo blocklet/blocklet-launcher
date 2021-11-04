@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, useLocation } from 'react-router-dom';
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { setDateTool } from '@arcblock/ux/lib/Util';
+import Center from '@arcblock/ux/lib/Center';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
@@ -16,9 +17,10 @@ import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
 import Layout from './components/layout';
-import { getEnvironment } from './libs/utils';
+import { getBlockletMetaUrl, getEnvironment } from './libs/utils';
 import { BlockletMetaProvider } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
+import useQuery from './hooks/query';
 
 const theme = create({
   typography: {
@@ -29,24 +31,31 @@ const theme = create({
 const InnerApp = () => {
   const { locale } = useLocaleContext();
   const location = useLocation();
+  const query = useQuery();
 
   moment.locale(locale === 'zh' ? 'zh-cn' : locale);
   setDateTool(moment);
+
+  const blockletMetaUrl = getBlockletMetaUrl(query);
+
+  if (!blockletMetaUrl) {
+    return <Center>Invalid Blocklet Information</Center>;
+  }
 
   return (
     <ABTNodeProvider>
       <GlobalStyle />
       <CssBaseline />
       <div className="wrapper">
-        <Layout>
-          <BlockletMetaProvider>
+        <BlockletMetaProvider>
+          <Layout>
             <Switch>
               <Route exact path="/launch" component={LaunchPage} />
               <Route exact path="/launch/new" component={NewNodePage} />
               <Redirect to={`/launch${location.search}`} />
             </Switch>
-          </BlockletMetaProvider>
-        </Layout>
+          </Layout>
+        </BlockletMetaProvider>
       </div>
     </ABTNodeProvider>
   );
