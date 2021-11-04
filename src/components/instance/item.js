@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Img from '@arcblock/ux/lib/Img';
 import DidAddress from '@arcblock/did-connect/lib/Address';
+import ABTNodeIcon from '@arcblock/icons/lib/ABTNode';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
@@ -25,7 +25,7 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
   return (
     <Container {...props}>
       <div className="header">
-        <Img size="contain" width={48} src="/images/abtnode.svg" alt="abtnode icon" />
+        <ABTNodeIcon color="#BFBFBF" />
         <InfoIcon style={{ cursor: 'pointer' }} onMouseEnter={handlePopoverOpen} color="disabled" />
       </div>
       <Typography className="instance-name text bold">{abtnode.name || '名称'}</Typography>
@@ -57,7 +57,6 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
 
 const Container = styled.div`
   width: 100%;
-  height: 253px;
   padding: 20px;
   border-radius: 8px;
   border: 1px solid #f0f0f0;
