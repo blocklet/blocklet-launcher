@@ -20,7 +20,7 @@ export default function List({ abtnodes, blockletMetaUrl, ...props }) {
     try {
       setRedirecting(true);
       const url = new URL('/admin/launch-blocklet', node.url);
-      url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletMetaUrl)));
+      url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
       window.location.href = url.toString();
     } catch (error) {
       setRedirecting(false);
@@ -63,11 +63,17 @@ export default function List({ abtnodes, blockletMetaUrl, ...props }) {
 }
 
 const Content = styled.div`
+  height: 100%;
+
   .empty {
     text-align: center;
   }
 
   .node-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
     .item {
       cursor: pointer;
     }
@@ -81,9 +87,9 @@ const Content = styled.div`
     .action {
       display: flex;
       justify-content: center;
+      margin-top: auto;
 
       button {
-        position: fixed;
         bottom: 24px;
         width: 300px;
       }
