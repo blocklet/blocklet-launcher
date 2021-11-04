@@ -13,8 +13,7 @@ import { Done } from '@material-ui/icons';
 import { Link, Paper } from '@material-ui/core';
 import { useBlockletMetaContext } from '../../libs/context/blocklet-meta';
 import AppHeader from '../app-header';
-import { getBlockletLogoUrl, getBlockletMetaUrl } from '../../libs/utils';
-import useQuery from '../../hooks/query';
+import { getBlockletLogoUrl } from '../../libs/utils';
 
 function CustomStepIcon({ active, completed }) {
   const urlParams = new URLSearchParams(window.location.search);
@@ -42,13 +41,6 @@ CustomStepIcon.propTypes = {
 
 function Layout({ children }) {
   const { t } = useLocaleContext();
-  const query = useQuery();
-
-  const blockletMetaUrl = getBlockletMetaUrl(query);
-
-  if (!blockletMetaUrl) {
-    return <Div>Invalid Blocklet Information</Div>;
-  }
 
   const blockletMeta = useBlockletMetaContext();
 
