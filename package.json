@@ -65,8 +65,8 @@
     "build": "yarn clean && npm run build:client && rm -f build/static/**/*.{js,css}.map && npm run build:server",
     "build:client": "PUBLIC_URL=\"/.blocklet/proxy\" react-app-rewired build",
     "build:server": "NODE_ENV=production blocklet bundle -w api/webpack.blocklet.js --create-release",
-    "release": "npm run clean && npm run build",
-    "deploy": "npm run release && blocklet deploy .blocklet/bundle --skip-hooks"
+    "bundle": "npm run clean && npm run build",
+    "deploy": "npm run bundle && blocklet deploy .blocklet/bundle --skip-hooks"
   },
   "eslintConfig": {
     "extends": "react-app"
