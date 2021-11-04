@@ -75,7 +75,9 @@ function Layout({ children }) {
             </Step>
           </Stepper>
         </div>
-        <div className="content">{children}</div>
+        <div id="content" className="content">
+          {children}
+        </div>
       </Paper>
     </Div>
   );
