@@ -18,10 +18,6 @@ function BlockletMetaProvider({ children }) {
   const [error, setError] = useState();
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
-  if (!blockletMetaUrl) {
-    setError(t('launch.invalidParam'));
-  }
-
   const blockletMetaState = useAsync(async () => {
     try {
       const { data } = await api.get(blockletMetaUrl);
