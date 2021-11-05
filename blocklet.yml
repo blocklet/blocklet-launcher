@@ -6,6 +6,7 @@ keywords:
   - dapp
   - forge
 files:
+  - api
   - build
   - screenshots
   - logo.png
@@ -16,8 +17,8 @@ repository:
   type: git
   url: 'git+https://github.com/blocklet/install-on-abtnode.git'
 license: Apache-2.0
-group: static
-main: build
+group: dapp
+main: api/index.js
 community: ''
 documentation: ''
 homepage: ''

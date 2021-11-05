@@ -21,7 +21,7 @@ function BlockletMetaProvider({ children }) {
   const blockletMetaState = useAsync(async () => {
     try {
       const { data } = await api.get(`/blocklet-meta?url=${encodeURIComponent(blockletMetaUrl)}`);
-      return data;
+      return data.meta;
     } catch (err) {
       setError(error.message);
       return {};

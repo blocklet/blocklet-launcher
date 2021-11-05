@@ -48,20 +48,14 @@ indexRoute.init(app);
 sessionRoute.init(router);
 
 if (isProduction) {
-  const staticDir = process.env.BLOCKLET_APP_ID ? './' : '../../';
-
   app.use(compression());
   app.use(router);
   if (process.env.BLOCKLET_DID) {
     app.use(`/${process.env.BLOCKLET_DID}`, router);
   }
 
-  const staticDirNew = path.resolve(__dirname, staticDir, 'build');
+  const staticDirNew = path.resolve(__dirname, '../..', 'build');
   app.use(express.static(staticDirNew, { maxAge: '365d', index: false }));
-  if (process.env.BLOCKLET_DID) {
-    app.use(`/${process.env.BLOCKLET_DID}`, express.static(staticDirNew, { maxAge: '365d', index: false }));
-  }
-
   app.use(fallback('index.html', { root: staticDirNew }));
 
   app.use((req, res) => {
