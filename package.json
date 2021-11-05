@@ -64,8 +64,8 @@
     "start:client": "PUBLIC_URL=\"\" react-app-rewired start",
     "start:server": "NODE_ENV=development nodemon api/index.js -w api",
     "build": "yarn clean && npm run build:client && rm -f build/static/**/*.{js,css}.map && npm run build:server",
-    "build:client": "PUBLIC_URL=\"/.blocklet/proxy\" react-app-rewired build",
-    "build:server": "NODE_ENV=production blocklet bundle -w api/webpack.blocklet.js --create-release",
+    "build:client": "PUBLIC_URL=\"/\" react-app-rewired build",
+    "build:server": "NODE_ENV=production blocklet bundle --zip --create-release",
     "bundle": "npm run clean && npm run build",
     "deploy": "npm run bundle && blocklet deploy .blocklet/bundle --skip-hooks"
   },
