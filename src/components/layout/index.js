@@ -109,6 +109,7 @@ const Div = styled.div`
     max-width: 1245px;
     height: 80%;
     max-height: 880px;
+    overflow: auto;
   }
 
   .content {

@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+require('express-async-errors');
 const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
@@ -8,12 +9,11 @@ const serverless = require('serverless-http');
 const cookieParser = require('cookie-parser');
 const fallback = require('express-history-api-fallback');
 
-const abtnode = require('../routes/abtnode');
-const session = require('../routes/session');
+const indexRoute = require('../routes/index');
+const sessionRoute = require('../routes/session');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Create and config express application
 const app = express();
 app.use(compression());
 app.use(cookieParser());
@@ -44,8 +44,8 @@ app.use(
 
 const router = express.Router();
 
-abtnode.init(app);
-session.init(router);
+indexRoute.init(app);
+sessionRoute.init(router);
 
 if (isProduction) {
   const staticDir = process.env.BLOCKLET_APP_ID ? './' : '../../';
