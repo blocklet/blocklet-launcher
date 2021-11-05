@@ -39,7 +39,7 @@ function LaunchPage() {
     setLauncherCredential({ userDid });
 
     try {
-      const { data } = await api.get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${userDid}`);
+      const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${userDid}`);
 
       setFetchNodesState((pre) => {
         pre.loading = false;
