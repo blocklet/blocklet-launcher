@@ -12,7 +12,7 @@ module.exports = {
 
       const { data: meta } = await axios.get(blockletMetaUrl);
 
-      return { meta };
+      return res.json({ meta });
     });
   },
 };

@@ -127,6 +127,7 @@ const Div = styled.div`
     border-right: 1px solid #f0f0f0;
     width: 30%;
     background: #fbfcfd;
+    min-height: 48px;
   }
 
   .stepper {
