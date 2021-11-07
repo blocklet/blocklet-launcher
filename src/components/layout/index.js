@@ -1,61 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import joinUrl from 'url-join';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
-import PendingIcon from '@arcblock/icons/lib/Pending';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import { Done as DoneIcon, Menu as MenuIcon } from '@material-ui/icons';
-import { Hidden, Link, Paper } from '@material-ui/core';
+import { Menu as MenuIcon } from '@material-ui/icons';
+import { Drawer, Hidden, Link, Paper } from '@material-ui/core';
 import { useBlockletMetaContext } from '../../libs/context/blocklet-meta';
 import AppHeader from '../app-header';
 import { getBlockletLogoUrl } from '../../libs/utils';
 import useMobile from '../../hooks/is-mobile';
-
-function CustomStepIcon({ active, completed }) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const { changeLocale, locale } = useLocaleContext();
-
-  useEffect(() => {
-    changeLocale(urlParams.get('__blang__') || locale);
-  });
-
-  if (completed) {
-    return <DoneIcon style={{ color: '#31AB86' }} />;
-  }
-
-  if (active) {
-    return <PendingIcon color="#4F6AF6" />;
-  }
-
-  return <FiberManualRecordIcon color="disabled" />;
-}
-
-CustomStepIcon.propTypes = {
-  active: PropTypes.bool.isRequired,
-  completed: PropTypes.bool.isRequired,
-};
+import Nav from './nav';
 
 const Div = styled.div``;
 
 function Layout({ children }) {
   const { t } = useLocaleContext();
+  const [openNav, setOpenNav] = useState(false);
 
   const blockletMeta = useBlockletMetaContext();
   const isMobile = useMobile();
 
   const Container = isMobile ? Div : Paper;
 
+  const toggleNav = (value) => setOpenNav(value);
+
   return (
     <Root>
       <header className="root-header">
         <Hidden smUp>
           <div className="left">
-            <MenuIcon className="menu__icon" />
+            <MenuIcon onClick={() => toggleNav(true)} className="menu__icon" />
             <AppHeader
               title={blockletMeta.data.title}
               subTitle={
@@ -77,31 +52,11 @@ function Layout({ children }) {
         </div>
       </header>
       <Container className="box">
+        <Drawer anchor="left" open={openNav} onClose={() => toggleNav(false)}>
+          <Nav blockletMeta={blockletMeta} />
+        </Drawer>
         <Hidden smDown>
-          <div className="nav-sidebar">
-            <AppHeader
-              title={blockletMeta.data.title}
-              subTitle={
-                // eslint-disable-next-line react/jsx-wrap-multilines
-                <Link target="_blank" href={joinUrl(blockletMeta.registryUrl, `/blocklet/${blockletMeta.data.did}`)}>
-                  {t('launch.openInRegistry')}
-                </Link>
-              }
-              logoUrl={getBlockletLogoUrl({
-                did: blockletMeta.data.did,
-                baseUrl: blockletMeta.registryUrl,
-                logoPath: blockletMeta.data.logo,
-              })}
-            />
-            <Stepper className="stepper" activeStep={0} orientation="vertical">
-              <Step key="select-node">
-                <StepLabel StepIconComponent={CustomStepIcon}>{t('launch.selectAbtNode')}</StepLabel>
-              </Step>
-              <Step key="launch-app">
-                <StepLabel StepIconComponent={CustomStepIcon}>{t('launch.launchApp')}</StepLabel>
-              </Step>
-            </Stepper>
-          </div>
+          <Nav blockletMeta={blockletMeta} />
         </Hidden>
         <div id="content" className="content">
           {children}
@@ -183,24 +138,6 @@ const Root = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     padding: 80px;
-  }
-
-  .nav-sidebar {
-    padding: 40px;
-    border-right: 1px solid #f0f0f0;
-    width: 30%;
-    background: #fbfcfd;
-    min-height: 48px;
-  }
-
-  .stepper {
-    padding: 0;
-    background: transparent;
-    margin-top: 100px;
-
-    .step {
-      cursor: pointer;
-    }
   }
 `;
 
