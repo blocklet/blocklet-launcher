@@ -7,7 +7,7 @@ import Img from '@arcblock/ux/lib/Img';
 export default function AppHeader({ title, subTitle, logoUrl }) {
   return (
     <Container>
-      <Img className="logo" src={logoUrl} width={48} size="contain" placeholder="application logo" />
+      <Img className="logo" src={logoUrl} size="contain" placeholder="application logo" />
       <div className="title">
         <div className="title-name">{title}</div>
         <div className="title-sub">{subTitle}</div>
@@ -34,7 +34,13 @@ const Container = styled.div`
   align-items: center;
 
   .logo {
-    min-width: 48px;
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      width: 48px;
+    }
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      width: 40px;
+    }
   }
 
   .title {
@@ -44,15 +50,36 @@ const Container = styled.div`
     margin-left: 10px;
 
     .title-name {
-      font-size: 20px;
-      line-height: 23px;
       color: #222222;
+
+      ${(props) => props.theme.breakpoints.up('sm')} {
+        font-size: 20px;
+        line-height: 23px;
+      }
+
+      ${(props) => props.theme.breakpoints.down('sm')} {
+        font-size: 16px;
+        line-height: 19px;
+        width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     .title-sub {
       color: #666666;
       font-size: 14px;
       line-height: 16px;
+      margin-top: 5px;
+
+      ${(props) => props.theme.breakpoints.down('sm')} {
+        width: 100px;
+        width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 `;
