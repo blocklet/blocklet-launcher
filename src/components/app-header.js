@@ -7,7 +7,7 @@ import Img from '@arcblock/ux/lib/Img';
 export default function AppHeader({ title, subTitle, logoUrl }) {
   return (
     <Container>
-      <Img className="logo" src={logoUrl} size="contain" placeholder="application logo" />
+      <Img className="logo" width={48} src={logoUrl} size="contain" placeholder="application logo" />
       <div className="title">
         <div className="title-name">{title}</div>
         <div className="title-sub">{subTitle}</div>
@@ -60,7 +60,6 @@ const Container = styled.div`
       ${(props) => props.theme.breakpoints.down('sm')} {
         font-size: 16px;
         line-height: 19px;
-        width: 100px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -74,8 +73,6 @@ const Container = styled.div`
       margin-top: 5px;
 
       ${(props) => props.theme.breakpoints.down('sm')} {
-        width: 100px;
-        width: 100px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
