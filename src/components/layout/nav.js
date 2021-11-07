@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import joinUrl from 'url-join';
 import styled from 'styled-components';
+import joinUrl from 'url-join';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import PendingIcon from '@arcblock/icons/lib/Pending';
 import { Link, Step, StepLabel, Stepper } from '@material-ui/core';
