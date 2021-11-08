@@ -66,8 +66,18 @@ const Div = styled.div`
     min-height: 48px;
   }
 
+  ${(props) => props.theme.breakpoints.up('sm')} {
+    .MuiStepConnector-vertical {
+      padding: 0;
+    }
+  }
+
   ${(props) => props.theme.breakpoints.down('sm')} {
     padding: 16px;
+
+    .MuiStepConnector-lineVertical {
+      border: none;
+    }
   }
 
   .stepper {
