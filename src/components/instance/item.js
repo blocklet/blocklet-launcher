@@ -6,6 +6,7 @@ import ABTNodeIcon from '@arcblock/icons/lib/ABTNode';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
+import Hidden from '@material-ui/core/Hidden';
 
 export default function Item({ abtnode, blockletMetaUrl, ...props }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -14,6 +15,9 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
   };
 
   const handlePopoverClose = () => {
@@ -24,12 +28,19 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
 
   return (
     <Container {...props}>
-      <div className="header">
+      <div className="node-header">
         <ABTNodeIcon color="#BFBFBF" />
-        <InfoIcon style={{ cursor: 'pointer' }} onMouseEnter={handlePopoverOpen} color="disabled" />
+        <Hidden smDown>
+          <InfoIcon style={{ cursor: 'pointer' }} onMouseEnter={handlePopoverOpen} color="disabled" />
+        </Hidden>
       </div>
-      <Typography className="instance-name text bold">{abtnode.name || '名称'}</Typography>
-      <Typography className="instance-desc text light">描述</Typography>
+      <div className="node-body">
+        <Typography className="instance-name text bold">{abtnode.name || '名称'}</Typography>
+        <Typography className="instance-desc text light">描述</Typography>
+      </div>
+      <Hidden smUp>
+        <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
+      </Hidden>
       <Popover
         id="mouse-over-popover"
         open={open}
@@ -56,20 +67,47 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
 }
 
 const Container = styled.div`
+  display: flex;
   width: 100%;
   padding: 20px;
   border-radius: 8px;
   border: 1px solid #f0f0f0;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${(props) => props.theme.breakpoints.up('sm')} {
+    flex-direction: column;
+    align-items: center;
+    height: 200px;
+  }
 
-  .header {
-    display: flex;
-    align-items: flex-start;
+  ${(props) => props.theme.breakpoints.down('sm')} {
     justify-content: space-between;
-    width: 100%;
+    align-items: center;
+    height: 72px;
+  }
+
+  .node-header {
+    display: flex;
+
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      align-items: flex-start;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .node-body {
+    display: flex;
+    flex-direction: column;
+
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      margin-top: 26px;
+    }
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      margin: 0 20px;
+      width: 100%;
+      align-items: flex-start;
+    }
   }
 
   .text {
@@ -80,13 +118,23 @@ const Container = styled.div`
   }
 
   .instance-name {
-    margin-top: 26px;
+    font-weight: bolder;
     -webkit-line-clamp: 1;
+    font-size: 16px;
   }
 
   .instance-desc {
-    margin-top: 8px;
-    -webkit-line-clamp: 3;
+    font-size: 14px;
+    line-height: 14px;
+
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      -webkit-line-clamp: 2;
+    }
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      -webkit-line-clamp: 1;
+      margin-top: 5px;
+    }
   }
 
   .instance-select {

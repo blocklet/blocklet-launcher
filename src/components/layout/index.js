@@ -10,7 +10,22 @@ import { getBlockletLogoUrl } from '../../libs/utils';
 import useMobile from '../../hooks/is-mobile';
 import Nav from './nav';
 
-const Div = styled.div``;
+const MobileContent = styled.div`
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  margin-top: 68px;
+`;
+
+const PcContent = styled(Paper)`
+  display: flex;
+  overflow: auto;
+  width: 80%;
+  height: 80%;
+  max-width: 1245px;
+  max-height: 880px;
+`;
 
 function Layout({ children }) {
   const [openNav, setOpenNav] = useState(false);
@@ -18,7 +33,7 @@ function Layout({ children }) {
   const blockletMeta = useBlockletMetaContext();
   const isMobile = useMobile();
 
-  const Container = isMobile ? Div : Paper;
+  const Container = isMobile ? MobileContent : PcContent;
 
   const toggleNav = (value) => setOpenNav(value);
 
@@ -43,10 +58,12 @@ function Layout({ children }) {
           <LocaleSelector size={26} showText={false} className="locale-addon" />
         </div>
       </header>
-      <Container className="box">
+      <Hidden smUp>
         <Drawer anchor="left" open={openNav} onClose={() => toggleNav(false)}>
           <Nav blockletMeta={blockletMeta} />
         </Drawer>
+      </Hidden>
+      <Container>
         <Hidden smDown>
           <Nav blockletMeta={blockletMeta} />
         </Hidden>
@@ -78,19 +95,22 @@ const Root = styled.div`
   }
 
   .root-header {
+    top: 0;
     display: flex;
+    width: 100%;
+    height: 68px;
     align-items: center;
     position: fixed;
     display: flex;
-    top: 0;
-    width: 100%;
-    padding: 24px;
+    box-shadow: 0px 1px 1px rgba(168, 180, 197, 0.12);
 
     ${(props) => props.theme.breakpoints.down('sm')} {
+      padding: 14px;
       justify-content: space-between;
     }
 
     ${(props) => props.theme.breakpoints.up('sm')} {
+      padding: 24px;
       justify-content: flex-end;
     }
 
@@ -110,26 +130,19 @@ const Root = styled.div`
     }
   }
 
-  .box {
-    display: flex;
-    overflow: auto;
-
-    ${(props) => props.theme.breakpoints.up('sm')} {
-      width: 80%;
-      max-width: 1245px;
-      height: 80%;
-      max-height: 880px;
-    }
-  }
-
   .content {
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 80px;
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      margin-top: 68px;
+    }
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      margin-top: 34px;
+    }
   }
 `;
 

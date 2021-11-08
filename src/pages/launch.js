@@ -7,6 +7,7 @@ import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import Typography from '@material-ui/core/Typography';
+import { Hidden } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
 
@@ -23,6 +24,8 @@ function LaunchPage() {
   const query = useQuery();
   const history = useHistory();
   const [launcherCredential, setLauncherCredential] = useSessionStorage('launcher_credential', {});
+  const [selectedNode, setSelectedNode] = useState(null);
+  const [redirecting, setRedirecting] = useState(false);
   const [fetchNodesState, setFetchNodesState] = useState({
     loading: true,
     error: '',
@@ -77,6 +80,18 @@ function LaunchPage() {
     history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
   };
 
+  const handleSelect = (node) => {
+    try {
+      setRedirecting(true);
+      const url = new URL('/admin/launch-blocklet', node.url);
+      url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
+      window.location.href = url.toString();
+    } catch (error) {
+      setRedirecting(false);
+      console.error('redirect to node error', error);
+    }
+  };
+
   return (
     <>
       <Typography className="page-title" component="h2">
@@ -85,7 +100,11 @@ function LaunchPage() {
       <div className="page-content">
         {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
         {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
-        {fetchNodesState.loading && !fetchNodesState.error && <Spinner />}
+        {fetchNodesState.loading && !fetchNodesState.error && (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Spinner />
+          </div>
+        )}
         {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(launcherCredential) && (
           <Button rounded variant="contained" onClick={handleConnectLauncher}>
             {t('launch.connectLauncherButton')}
@@ -93,17 +112,41 @@ function LaunchPage() {
         )}
         {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
           <>
-            <div className="toolbar">
-              <Typography className="toolbar_title" component="span">
-                {t('common.nodeList')}
-              </Typography>
-              <Button rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-                {t('launch.createNode')}
-              </Button>
-            </div>
-            <List className="node-list" abtnodes={abtnodes} blockletMetaUrl={blockletMetaUrl} />
+            <Hidden smDown>
+              <div className="toolbar">
+                <Typography className="toolbar_title" component="span">
+                  {t('common.nodeList')}
+                </Typography>
+                <Button rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+                  {t('launch.createNode')}
+                </Button>
+              </div>
+            </Hidden>
+            <List
+              className="node-list"
+              abtnodes={abtnodes}
+              selectedNode={selectedNode}
+              onSelect={setSelectedNode}
+              blockletMetaUrl={blockletMetaUrl}
+            />
           </>
         )}
+      </div>
+      <div className="page-footer">
+        <Hidden smUp>
+          <Button rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+            {t('launch.createNode')}
+          </Button>
+        </Hidden>
+        <Button
+          disabled={!selectedNode || redirecting}
+          onClick={() => handleSelect(selectedNode)}
+          startIcon={redirecting && <Spinner size={[12, 12]} />}
+          rounded
+          color="primary"
+          variant="contained">
+          {t('common.select')}
+        </Button>
       </div>
     </>
   );
@@ -120,7 +163,6 @@ export default function Page() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
   height: 100%;
   width: 100%;
 
@@ -142,11 +184,49 @@ const Container = styled.div`
   }
 
   .page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     height: 100%;
-    margin-top: 116px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      margin-top: 116px;
+      padding: 40px;
+    }
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      margin-top: 33px;
+      padding: 16px;
+    }
+  }
+
+  .page-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+    margin-top: auto;
+    height: 68px;
+    padding: 15px;
+    box-shadow: 0px -1px 1px rgba(168, 180, 197, 0.12);
+    background: #ffffff;
+
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      justify-content: center;
+
+      & > button {
+        width: 300px;
+      }
+    }
   }
 
   .node-list {
-    margin-top: 40px;
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      margin-top: 40px;
+    }
   }
 `;
