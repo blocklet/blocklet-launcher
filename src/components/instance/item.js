@@ -35,8 +35,8 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         </Hidden>
       </div>
       <div className="node-body">
-        <Typography className="instance-name text bold">{abtnode.name || '名称'}</Typography>
-        <Typography className="instance-desc text light">描述</Typography>
+        <Typography className="instance-name text bold">{abtnode.name}</Typography>
+        <Typography className="instance-desc text light">{abtnode.description}</Typography>
       </div>
       <Hidden smUp>
         <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
@@ -114,7 +114,10 @@ const Container = styled.div`
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    text-align: center;
+
+    ${(props) => props.theme.breakpoints.up('sm')} {
+      text-align: center;
+    }
   }
 
   .instance-name {
