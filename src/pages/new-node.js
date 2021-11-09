@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import useQuery from '../hooks/query';
 import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
@@ -20,12 +21,15 @@ export default function NewNode() {
 
   useEffect(() => {
     const rect = ref.current.parentElement.getBoundingClientRect();
-    setWidth(`${rect.width}px`);
-    setHeight(`${rect.height - 10}px`);
-  }, []);
+    // 加载完成后可以更准确地计算父容器长宽
+    if (!loading) {
+      setWidth(`${rect.width}px`);
+      setHeight(`${rect.height}px`);
+    }
+  }, [loading]);
 
   return (
-    <div ref={ref}>
+    <Div ref={ref}>
       {loading && <Spinner />}
       <iframe
         onLoad={handleLoaded}
@@ -37,6 +41,15 @@ export default function NewNode() {
         cellSpacing="0"
         src={launchUrlObject.toString()}
       />
-    </div>
+    </Div>
   );
 }
+
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+`;
