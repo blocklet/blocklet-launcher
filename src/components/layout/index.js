@@ -67,9 +67,7 @@ function Layout({ children }) {
         <Hidden smDown>
           <Nav blockletMeta={blockletMeta} />
         </Hidden>
-        <div id="content" className="content">
-          {children}
-        </div>
+        <div className="content">{children}</div>
       </Container>
     </Root>
   );
