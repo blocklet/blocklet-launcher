@@ -15,7 +15,7 @@ function StepProvider({ children, steps }) {
 
   const value = {
     steps,
-    activeStep: activeStep + 1,
+    activeStep,
     totalStepsCount: steps.length,
   };
 

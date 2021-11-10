@@ -48,7 +48,7 @@ function Layout({ children }) {
             <MenuIcon onClick={() => toggleNav(true)} className="menu__icon" />
             <AppHeader
               title={blockletMeta.data.title}
-              subTitle={t('launch.stepTip', { progressText: `${activeStep}/${totalStepsCount}` })}
+              subTitle={t('launch.stepTip', { progressText: `${activeStep + 1}/${totalStepsCount}` })}
               logoUrl={getBlockletLogoUrl({
                 did: blockletMeta.data.did,
                 baseUrl: blockletMeta.registryUrl,
