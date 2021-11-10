@@ -1,32 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 
 const StepContext = createContext();
 const { Provider } = StepContext;
 
-function StepProvider({ children }) {
+function StepProvider({ children, steps }) {
   const [activeStep, setActiveStep] = useState(0);
-  const { t } = useLocaleContext();
-
-  const [steps] = useState([
-    {
-      key: 'select-node',
-      name: t('launch.selectAbtNode'),
-      path: '/launch',
-    },
-    {
-      key: 'create-node',
-      name: t('launch.createAbtNode'),
-      path: '/launch/new',
-      optional: true,
-    },
-    {
-      key: 'launch-app',
-      name: t('launch.launchApp'),
-      path: '',
-    },
-  ]);
 
   useEffect(() => {
     const stepIndex = steps.findIndex((step) => step.path === window.location.pathname);
@@ -49,6 +28,7 @@ function useStepContext() {
 
 StepProvider.propTypes = {
   children: PropTypes.any.isRequired,
+  steps: PropTypes.array.isRequired,
 };
 
 export { StepProvider, useStepContext };
