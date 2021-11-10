@@ -30,7 +30,7 @@ const theme = create({
 });
 
 const InnerApp = () => {
-  const { locale } = useLocaleContext();
+  const { t, locale } = useLocaleContext();
   const location = useLocation();
   const query = useQuery();
 
@@ -43,13 +43,32 @@ const InnerApp = () => {
     return <Center>Invalid Blocklet Information</Center>;
   }
 
+  const steps = [
+    {
+      key: 'select-node',
+      name: t('launch.selectAbtNode'),
+      path: '/launch',
+    },
+    {
+      key: 'create-node',
+      name: t('launch.createAbtNode'),
+      path: '/launch/new',
+      optional: true,
+    },
+    {
+      key: 'launch-app',
+      name: t('launch.launchApp'),
+      path: '',
+    },
+  ];
+
   return (
     <ABTNodeProvider>
       <GlobalStyle />
       <CssBaseline />
       <div className="wrapper">
         <BlockletMetaProvider>
-          <StepProvider>
+          <StepProvider steps={steps}>
             <Layout>
               <Switch>
                 <Route exact path="/launch" component={LaunchPage} />
