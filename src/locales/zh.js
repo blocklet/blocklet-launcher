@@ -4,10 +4,12 @@ module.exports = flat({
   common: {
     select: '选择',
     nodeList: '节点列表',
+    optional: '可选',
   },
   launch: {
     openInRegistry: '在 Registry 中打开',
     selectAbtNode: '选择节点',
+    createAbtNode: '创建节点',
     launchApp: '启动应用',
     title: '请选择节点',
     noInstance: '没有节点',
@@ -15,6 +17,7 @@ module.exports = flat({
     loadingError: '加载节点列表失败',
     connectLauncherButton: '连接 Launcher',
     createNode: '创建新的',
+    stepTip: '步骤 {progressText}',
   },
   connectLauncher: {
     authMessages: {
