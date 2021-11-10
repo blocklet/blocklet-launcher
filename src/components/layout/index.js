@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
+import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { Drawer, Hidden, Paper } from '@material-ui/core';
 import { useBlockletMetaContext } from '../../libs/context/blocklet-meta';
@@ -9,6 +10,7 @@ import AppHeader from '../app-header';
 import { getBlockletLogoUrl } from '../../libs/utils';
 import useMobile from '../../hooks/is-mobile';
 import Nav from './nav';
+import { useStepContext } from '../../libs/context/steps';
 
 const MobileContent = styled.div`
   display: flex;
@@ -29,9 +31,10 @@ const PcContent = styled(Paper)`
 
 function Layout({ children }) {
   const [openNav, setOpenNav] = useState(false);
-
   const blockletMeta = useBlockletMetaContext();
   const isMobile = useMobile();
+  const { activeStep, totalStepsCount } = useStepContext();
+  const { t } = useLocaleContext();
 
   const Container = isMobile ? MobileContent : PcContent;
 
@@ -45,7 +48,7 @@ function Layout({ children }) {
             <MenuIcon onClick={() => toggleNav(true)} className="menu__icon" />
             <AppHeader
               title={blockletMeta.data.title}
-              subTitle="Step 2/5"
+              subTitle={t('launch.stepTip', { progressText: `${activeStep}/${totalStepsCount}` })}
               logoUrl={getBlockletLogoUrl({
                 did: blockletMeta.data.did,
                 baseUrl: blockletMeta.registryUrl,

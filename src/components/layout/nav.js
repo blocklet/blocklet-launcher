@@ -8,6 +8,7 @@ import { Link, Step, StepLabel, Stepper } from '@material-ui/core';
 import { Done as DoneIcon, FiberManualRecord as FiberManualRecordIcon } from '@material-ui/icons';
 import AppHeader from '../app-header';
 import { getBlockletLogoUrl } from '../../libs/utils';
+import { useStepContext } from '../../libs/context/steps';
 
 function CustomStepIcon({ active, completed }) {
   if (completed) {
@@ -28,6 +29,7 @@ CustomStepIcon.propTypes = {
 
 function Nav({ blockletMeta }) {
   const { t } = useLocaleContext();
+  const { steps, activeStep } = useStepContext();
 
   return (
     <Div className="nav-sidebar">
@@ -45,13 +47,14 @@ function Nav({ blockletMeta }) {
           logoPath: blockletMeta.data.logo,
         })}
       />
-      <Stepper className="stepper" activeStep={0} orientation="vertical">
-        <Step key="select-node">
-          <StepLabel StepIconComponent={CustomStepIcon}>{t('launch.selectAbtNode')}</StepLabel>
-        </Step>
-        <Step key="launch-app">
-          <StepLabel StepIconComponent={CustomStepIcon}>{t('launch.launchApp')}</StepLabel>
-        </Step>
+      <Stepper className="stepper" activeStep={activeStep} orientation="vertical">
+        {steps.map((step) => (
+          <Step key={step.key}>
+            <StepLabel StepIconComponent={CustomStepIcon}>
+              {`${step.name}${step.optional === true ? `(${t('common.optional')})` : ''}`}
+            </StepLabel>
+          </Step>
+        ))}
       </Stepper>
     </Div>
   );

@@ -21,6 +21,7 @@ import { getBlockletMetaUrl, getEnvironment } from './libs/utils';
 import { BlockletMetaProvider } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
 import useQuery from './hooks/query';
+import { StepProvider } from './libs/context/steps';
 
 const theme = create({
   typography: {
@@ -48,13 +49,15 @@ const InnerApp = () => {
       <CssBaseline />
       <div className="wrapper">
         <BlockletMetaProvider>
-          <Layout>
-            <Switch>
-              <Route exact path="/launch" component={LaunchPage} />
-              <Route exact path="/launch/new" component={NewNodePage} />
-              <Redirect to={`/launch${location.search}`} />
-            </Switch>
-          </Layout>
+          <StepProvider>
+            <Layout>
+              <Switch>
+                <Route exact path="/launch" component={LaunchPage} />
+                <Route exact path="/launch/new" component={NewNodePage} />
+                <Redirect to={`/launch${location.search}`} />
+              </Switch>
+            </Layout>
+          </StepProvider>
         </BlockletMetaProvider>
       </div>
     </ABTNodeProvider>
