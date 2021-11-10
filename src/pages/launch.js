@@ -106,7 +106,7 @@ function LaunchPage() {
           </div>
         )}
         {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(launcherCredential) && (
-          <Button rounded variant="contained" onClick={handleConnectLauncher}>
+          <Button color="primary" rounded variant="contained" onClick={handleConnectLauncher}>
             {t('launch.connectLauncherButton')}
           </Button>
         )}
