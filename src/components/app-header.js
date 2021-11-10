@@ -3,11 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from '@arcblock/ux/lib/Img';
+import useMobile from '../hooks/is-mobile';
 
 export default function AppHeader({ title, subTitle, logoUrl }) {
+  const isMobile = useMobile();
+
   return (
     <Container>
-      <Img className="logo" width={48} src={logoUrl} size="contain" placeholder="application logo" />
+      <Img width={isMobile ? 40 : 48} src={logoUrl} size="contain" placeholder="application logo" />
       <div className="title">
         <div className="title-name">{title}</div>
         <div className="title-sub">{subTitle}</div>
@@ -32,16 +35,6 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
-  .logo {
-    ${(props) => props.theme.breakpoints.up('sm')} {
-      width: 48px;
-    }
-
-    ${(props) => props.theme.breakpoints.down('sm')} {
-      width: 40px;
-    }
-  }
 
   .title {
     display: flex;
