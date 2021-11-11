@@ -10,18 +10,18 @@ import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, useLocati
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { setDateTool } from '@arcblock/ux/lib/Util';
 import Center from '@arcblock/ux/lib/Center';
+import { StepProvider, Layout } from '@arcblock/abt-launcher';
+import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
-import Layout from './components/layout';
 import { getBlockletMetaUrl, getEnvironment } from './libs/utils';
-import { BlockletMetaProvider } from './libs/context/blocklet-meta';
+import { BlockletMetaProvider, useBlockletMetaContext } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
 import useQuery from './hooks/query';
-import { StepProvider } from './libs/context/steps';
 
 const theme = create({
   typography: {
@@ -33,6 +33,7 @@ const InnerApp = () => {
   const { t, locale } = useLocaleContext();
   const location = useLocation();
   const query = useQuery();
+  const blockletMeta = useBlockletMetaContext();
 
   moment.locale(locale === 'zh' ? 'zh-cn' : locale);
   setDateTool(moment);
@@ -63,23 +64,18 @@ const InnerApp = () => {
   ];
 
   return (
-    <ABTNodeProvider>
-      <GlobalStyle />
-      <CssBaseline />
-      <div className="wrapper">
-        <BlockletMetaProvider>
-          <StepProvider steps={steps}>
-            <Layout>
-              <Switch>
-                <Route exact path="/launch" component={LaunchPage} />
-                <Route exact path="/launch/new" component={NewNodePage} />
-                <Redirect to={`/launch${location.search}`} />
-              </Switch>
-            </Layout>
-          </StepProvider>
-        </BlockletMetaProvider>
-      </div>
-    </ABTNodeProvider>
+    <StepProvider steps={steps}>
+      <Layout
+        locale={locale}
+        blockletMeta={blockletMeta.data}
+        headerEndAddons={<LocaleSelector size={26} showText={false} className="locale-addon" />}>
+        <Switch>
+          <Route exact path="/launch" component={LaunchPage} />
+          <Route exact path="/launch/new" component={NewNodePage} />
+          <Redirect to={`/launch${location.search}`} />
+        </Switch>
+      </Layout>
+    </StepProvider>
   );
 };
 
@@ -87,7 +83,15 @@ const App = () => (
   <MuiThemeProvider theme={theme}>
     <ThemeProvider theme={theme}>
       <LocaleProvider translations={translations}>
-        <InnerApp />
+        <ABTNodeProvider>
+          <GlobalStyle />
+          <CssBaseline />
+          <div className="wrapper">
+            <BlockletMetaProvider>
+              <InnerApp />
+            </BlockletMetaProvider>
+          </div>
+        </ABTNodeProvider>
       </LocaleProvider>
     </ThemeProvider>
   </MuiThemeProvider>
