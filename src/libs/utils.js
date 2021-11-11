@@ -55,6 +55,8 @@ const getBlockletLogoUrl = ({ did, baseUrl, logoPath }) => {
   return joinUrl(apiPrefix, `/blocklet/logo/${did}`);
 };
 
+const getRegistryUrl = (blockletMetaUrl) => (blockletMetaUrl ? new URL(blockletMetaUrl).origin : '');
+
 export {
   getWebWalletUrl,
   isObjectFn,
@@ -64,4 +66,5 @@ export {
   getEnvironment,
   getBlockletMetaUrl,
   getBlockletLogoUrl,
+  getRegistryUrl,
 };

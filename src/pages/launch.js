@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import isEmpty from 'is-empty';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import useSessionStorage from 'react-use/lib/useSessionStorage';
+import useLocalStorage from 'react-use/lib/useLocalStorage';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
@@ -23,7 +23,7 @@ function LaunchPage() {
   const [open, setOpen] = useState(false);
   const query = useQuery();
   const history = useHistory();
-  const [launcherCredential, setLauncherCredential] = useSessionStorage('launcher_credential', {});
+  const [launcherCredential, setLauncherCredential] = useLocalStorage('launcher_credential', {});
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
   const [fetchNodesState, setFetchNodesState] = useState({
@@ -134,7 +134,7 @@ function LaunchPage() {
       </div>
       <div className="page-footer">
         <Hidden smUp>
-          <Button rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+          <Button className="create-button" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
             {t('launch.createNode')}
           </Button>
         </Hidden>
@@ -214,6 +214,10 @@ const Container = styled.div`
     padding: 15px;
     box-shadow: 0px -1px 1px rgba(168, 180, 197, 0.12);
     background: #ffffff;
+
+    .create-button {
+      margin-right: 32px;
+    }
 
     ${(props) => props.theme.breakpoints.up('sm')} {
       justify-content: center;

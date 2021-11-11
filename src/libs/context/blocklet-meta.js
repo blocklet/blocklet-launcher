@@ -5,7 +5,7 @@ import Center from '@arcblock/ux/lib/Center';
 import { Alert } from '@material-ui/lab';
 import { useAsync } from 'react-use';
 import useQuery from '../../hooks/query';
-import { getBlockletMetaUrl } from '../utils';
+import { getBlockletMetaUrl, getRegistryUrl } from '../utils';
 import api from '../api';
 
 const BlockletMetaContext = createContext();
@@ -21,8 +21,11 @@ function BlockletMetaProvider({ children }) {
   const blockletMetaState = useAsync(async () => {
     try {
       const { data } = await api.get(`/blocklet-meta?url=${encodeURIComponent(blockletMetaUrl)}`);
+      data.meta.registryUrl = getRegistryUrl(blockletMetaUrl);
+
       return data.meta;
     } catch (err) {
+      console.warn(err);
       setError(error.message);
       return {};
     }
@@ -30,7 +33,7 @@ function BlockletMetaProvider({ children }) {
 
   const value = {
     url: blockletMetaUrl,
-    registryUrl: new URL(blockletMetaUrl).origin,
+    registryUrl: getRegistryUrl(blockletMetaUrl),
     loading: blockletMetaState.loading,
     error,
     data: blockletMetaState.value,
