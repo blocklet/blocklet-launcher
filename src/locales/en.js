@@ -8,7 +8,6 @@ module.exports = flat({
   },
   launch: {
     selectAbtNode: 'Select ABT Node',
-    openInRegistry: 'Open In Registry',
     launchApp: 'Launch Application',
     createAbtNode: 'Create ABT Node',
     title: 'Select ABT Node',
