@@ -2,7 +2,7 @@ const flat = require('flat');
 
 module.exports = flat({
   common: {
-    select: '选择',
+    next: '下一步',
     nodeList: '节点列表',
     optional: '可选',
   },

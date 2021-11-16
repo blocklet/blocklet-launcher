@@ -2,7 +2,7 @@ const flat = require('flat');
 
 module.exports = flat({
   common: {
-    select: 'Select',
+    next: 'Next',
     nodeList: 'Node List',
     optional: 'Optional',
   },
