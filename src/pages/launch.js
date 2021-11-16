@@ -145,7 +145,7 @@ function LaunchPage() {
           rounded
           color="primary"
           variant="contained">
-          {t('common.select')}
+          {t('common.next')}
         </Button>
       </div>
     </>
