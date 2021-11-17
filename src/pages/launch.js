@@ -106,9 +106,11 @@ function LaunchPage() {
           </div>
         )}
         {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(launcherCredential) && (
-          <Button color="primary" rounded variant="contained" onClick={handleConnectLauncher}>
-            {t('launch.connectLauncherButton')}
-          </Button>
+          <div className="center">
+            <Button color="primary" rounded variant="contained" onClick={handleConnectLauncher}>
+              {t('launch.connectLauncherButton')}
+            </Button>
+          </div>
         )}
         {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
           <>
@@ -165,6 +167,11 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
+
+  .center {
+    display: flex;
+    justify-content: center;
+  }
 
   .page-title {
     color: #222;
