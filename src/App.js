@@ -12,16 +12,18 @@ import { setDateTool } from '@arcblock/ux/lib/Util';
 import Center from '@arcblock/ux/lib/Center';
 import { StepProvider, Layout } from '@arcblock/abt-launcher';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
+import SessionManager from '@arcblock/did-connect/lib/SessionManager';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
-import { getBlockletMetaUrl, getEnvironment } from './libs/utils';
+import { getBlockletMetaUrl, getEnvironment, getWebWalletUrl } from './libs/utils';
 import { BlockletMetaProvider, useBlockletMetaContext } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
 import useQuery from './hooks/query';
+import { SessionProvider, useSessionContext } from './contexts/session';
 
 const theme = create({
   typography: {
@@ -34,6 +36,7 @@ const InnerApp = () => {
   const location = useLocation();
   const query = useQuery();
   const blockletMeta = useBlockletMetaContext();
+  const { session } = useSessionContext();
 
   moment.locale(locale === 'zh' ? 'zh-cn' : locale);
   setDateTool(moment);
@@ -68,7 +71,13 @@ const InnerApp = () => {
       <Layout
         locale={locale}
         blockletMeta={blockletMeta.data}
-        headerEndAddons={<LocaleSelector size={26} showText={false} className="locale-addon" />}>
+        headerEndAddons={
+          // eslint-disable-next-line react/jsx-wrap-multilines
+          <>
+            <LocaleSelector size={26} showText={false} className="locale-addon" />
+            <SessionManager session={session} webWalletUrl={getWebWalletUrl()} />
+          </>
+        }>
         <Switch>
           <Route exact path="/launch" component={LaunchPage} />
           <Route exact path="/launch/new" component={NewNodePage} />
@@ -80,21 +89,23 @@ const InnerApp = () => {
 };
 
 const App = () => (
-  <MuiThemeProvider theme={theme}>
-    <ThemeProvider theme={theme}>
-      <LocaleProvider translations={translations}>
-        <ABTNodeProvider>
-          <GlobalStyle />
-          <CssBaseline />
-          <div className="wrapper">
-            <BlockletMetaProvider>
-              <InnerApp />
-            </BlockletMetaProvider>
-          </div>
-        </ABTNodeProvider>
-      </LocaleProvider>
-    </ThemeProvider>
-  </MuiThemeProvider>
+  <SessionProvider serviceHost="https://launcher.staging.arcblock.io/.service/@abtnode/auth-service/" autoLogin={false}>
+    <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <LocaleProvider translations={translations}>
+          <ABTNodeProvider>
+            <GlobalStyle />
+            <CssBaseline />
+            <div className="wrapper">
+              <BlockletMetaProvider>
+                <InnerApp />
+              </BlockletMetaProvider>
+            </div>
+          </ABTNodeProvider>
+        </LocaleProvider>
+      </ThemeProvider>
+    </MuiThemeProvider>
+  </SessionProvider>
 );
 
 const WrappedApp = withRouter(App);

@@ -9,10 +9,6 @@ function ConnectLauncher({ onSuccess, onClose }) {
   const launcherUrl = getEnvironment('LAUNCHER_URL');
   const { locale, t } = useContext(LocaleContext);
 
-  const handleSuccess = ({ did }) => {
-    onSuccess({ userDid: did });
-  };
-
   const handleClose = () => {
     onClose();
   };
@@ -23,7 +19,7 @@ function ConnectLauncher({ onSuccess, onClose }) {
       locale={locale}
       checkFn={api.create({ baseURL: launcherUrl }).get}
       onClose={handleClose}
-      onSuccess={handleSuccess}
+      onSuccess={onSuccess}
       checkTimeout={5 * 60 * 1000}
       webWalletUrl={getWebWalletUrl()}
       messages={{

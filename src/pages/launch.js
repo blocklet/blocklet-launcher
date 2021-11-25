@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import isEmpty from 'is-empty';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import useLocalStorage from 'react-use/lib/useLocalStorage';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
@@ -16,6 +15,7 @@ import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
 import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
+import { useSessionContext } from '../contexts/session';
 
 function LaunchPage() {
   const { t, locale } = useLocaleContext();
@@ -23,13 +23,14 @@ function LaunchPage() {
   const [open, setOpen] = useState(false);
   const query = useQuery();
   const history = useHistory();
-  const [launcherCredential, setLauncherCredential] = useLocalStorage('launcher_credential', {});
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
   const [fetchNodesState, setFetchNodesState] = useState({
     loading: true,
     error: '',
   });
+  const { session = {} } = useSessionContext();
+  const { user } = session;
 
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
@@ -37,12 +38,13 @@ function LaunchPage() {
     return <Alert severity="error">{t('launch.invalidParam')}</Alert>;
   }
 
-  const handleSuccess = async ({ userDid }) => {
+  const handleSuccess = async ({ did, loginToken }) => {
     setOpen(false);
-    setLauncherCredential({ userDid });
+    localStorage.setItem('abt_launcher_login_token', loginToken);
+    session.refresh(true);
 
     try {
-      const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${userDid}`);
+      const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${did}`);
 
       setFetchNodesState((pre) => {
         pre.loading = false;
@@ -68,12 +70,9 @@ function LaunchPage() {
   const handleConnectLauncher = () => setOpen(true);
 
   useEffect(() => {
-    if (isEmpty(launcherCredential)) {
+    if (isEmpty(user)) {
       setOpen(true);
-      return;
     }
-
-    handleSuccess(launcherCredential);
   }, [locale]);
 
   const handleCreateNode = () => {
@@ -105,14 +104,14 @@ function LaunchPage() {
             <Spinner />
           </div>
         )}
-        {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(launcherCredential) && (
+        {!fetchNodesState.loading && !fetchNodesState.error && isEmpty(user) && (
           <div className="center">
             <Button color="primary" rounded variant="contained" onClick={handleConnectLauncher}>
               {t('launch.connectLauncherButton')}
             </Button>
           </div>
         )}
-        {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
+        {!isEmpty(user) && !fetchNodesState.loading && !fetchNodesState.error && (
           <>
             <Hidden smDown>
               <div className="toolbar">
