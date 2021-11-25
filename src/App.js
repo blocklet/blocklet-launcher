@@ -18,7 +18,7 @@ import { translations } from './locales';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
-import { getBlockletMetaUrl, getEnvironment } from './libs/utils';
+import { getBlockletLogoUrl, getBlockletMetaUrl, getEnvironment } from './libs/utils';
 import { BlockletMetaProvider, useBlockletMetaContext } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
 import useQuery from './hooks/query';
@@ -63,11 +63,24 @@ const InnerApp = () => {
     },
   ];
 
+  console.log(
+    getBlockletLogoUrl({
+      did: blockletMeta.data.did,
+      baseUrl: blockletMeta.registryUrl,
+      logoPath: blockletMeta.data.logo,
+    })
+  );
+
   return (
     <StepProvider steps={steps}>
       <Layout
         locale={locale}
         blockletMeta={blockletMeta.data}
+        logoUrl={getBlockletLogoUrl({
+          did: blockletMeta.data.did,
+          baseUrl: blockletMeta.registryUrl,
+          logoPath: blockletMeta.data.logo,
+        })}
         headerEndAddons={<LocaleSelector size={26} showText={false} className="locale-addon" />}>
         <Switch>
           <Route exact path="/launch" component={LaunchPage} />
