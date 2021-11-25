@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
-import { Grid, Typography } from '@material-ui/core';
+import Empty from '@arcblock/ux/lib/Empty';
+import { Grid } from '@material-ui/core';
 import Item from './item';
 
 export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect, ...props }) {
@@ -10,7 +11,7 @@ export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect
 
   return (
     <Content>
-      {abtnodes.length === 0 && <Typography className="empty">{t('launch.noInstance')}</Typography>}
+      {abtnodes.length === 0 && <Empty>{t('launch.noInstance')}</Empty>}
       {abtnodes.length > 0 && (
         <div className="node-list">
           <Grid container spacing={5} {...props}>
