@@ -119,7 +119,7 @@ function LaunchPage() {
                 <Typography className="toolbar_title" component="span">
                   {t('common.nodeList')}
                 </Typography>
-                <Button rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+                <Button variant="contained" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
                   {t('launch.createNode')}
                 </Button>
               </div>
