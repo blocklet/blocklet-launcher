@@ -1,5 +1,5 @@
 name: install-on-abtnode
-title: Install On ABT Node
+title: Blocklet Launcher
 version: 1.1.8
 description: A simple blocklet that helps you install blocklet on abtnode
 keywords:
@@ -25,12 +25,12 @@ homepage: ''
 screenshots: []
 environments:
   - name: LAUNCHER_URL
-    description: The address of ABT Node Launcher
+    description: The address of Blocklet Server Launcher
     required: true
     secure: false
     default: ''
   - name: LAUNCHER_INSTANCE_API
-    description: The API for getting ABT Node instances
+    description: The API for getting Blocklet Server instances
     required: true
     secure: false
     default: ''

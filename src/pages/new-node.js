@@ -33,7 +33,7 @@ export default function NewNode() {
       {loading && <Spinner />}
       <iframe
         onLoad={handleLoaded}
-        title="purchase abt node"
+        title="purchase blocklet server"
         width={width}
         height={height}
         frameBorder="0"
