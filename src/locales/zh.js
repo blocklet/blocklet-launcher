@@ -28,6 +28,6 @@ module.exports = flat({
     },
   },
   pageTitle: {
-    selectNode: '选择 ABT Node',
+    selectNode: '选择 Blocklet Launcher',
   },
 });

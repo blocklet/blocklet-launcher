@@ -7,10 +7,10 @@ module.exports = flat({
     optional: 'Optional',
   },
   launch: {
-    selectAbtNode: 'Select ABT Node',
+    selectAbtNode: 'Select Blocklet Server',
     launchApp: 'Launch Application',
-    createAbtNode: 'Create ABT Node',
-    title: 'Select ABT Node',
+    createAbtNode: 'Create Blocklet Server',
+    title: 'Select Blocklet Server',
     noInstance: 'No Instance',
     invalidParam: 'Invalid Parameter',
     loadingError: 'Loading nodes error',
@@ -27,6 +27,6 @@ module.exports = flat({
     },
   },
   pageTitle: {
-    selectNode: 'Select ABT Node',
+    selectNode: 'Select Blocklet Server',
   },
 });
