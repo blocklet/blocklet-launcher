@@ -1,14 +1,14 @@
-# Install On ABT Node
+# Blocklet Launcher
 
 [![docs](https://img.shields.io/badge/powered%20by-arcblock-green.svg)](https://docs.arcblock.io)
 
-A simple blocklet that helps you to install blocket on ABT Node
+A simple blocklet that helps you to install blocklet on Blocklet Server.
 
 [![docs](https://img.shields.io/badge/-run%20online-blue.svg)](https://install.arcblock.io/)
 
-## Install on my ABT Node
+## Install on my Blocklet Server
 
-[![Install on my ABT Node](https://raw.githubusercontent.com/blocklet/development-guide/main/assets/install_on_abtnode.svg)](https://install.arcblock.io/?action=blocklet-install&meta_url=https%3A%2F%2Fgithub.com%2Fblocklet%2Finstall-on-abtnode%2Freleases%2Fdownload%2F1.1.7%2Fblocklet.json)
+[![Install on my Blocklet Server](https://raw.githubusercontent.com/blocklet/development-guide/main/assets/install_on_abtnode.svg)](https://install.arcblock.io/?action=blocklet-install&meta_url=https%3A%2F%2Fgithub.com%2Fblocklet%2Finstall-on-abtnode%2Freleases%2Fdownload%2F1.1.7%2Fblocklet.json)
 
 ## Table of Contents
 
@@ -34,7 +34,7 @@ yarn install
 
 ## Usage
 
-### Development to local ABT Node
+### Development to local Blocklet Server
 
 ```
 yarn start:client
@@ -46,7 +46,7 @@ abtnode start
 abtnode dev .
 ```
 
-### Deploy to local ABT Node
+### Deploy to local Blocklet Server
 
 ```
 abtnode init
