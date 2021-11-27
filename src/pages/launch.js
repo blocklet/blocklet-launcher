@@ -135,7 +135,7 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
-        <Hidden smUp>
+        <Hidden mdUp>
           <Button className="create-button" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
             {t('launch.createNode')}
           </Button>
