@@ -28,6 +28,6 @@ module.exports = flat({
     },
   },
   pageTitle: {
-    selectNode: '选择 Blocklet Launcher',
+    selectNode: '选择 Blocklet Server',
   },
 });
