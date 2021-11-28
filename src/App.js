@@ -63,14 +63,6 @@ const InnerApp = () => {
     },
   ];
 
-  console.log(
-    getBlockletLogoUrl({
-      did: blockletMeta.data.did,
-      baseUrl: blockletMeta.registryUrl,
-      logoPath: blockletMeta.data.logo,
-    })
-  );
-
   return (
     <StepProvider steps={steps}>
       <Layout
