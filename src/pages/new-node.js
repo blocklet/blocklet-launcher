@@ -19,13 +19,21 @@ export default function NewNode() {
 
   const handleLoaded = () => setLoading(false);
 
-  useEffect(() => {
+  const handleResize = () => {
+    if (!ref.current) {
+      return;
+    }
+
     const rect = ref.current.parentElement.getBoundingClientRect();
     // 加载完成后可以更准确地计算父容器长宽
     if (!loading) {
       setWidth(`${rect.width}px`);
       setHeight(`${rect.height}px`);
     }
+  };
+
+  useEffect(() => {
+    handleResize();
   }, [loading]);
 
   return (
@@ -52,4 +60,5 @@ const Div = styled.div`
 
   width: 100%;
   height: 100%;
+  padding-bottom: 20px;
 `;
