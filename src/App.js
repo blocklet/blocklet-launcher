@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { create } from '@arcblock/ux/lib/Theme';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, useLocation } from 'react-router-dom';
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { setDateTool } from '@arcblock/ux/lib/Util';
@@ -74,15 +74,25 @@ const InnerApp = () => {
           logoPath: blockletMeta.data.logo,
         })}
         headerEndAddons={<LocaleSelector size={26} showText={false} className="locale-addon" />}>
-        <Switch>
-          <Route exact path="/launch" component={LaunchPage} />
-          <Route exact path="/launch/new" component={NewNodePage} />
-          <Redirect to={`/launch${location.search}`} />
-        </Switch>
+        <Content>
+          <Switch>
+            <Route exact path="/launch" component={LaunchPage} />
+            <Route exact path="/launch/new" component={NewNodePage} />
+            <Redirect to={`/launch${location.search}`} />
+          </Switch>
+        </Content>
       </Layout>
     </StepProvider>
   );
 };
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
 
 const App = () => (
   <MuiThemeProvider theme={theme}>
