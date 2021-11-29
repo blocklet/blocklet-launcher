@@ -60,6 +60,12 @@ function LaunchPage() {
     }
   };
 
+  useEffect(() => {
+    if (abtnodes && abtnodes.length > 0) {
+      setSelectedNode(abtnodes[0]);
+    }
+  }, [abtnodes]);
+
   const handleClose = () => {
     setOpen(false);
     setFetchNodesState({ ...fetchNodesState, loading: false });
