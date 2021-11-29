@@ -167,6 +167,13 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
+  ${(props) => props.theme.breakpoints.up('sm')} {
+    margin-top: 68px;
+  }
+
+  ${(props) => props.theme.breakpoints.down('sm')} {
+    margin-top: 34px;
+  }
 
   .center {
     display: flex;
