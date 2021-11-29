@@ -37,28 +37,38 @@ export default function NewNode() {
   }, [loading]);
 
   return (
-    <Div ref={ref}>
-      {loading && <Spinner />}
-      <iframe
-        onLoad={handleLoaded}
-        title="purchase blocklet server"
-        width={width}
-        height={height}
-        frameBorder="0"
-        border="0"
-        cellSpacing="0"
-        src={launchUrlObject.toString()}
-      />
+    <Div>
+      <Container ref={ref}>
+        {loading && <Spinner />}
+        <iframe
+          onLoad={handleLoaded}
+          title="purchase blocklet server"
+          width={width}
+          height={height}
+          frameBorder="0"
+          border="0"
+          cellSpacing="0"
+          src={launchUrlObject.toString()}
+        />
+      </Container>
     </Div>
   );
 }
 
-const Div = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 
   width: 100%;
   height: 100%;
-  padding-bottom: 20px;
+`;
+
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
 `;
