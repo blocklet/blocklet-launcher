@@ -15,6 +15,7 @@ import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
+import HomePage from './pages/index';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
@@ -102,9 +103,12 @@ const App = () => (
           <GlobalStyle />
           <CssBaseline />
           <div className="wrapper">
-            <BlockletMetaProvider>
-              <InnerApp />
-            </BlockletMetaProvider>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <BlockletMetaProvider>
+                <InnerApp />
+              </BlockletMetaProvider>
+            </Switch>
           </div>
         </ABTNodeProvider>
       </LocaleProvider>
