@@ -38,7 +38,7 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         <Typography className="instance-name text bold">{abtnode.name}</Typography>
         <Typography className="instance-desc text light">{abtnode.description}</Typography>
       </div>
-      <Hidden smUp>
+      <Hidden mdUp>
         <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
       </Hidden>
       <Popover
@@ -73,7 +73,7 @@ const Container = styled.div`
   border-radius: 8px;
   border: 1px solid #f0f0f0;
 
-  ${(props) => props.theme.breakpoints.up('sm')} {
+  ${(props) => props.theme.breakpoints.up('md')} {
     flex-direction: column;
     align-items: center;
     height: 200px;
@@ -88,7 +88,7 @@ const Container = styled.div`
   .node-header {
     display: flex;
 
-    ${(props) => props.theme.breakpoints.up('sm')} {
+    ${(props) => props.theme.breakpoints.up('md')} {
       align-items: flex-start;
       justify-content: space-between;
       width: 100%;
@@ -99,7 +99,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 
-    ${(props) => props.theme.breakpoints.up('sm')} {
+    ${(props) => props.theme.breakpoints.up('md')} {
       margin-top: 26px;
     }
 
@@ -128,7 +128,6 @@ const Container = styled.div`
 
   .instance-desc {
     font-size: 14px;
-    line-height: 14px;
 
     ${(props) => props.theme.breakpoints.up('sm')} {
       -webkit-line-clamp: 2;
