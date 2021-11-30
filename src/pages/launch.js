@@ -213,8 +213,8 @@ const Container = styled.div`
     overflow-y: auto;
 
     ${(props) => props.theme.breakpoints.up('sm')} {
-      margin-top: 116px;
-      padding: 40px;
+      margin-top: 76px;
+      padding: 24px;
     }
 
     ${(props) => props.theme.breakpoints.down('sm')} {
@@ -230,8 +230,6 @@ const Container = styled.div`
 
     width: 100%;
     margin-top: auto;
-    height: 68px;
-    padding: 15px;
     box-shadow: 0px -1px 1px rgba(168, 180, 197, 0.12);
     background: #ffffff;
 
@@ -239,17 +237,22 @@ const Container = styled.div`
       margin-right: 32px;
     }
 
-    ${(props) => props.theme.breakpoints.up('sm')} {
+    ${(props) => props.theme.breakpoints.up('md')} {
       justify-content: center;
+      padding: 24px;
 
       & > button {
         width: 300px;
       }
     }
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      padding: 16px;
+    }
   }
 
   .node-list {
-    ${(props) => props.theme.breakpoints.up('sm')} {
+    ${(props) => props.theme.breakpoints.up('md')} {
       margin-top: 40px;
     }
   }
