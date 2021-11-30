@@ -5,6 +5,10 @@ module.exports = flat({
     next: '下一步',
     nodeList: '节点列表',
     optional: '可选',
+    start: '开始',
+  },
+  home: {
+    intro: 'Blocklet Launcher 可以帮助你很方便的将应用安装到你的 Blocklet Server 上。',
   },
   launch: {
     openInRegistry: '在 Registry 中打开',

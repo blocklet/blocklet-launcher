@@ -5,6 +5,10 @@ module.exports = flat({
     next: 'Next',
     nodeList: 'Node List',
     optional: 'Optional',
+    start: 'Start',
+  },
+  home: {
+    intro: 'Blocklet Launcher can help you easily install applications to your Blocklet Server.',
   },
   launch: {
     selectAbtNode: 'Select Blocklet Server',
