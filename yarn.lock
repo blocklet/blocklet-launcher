@@ -18,25 +18,25 @@
     lodash "^4.17.21"
     react-app-polyfill "^1.0.6"
 
-"@arcblock/abt-launcher@^1.15.18":
-  version "1.15.18"
-  resolved "https://registry.yarnpkg.com/@arcblock/abt-launcher/-/abt-launcher-1.15.18.tgz#e9f9f3b8bf2e55bfa56cf791e5169987fff62d96"
-  integrity sha512-zftt+j7L+WGYrqrblo25gr5J9g5dXAHvN8pLNm1s93ziCGuIgbJ5N2YgqMXvhBkI/9SxyLeyYQXPICMUjdHhcg==
+"@arcblock/abt-launcher@^1.15.19":
+  version "1.15.19"
+  resolved "https://registry.yarnpkg.com/@arcblock/abt-launcher/-/abt-launcher-1.15.19.tgz#87e769c91a87951c325030ccc037cfd551886e71"
+  integrity sha512-c+QLTkpiBKV0haifU48IkkJ2ksPYSP6hDS0SlAOH3BCMIX0qiYVfwP7GvOL3jQcFr7Ia2E5k+D5r2oR2gwk1dw==
   dependencies:
-    "@arcblock/ux" "^1.15.18"
+    "@arcblock/ux" "^1.15.19"
     "@material-ui/core" "^4.12.3"
     styled-components "^5.3.3"
     url-join "^4.0.1"
 
-"@arcblock/did-connect@^1.15.18":
-  version "1.15.18"
-  resolved "https://registry.yarnpkg.com/@arcblock/did-connect/-/did-connect-1.15.18.tgz#0c1c95eaa13ce4213cc60cc8788b11a17930a77c"
-  integrity sha512-MlaXo3QEKEiphb2/mGfhejmUcXwgK+kjtFzII6NpgtvUjzA8Nynfqhns3KokNvAJzxyxaUAgnitM4ba0dwl6MQ==
+"@arcblock/did-connect@^1.15.19":
+  version "1.15.19"
+  resolved "https://registry.yarnpkg.com/@arcblock/did-connect/-/did-connect-1.15.19.tgz#aaed2335c564a7402679a072a6f003ac738416f1"
+  integrity sha512-XASKwNZNtEVtYs5xgA7DsvoPfHrBVhsbTPOTvtdZp/yLkr6+ieO1PgJnVQWaDm30JKwex5xtgPkhyKeFsVcMKg==
   dependencies:
     "@arcblock/event-client" "^1.0.23"
-    "@arcblock/icons" "^1.15.18"
-    "@arcblock/react-hooks" "^1.15.18"
-    "@arcblock/ux" "^1.15.18"
+    "@arcblock/icons" "^1.15.19"
+    "@arcblock/react-hooks" "^1.15.19"
+    "@arcblock/ux" "^1.15.19"
     "@fontsource/rubik" "^4.5.0"
     "@fontsource/ubuntu-mono" "^4.4.5"
     "@material-ui/core" "^4.12.3"
@@ -73,15 +73,15 @@
     wolfy87-eventemitter "^5.2.5"
     ws "^7.2.0"
 
-"@arcblock/icons@^1.15.18":
-  version "1.15.18"
-  resolved "https://registry.yarnpkg.com/@arcblock/icons/-/icons-1.15.18.tgz#aa2676f2ea7cfdcaa9e29387064f8adf7a702fa6"
-  integrity sha512-lYH0ofN6GjZXx31FUHoCjReZ9YKoxLjJ0l2XR+WsWBZOU9eYztfs7JMtYkomJcINGlSqh9qkgf3nBR7VFaD00Q==
+"@arcblock/icons@^1.15.19":
+  version "1.15.19"
+  resolved "https://registry.yarnpkg.com/@arcblock/icons/-/icons-1.15.19.tgz#ce7030b4d26d5b651456076bffd9c160dd84e186"
+  integrity sha512-QIjlmamQ62Z+Xocai0Xgd3SBt0SoseHDxxDL7bK2tbDceloSeyGlKSiEWVXzn3TNKz4VIQV3lOPHXYUUxbuQMA==
 
-"@arcblock/react-hooks@^1.15.18":
-  version "1.15.18"
-  resolved "https://registry.yarnpkg.com/@arcblock/react-hooks/-/react-hooks-1.15.18.tgz#86d844384df3963f9eff20e91015ba220de8648a"
-  integrity sha512-SA/+kSCMdZPhC3ejJYrXZ42OsAR79Dq3XTWOcgDw1ix06EhsAT+t04zOocWfjLqRv8slBhPOS/5thQFkan3u6A==
+"@arcblock/react-hooks@^1.15.19":
+  version "1.15.19"
+  resolved "https://registry.yarnpkg.com/@arcblock/react-hooks/-/react-hooks-1.15.19.tgz#3dab37dab6b602f7b788f10ae4bac162df991fe6"
+  integrity sha512-V71vFEzsEjREcTjfSnHAc6oMT24GqpGLC2VeF9TIBqek+Q6+DZhjF6jItZYALA+OYIG3iEMgOCiccXiAuuBvlQ==
   dependencies:
     core-js "^3.6.4"
     event-target-shim "^5.0.1"
@@ -98,13 +98,13 @@
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
 
-"@arcblock/ux@^1.15.18":
-  version "1.15.18"
-  resolved "https://registry.yarnpkg.com/@arcblock/ux/-/ux-1.15.18.tgz#e82f5641e956affb79a528b029941e93785542e6"
-  integrity sha512-qQF4cmAT137ABHC6PrXaDcO/ELYYaf6DZqwqJYrmEDrkzrz4vAxgv1pLsPB5VdaHNKzMUbGdLVhXvnXc5dPxVA==
+"@arcblock/ux@^1.15.19":
+  version "1.15.19"
+  resolved "https://registry.yarnpkg.com/@arcblock/ux/-/ux-1.15.19.tgz#0917da9728add9cf0872e4da6a34656256ce1b98"
+  integrity sha512-lcRiVrAifXLxI4OwjSn7b07+26egIPjMBMMAGkpECns5SRBEnhbKpygcRrTabSyb9BgHmvic+NNxzVx3d3SImA==
   dependencies:
-    "@arcblock/icons" "^1.15.18"
-    "@arcblock/react-hooks" "^1.15.18"
+    "@arcblock/icons" "^1.15.19"
+    "@arcblock/react-hooks" "^1.15.19"
     "@babel/plugin-syntax-dynamic-import" "^7.8.3"
     "@material-ui/core" "^4.12.3"
     "@material-ui/icons" "4.11.2"
