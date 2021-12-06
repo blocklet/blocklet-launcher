@@ -12,11 +12,15 @@ A simple blocklet that helps you to install blocket on ABT Node
 
 ## Table of Contents
 
-- [Table of Contents](#Table-of-Contents)
-- [Visuals](#Visuals)
-- [Installation](#Introduction)
-- [Usage](#Usage)
-- [License](#License)
+- [Install On ABT Node](#install-on-abt-node)
+  - [Install on my ABT Node](#install-on-my-abt-node)
+  - [Table of Contents](#table-of-contents)
+  - [Visuals](#visuals)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Development to local ABT Node](#development-to-local-abt-node)
+    - [Deploy to local ABT Node](#deploy-to-local-abt-node)
+  - [License](#license)
 
 ## Visuals
 
@@ -43,7 +47,7 @@ or
 
 abtnode init
 abtnode start
-abtnode dev .
+blocklet dev
 ```
 
 ### Deploy to local ABT Node
@@ -51,7 +55,7 @@ abtnode dev .
 ```
 abtnode init
 abtnode start
-abtnode deploy .
+blocklet deploy .
 ```
 
 ## License
