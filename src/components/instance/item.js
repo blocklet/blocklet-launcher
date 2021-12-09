@@ -22,6 +22,11 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
+    console.log('popover out 3');
+  };
+
+  const h22 = () => {
+    setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
@@ -31,7 +36,20 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
       <div className="node-header">
         <ABTNodeIcon color="#BFBFBF" />
         <Hidden smDown>
-          <InfoIcon style={{ cursor: 'pointer' }} onMouseEnter={handlePopoverOpen} color="disabled" />
+          <span>tt11</span>
+          <InfoIcon
+            className="info_icon"
+            style={{ cursor: 'pointer' }}
+            onMouseEnter={handlePopoverOpen}
+            color="disabled"
+          />
+          {/* <div style={{ position: 'relative' }}>
+            <InfoIcon className="info_icon" style={{ cursor: 'pointer' }} color="disabled" />
+            <div className="desktop_pop_card">
+              <DidAddress>{abtnode.did}</DidAddress>
+              <ExternalLink href={abtnode.url}>{abtnode.url}</ExternalLink>
+            </div>
+          </div> */}
         </Hidden>
       </div>
       <div className="node-body">
@@ -39,16 +57,20 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         <Typography className="instance-desc text light">{abtnode.description}</Typography>
       </div>
       <Hidden mdUp>
+        <span>aa22</span>
         <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
       </Hidden>
       <Popover
-        id="mouse-over-popover"
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',
         }}
+        sx={{
+          pointerEvents: 'none',
+        }}
+        disableRestoreFocus
         transformOrigin={{
           vertical: 'top',
           horizontal: 'center',
@@ -56,7 +78,21 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         onClose={handlePopoverClose}>
         <Card>
           <CardContent
+            className="card_content"
+            onMouseLeave={h22}
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100px' }}>
+            {/* <span className="card_aider">s</span> */}
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                zIndex: 10,
+                top: '-30px',
+                width: '40px',
+                height: '40px',
+              }}>
+              a
+            </div>
             <DidAddress>{abtnode.did}</DidAddress>
             <ExternalLink href={abtnode.url}>{abtnode.url}</ExternalLink>
           </CardContent>
@@ -85,6 +121,43 @@ const Container = styled.div`
     height: 72px;
   }
 
+  .card_content {
+    position: 'relative';
+    display: 'flex';
+    flex-direction: 'column';
+    justify-content: 'space-between';
+    height: '100px';
+  }
+  .card_aider {
+    display: block;
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    background-color: red;
+  }
+
+  /* .desktop_pop_card {
+    padding: 8px;
+    position: absolute;
+    z-index: 2;
+    width: 298.78px;
+    height: 89px;
+    right: -100px;
+    top: 28px;
+
+    background: #ffffff;
+
+    box-shadow: 0px 4px 16px rgba(90, 106, 129, 0.07);
+    border-radius: 12px;
+    transition: all ease 0.2s;
+  }
+
+  .info_icon:hover + .desktop_pop_card {
+    background-color: red;
+  } */
   .node-header {
     display: flex;
 
