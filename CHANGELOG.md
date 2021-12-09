@@ -1,3 +1,7 @@
+## 1.1.9 (December 09, 2021)
+
+- fix: the bubble popup can be hidden after mouseout
+
 ## 1.1.8 (October 05, 2021)
 
 - add create abtnode link when there is no abtnode
