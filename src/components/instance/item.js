@@ -43,7 +43,6 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         <Hidden smDown>
           <InfoIcon
             className="info_icon"
-            style={{ cursor: 'pointer', zIndex: 1401 }}
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
             color="disabled"
@@ -79,17 +78,6 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
             onMouseEnter={handlerOverPop}
             onMouseLeave={handlePopoverClose}
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100px' }}>
-            <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                zIndex: 10,
-                top: '-30px',
-                width: '40px',
-                height: '40px',
-              }}>
-              a
-            </div>
             <DidAddress>{abtnode.did}</DidAddress>
             <ExternalLink href={abtnode.url}>{abtnode.url}</ExternalLink>
           </CardContent>
@@ -118,6 +106,11 @@ const Container = styled.div`
     height: 72px;
   }
 
+  .info_icon {
+    cursor: 'pointer';
+    z-index: 1401;
+  }
+
   .card_content {
     position: 'relative';
     display: 'flex';
@@ -125,17 +118,6 @@ const Container = styled.div`
     justify-content: 'space-between';
     height: '100px';
   }
-  .card_aider {
-    display: block;
-    position: absolute;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 60px;
-    height: 60px;
-    background-color: red;
-  }
-
   .node-header {
     display: flex;
 
