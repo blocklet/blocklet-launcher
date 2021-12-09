@@ -13,20 +13,25 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
   const url = new URL('/admin/launch-blocklet', abtnode.url);
   url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletMetaUrl)));
 
+  let popCloseTimer;
+
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
     event.preventDefault();
     event.stopPropagation();
+    clearTimeout(popCloseTimer);
     return false;
   };
 
   const handlePopoverClose = () => {
-    setAnchorEl(null);
-    console.log('popover out 3');
+    clearTimeout(popCloseTimer);
+    popCloseTimer = setTimeout(() => {
+      setAnchorEl(null);
+    }, 100);
   };
 
-  const h22 = () => {
-    setAnchorEl(null);
+  const handlerOverPop = () => {
+    clearTimeout(popCloseTimer);
   };
 
   const open = Boolean(anchorEl);
@@ -36,20 +41,13 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
       <div className="node-header">
         <ABTNodeIcon color="#BFBFBF" />
         <Hidden smDown>
-          <span>tt11</span>
           <InfoIcon
             className="info_icon"
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', zIndex: 1401 }}
             onMouseEnter={handlePopoverOpen}
+            onMouseLeave={handlePopoverClose}
             color="disabled"
           />
-          {/* <div style={{ position: 'relative' }}>
-            <InfoIcon className="info_icon" style={{ cursor: 'pointer' }} color="disabled" />
-            <div className="desktop_pop_card">
-              <DidAddress>{abtnode.did}</DidAddress>
-              <ExternalLink href={abtnode.url}>{abtnode.url}</ExternalLink>
-            </div>
-          </div> */}
         </Hidden>
       </div>
       <div className="node-body">
@@ -57,7 +55,6 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         <Typography className="instance-desc text light">{abtnode.description}</Typography>
       </div>
       <Hidden mdUp>
-        <span>aa22</span>
         <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
       </Hidden>
       <Popover
@@ -79,9 +76,9 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         <Card>
           <CardContent
             className="card_content"
-            onMouseLeave={h22}
+            onMouseEnter={handlerOverPop}
+            onMouseLeave={handlePopoverClose}
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100px' }}>
-            {/* <span className="card_aider">s</span> */}
             <div
               style={{
                 position: 'absolute',
@@ -139,25 +136,6 @@ const Container = styled.div`
     background-color: red;
   }
 
-  /* .desktop_pop_card {
-    padding: 8px;
-    position: absolute;
-    z-index: 2;
-    width: 298.78px;
-    height: 89px;
-    right: -100px;
-    top: 28px;
-
-    background: #ffffff;
-
-    box-shadow: 0px 4px 16px rgba(90, 106, 129, 0.07);
-    border-radius: 12px;
-    transition: all ease 0.2s;
-  }
-
-  .info_icon:hover + .desktop_pop_card {
-    background-color: red;
-  } */
   .node-header {
     display: flex;
 
