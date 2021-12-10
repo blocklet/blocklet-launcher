@@ -92,6 +92,9 @@ function LaunchPage() {
       const url = new URL('/admin/launch-blocklet', node.url);
       url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
       window.location.href = url.toString();
+      setTimeout(() => {
+        setRedirecting(false);
+      }, 1000);
     } catch (error) {
       setRedirecting(false);
       console.error('redirect to node error', error);
