@@ -94,7 +94,7 @@ function LaunchPage() {
       window.location.href = url.toString();
       setTimeout(() => {
         setRedirecting(false);
-      }, 1000);
+      }, 1500);
     } catch (error) {
       setRedirecting(false);
       console.error('redirect to node error', error);
