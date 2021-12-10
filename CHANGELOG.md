@@ -1,3 +1,7 @@
+## 1.1.10 (十二月 10, 2021)
+
+- fix: change safari next button
+
 ## 1.1.9 (December 09, 2021)
 
 - fix: the bubble popup can be hidden after mouseout
