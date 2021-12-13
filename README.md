@@ -24,38 +24,43 @@ A simple blocklet that helps you to install blocklet on Blocklet Server.
 
 ## Visuals
 
-![empty page](/screenshots/empty.png)
-![index page](/screenshots/index.png)
+![select page](/screenshots/select.png)
+![purchase page](/screenshots/purchase.png)
 
-## Installation
+## Development
 
-- Download the repo
+## Requirement
 
+- A locally running Blocklet Server
+
+### Clone and install dependencies
+
+```shell
+git clone git@github.com:blocklet/blocklet-launcher.git
+cd blocklet-launcher && yarn install
 ```
-git clone git@github.com:blocklet/install-on-abtnode.git
-yarn install
+
+### Configuration
+
+Put following contents in `.env.development.local`:
+
+```bash
+SKIP_PREFLIGHT_CHECK=true
+LAUNCHER_URL={Blocklet Server Launcher Address}
+LAUNCHER_INSTANCE_API={API to fetch user's Blocklet Server instances}
 ```
 
-## Usage
+### Start debug
 
-### Development to local Blocklet Server
-
-```
-yarn start:client
-
-or
-
-abtnode init
-abtnode start
+```shell
 blocklet dev
 ```
 
 ### Deploy to local Blocklet Server
 
-```
-abtnode init
-abtnode start
-blocklet deploy .
+```shell
+npm run bundle
+blocklet deploy .blocklet/bundle
 ```
 
 ## License
