@@ -1,3 +1,7 @@
+## 1.2.0 (December 13, 2021)
+
+- bump version to 1.2.0
+
 ## 1.1.10 (十二月 10, 2021)
 
 - fix: change safari next button
