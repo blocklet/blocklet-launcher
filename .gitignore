@@ -8,7 +8,7 @@ package-lock.json
 blocklet.js
 config.yml
 build/
-.env
+.env.*
 *.dump
 demo.js
 exec-child.js
