@@ -70,7 +70,6 @@ function LaunchPage() {
     setOpen(false);
     setFetchNodesState({ ...fetchNodesState, loading: false });
   };
-
   const handleConnectLauncher = () => setOpen(true);
 
   useEffect(() => {
@@ -86,15 +85,18 @@ function LaunchPage() {
     history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
   };
 
+  if (/^.*((iPhone)|(iPad)|(Safari))+.*$/.test(navigator.userAgent)) {
+    window.addEventListener('pageshow', () => {
+      setRedirecting(false);
+    });
+  }
+
   const handleSelect = (node) => {
     try {
       setRedirecting(true);
       const url = new URL('/admin/launch-blocklet', node.url);
       url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
       window.location.href = url.toString();
-      setTimeout(() => {
-        setRedirecting(false);
-      }, 1500);
     } catch (error) {
       setRedirecting(false);
       console.error('redirect to node error', error);
