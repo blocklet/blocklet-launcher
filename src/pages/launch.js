@@ -86,8 +86,10 @@ function LaunchPage() {
   };
 
   if (/^.*((iPhone)|(iPad)|(Safari))+.*$/.test(navigator.userAgent)) {
-    window.addEventListener('pageshow', () => {
-      setRedirecting(false);
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        setRedirecting(false);
+      }
     });
   }
 
