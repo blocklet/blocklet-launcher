@@ -32,7 +32,6 @@ const theme = create({
 
 const InnerApp = () => {
   const { t, locale } = useLocaleContext();
-  const location = useLocation();
   const query = useQuery();
   const blockletMeta = useBlockletMetaContext();
 
@@ -79,7 +78,6 @@ const InnerApp = () => {
           <Switch>
             <Route exact path="/launch" component={LaunchPage} />
             <Route exact path="/launch/new" component={NewNodePage} />
-            <Redirect to={`/launch${location.search}`} />
           </Switch>
         </Content>
       </Layout>
@@ -95,26 +93,36 @@ const Content = styled.div`
   align-items: flex-start;
 `;
 
-const App = () => (
-  <MuiThemeProvider theme={theme}>
-    <ThemeProvider theme={theme}>
-      <LocaleProvider translations={translations}>
-        <ABTNodeProvider>
-          <GlobalStyle />
-          <CssBaseline />
-          <div className="wrapper">
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <BlockletMetaProvider>
-                <InnerApp />
-              </BlockletMetaProvider>
-            </Switch>
-          </div>
-        </ABTNodeProvider>
-      </LocaleProvider>
-    </ThemeProvider>
-  </MuiThemeProvider>
+const Launch = () => (
+  <BlockletMetaProvider>
+    <InnerApp />
+  </BlockletMetaProvider>
 );
+
+const App = () => {
+  const location = useLocation();
+
+  return (
+    <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <LocaleProvider translations={translations}>
+          <ABTNodeProvider>
+            <GlobalStyle />
+            <CssBaseline />
+            <div className="wrapper">
+              <Switch>
+                <Route exact path="/about" component={HomePage} />
+                <Route path="/launch*" component={Launch} />
+                <Redirect exact path="/" to={`/launch${location.search}`} />
+                <Redirect path="*" to="/about" />
+              </Switch>
+            </div>
+          </ABTNodeProvider>
+        </LocaleProvider>
+      </ThemeProvider>
+    </MuiThemeProvider>
+  );
+};
 
 const WrappedApp = withRouter(App);
 
