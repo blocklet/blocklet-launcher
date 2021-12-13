@@ -1,6 +1,6 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable no-console */
-require('dotenv').config();
+require('dotenv-flow').config();
 
 const { server } = require('./functions/app');
 
