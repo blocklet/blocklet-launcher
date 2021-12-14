@@ -1,3 +1,8 @@
+## 1.2.1 (December 14, 2021)
+
+- upgrade arcblock/ux dep
+- [skip ci] feat: new ci workflow (#37)
+
 ## 1.2.0 (December 13, 2021)
 
 - bump version to 1.2.0
