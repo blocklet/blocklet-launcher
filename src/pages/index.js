@@ -1,12 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '@arcblock/ux/lib/Button';
 import BaseLayout from '@arcblock/ux/lib/Layout';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
 
+import useQuery from '../hooks/query';
+
 export default function Home() {
   const { t } = useLocaleContext();
+  const history = useHistory();
+  const query = useQuery();
+
+  if (query.get('meta_url')) {
+    history.push(`/launch${window.location.search}`);
+  }
 
   return (
     <BaseLayout addons={<LocaleSelector showText={false} />}>

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { create } from '@arcblock/ux/lib/Theme';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import styled, { ThemeProvider } from 'styled-components';
-import { BrowserRouter as Router, Route, Switch, Redirect, withRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { setDateTool } from '@arcblock/ux/lib/Util';
 import Center from '@arcblock/ux/lib/Center';
@@ -100,8 +100,6 @@ const Launch = () => (
 );
 
 const App = () => {
-  const location = useLocation();
-
   return (
     <MuiThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
@@ -111,9 +109,8 @@ const App = () => {
             <CssBaseline />
             <div className="wrapper">
               <Switch>
-                <Route exact path="/about" component={HomePage} />
+                <Route exact path="/" component={HomePage} />
                 <Route path="/launch*" component={Launch} />
-                <Redirect exact path="/" to={`/launch${location.search}`} />
                 <Redirect path="*" to="/about" />
               </Switch>
             </div>
