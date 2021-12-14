@@ -5,7 +5,6 @@ const cors = require('cors');
 const compression = require('compression');
 const morgan = require('morgan');
 const express = require('express');
-const serverless = require('serverless-http');
 const cookieParser = require('cookie-parser');
 const fallback = require('express-history-api-fallback');
 
@@ -71,6 +70,4 @@ if (isProduction) {
   app.use(router);
 }
 
-// Make it serverless
-exports.handler = serverless(app);
 exports.server = app;

@@ -1,57 +1,27 @@
 module.exports = {
   parser: 'babel-eslint',
   plugins: ['import'],
-  extends: 'airbnb',
+  extends: '@arcblock/eslint-config',
   env: {
-    es6: true,
     browser: true,
+    commonjs: true,
+    es6: true,
+    jest: true,
     node: true,
     mocha: true,
   },
   rules: {
-    'react/jsx-filename-extension': 'off',
-    'react/jsx-closing-bracket-location': 'off',
-    'react/jsx-props-no-spreading': 'off',
-    'react/jsx-fragments': 'off',
-    'jsx-a11y/no-static-element-interactions': 'off',
-    'jsx-a11y/click-events-have-key-events': 'off',
-    'react/forbid-prop-types': 'off',
-    'react/no-unescaped-entities': 'off',
-    'react/sort-comp': 'off',
-    'object-curly-newline': 'off',
-    'class-methods-use-this': 'off',
-    'prefer-object-spread': 'off',
-    'max-len': [
+    'unicorn/filename-case': [
       'error',
       {
-        code: 120,
-        ignoreComments: true,
-        ignoreUrls: true,
-        ignoreStrings: true,
-        ignoreTemplateLiterals: true,
-        ignoreRegExpLiterals: true,
+        cases: {
+          kebabCase: true,
+        },
+        ignore: ['setupProxy.js', 'App.js'],
       },
     ],
-    'arrow-parens': ['off', 'as-needed'],
-    'comma-dangle': [
-      'error',
-      {
-        arrays: 'always-multiline',
-        objects: 'always-multiline',
-        imports: 'always-multiline',
-        exports: 'always-multiline',
-        functions: 'ignore',
-      },
-    ],
-    'no-param-reassign': [
-      'error',
-      {
-        props: false,
-      },
-    ],
-    'no-console': process.env.NODE_ENV === 'production' ? ['error', { allow: ['warn', 'error', 'log'] }] : 'off',
-    'no-confusing-arrow': 'off',
-    'no-plusplus': 'off',
   },
-  globals: {},
+  parserOptions: {
+    ecmaVersion: 2018,
+  },
 };
