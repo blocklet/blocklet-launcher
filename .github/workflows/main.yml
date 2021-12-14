@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - "new-ci"
 
 jobs:
   Deploy:
@@ -11,22 +12,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout repo
       uses: actions/checkout@v2
+
+    - name: Set yarn cache
+      uses: c-hive/gha-yarn-cache@v2
 
     - name: Initialize
       run: make github-action-init
 
-    - name: Deploy
-      env:
-        AWS_NODE_ENDPOINT: ${{ secrets.AWS_NODE_ENDPOINT }}
-        AWS_NODE_ACCESS_KEY: ${{ secrets.AWS_NODE_ACCESS_KEY }}
-        AWS_NODE_ACCESS_SECRET: ${{ secrets.AWS_NODE_ACCESS_SECRET }}
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      run: bash ./tools/publish.sh
-
-    - name: Release to Github
-      uses: blocklet/action-release-to-github@v1.0.0
+    - name: Blocklet workflow
+      uses: blocklet/action-workflow@v0.2.2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        skip-deploy: false
+        bundle-command: yarn build
+        abtnode-endpoint: ${{ secrets.AWS_NODE_ENDPOINT }}
+        access-key: ${{ secrets.AWS_NODE_ACCESS_KEY }}
+        access-secret: ${{ secrets.AWS_NODE_ACCESS_SECRET }}
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}

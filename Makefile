@@ -11,7 +11,7 @@ all: build
 
 init:
 	@echo "Install npm dependencies required for this repo..."
-	@npm install -g yarn @abtnode/cli
+	@yarn global add @abtnode/cli
 	@yarn
 
 github-action-init:
