@@ -1,3 +1,8 @@
+## 1.2.2 (December 14, 2021)
+
+- modify the way to be compatible with meta_url
+- refactor: remove useless depdencies
+
 ## 1.2.1 (December 14, 2021)
 
 - upgrade arcblock/ux dep
