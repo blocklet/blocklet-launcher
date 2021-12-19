@@ -12,6 +12,7 @@ import { setDateTool } from '@arcblock/ux/lib/Util';
 import Center from '@arcblock/ux/lib/Center';
 import { StepProvider, Layout } from '@arcblock/abt-launcher';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
+import CookieConsent from '@arcblock/ux/lib/CookieConsent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
@@ -79,6 +80,7 @@ const InnerApp = () => {
             <Route exact path="/launch" component={LaunchPage} />
             <Route exact path="/launch/new" component={NewNodePage} />
           </Switch>
+          <CookieConsent />
         </Content>
       </Layout>
     </StepProvider>

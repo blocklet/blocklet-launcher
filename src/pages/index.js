@@ -5,11 +5,12 @@ import Button from '@arcblock/ux/lib/Button';
 import BaseLayout from '@arcblock/ux/lib/Layout';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
+import CookieConsent from '@arcblock/ux/lib/CookieConsent';
 
 import useQuery from '../hooks/query';
 
 export default function Home() {
-  const { t } = useLocaleContext();
+  const { t, locale } = useLocaleContext();
   const history = useHistory();
   const query = useQuery();
 
@@ -35,6 +36,7 @@ export default function Home() {
           </div>
         </div>
       </Content>
+      <CookieConsent locale={locale} />
     </BaseLayout>
   );
 }
