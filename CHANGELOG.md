@@ -1,6 +1,6 @@
 ## 1.2.3 (十二月 21, 2021)
 
-- fix: add the entry to create a node button in not loggedin
+- feat: add the entry to create a node button in not loggedin
 - add cookie consent
 
 ## 1.2.2 (December 14, 2021)
