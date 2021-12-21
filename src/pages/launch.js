@@ -123,6 +123,16 @@ function LaunchPage() {
             <Button color="primary" rounded variant="contained" onClick={handleConnectLauncher}>
               {t('launch.connectLauncherButton')}
             </Button>
+            <Hidden smDown>
+              <Button
+                color="primary"
+                rounded
+                variant="outlined"
+                onClick={handleCreateNode}
+                style={{ marginLeft: '16px' }}>
+                {t('launch.createAbtNode')}
+              </Button>
+            </Hidden>
           </div>
         )}
         {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
