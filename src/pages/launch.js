@@ -53,6 +53,7 @@ function LaunchPage() {
 
       if (data.instances) {
         setAbtnodes(data.instances);
+        // setAbtnodes([]);
       }
     } catch (err) {
       console.error(err);
@@ -107,7 +108,7 @@ function LaunchPage() {
 
   return (
     <>
-      <Typography className="page-title" component="h2">
+      <Typography className="page-title" component="h5" variant="h5">
         {t('pageTitle.selectNode')}
       </Typography>
       <div className="page-content">
@@ -172,6 +173,21 @@ function LaunchPage() {
           variant="contained">
           {t('common.next')}
         </Button>
+        {/* {abtnodes && abtnodes.length ? (
+          <Button
+            disabled={!selectedNode || redirecting}
+            onClick={() => handleSelect(selectedNode)}
+            startIcon={redirecting && <Spinner size={[12, 12]} />}
+            rounded
+            color="primary"
+            variant="contained">
+            {t('common.next')}
+          </Button>
+        ) : (
+          <Button variant="contained" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+            {t('launch.createNode')}
+          </Button>
+        )} */}
       </div>
     </>
   );
@@ -191,7 +207,7 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   ${(props) => props.theme.breakpoints.up('sm')} {
-    margin-top: 68px;
+    margin-top: 34px;
   }
 
   ${(props) => props.theme.breakpoints.down('sm')} {
@@ -204,8 +220,6 @@ const Container = styled.div`
   }
 
   .page-title {
-    color: #222;
-    font-size: 28px;
     text-align: center;
   }
 
@@ -215,7 +229,7 @@ const Container = styled.div`
     align-items: center;
 
     .toolbar_title {
-      color: #999999;
+      color: ${(props) => props.theme.palette.grey['900']};
       font-size: 16px;
     }
   }

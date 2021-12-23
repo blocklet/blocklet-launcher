@@ -20,7 +20,7 @@ module.exports = flat({
     invalidParam: '无效的参数',
     loadingError: '加载节点列表失败',
     connectLauncherButton: '连接 Launcher',
-    createNode: '创建新的',
+    createNode: '创建新节点',
     stepTip: '步骤 {progressText}',
   },
   connectLauncher: {
