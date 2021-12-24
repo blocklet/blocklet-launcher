@@ -143,9 +143,6 @@ function LaunchPage() {
                 <Typography className="toolbar_title" component="span">
                   {t('common.nodeList')}
                 </Typography>
-                <Button variant="contained" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-                  {t('launch.createNode')}
-                </Button>
               </div>
             </Hidden>
             <List
@@ -159,21 +156,7 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
-        <Hidden mdUp>
-          <Button className="create-button" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-            {t('launch.createNode')}
-          </Button>
-        </Hidden>
-        <Button
-          disabled={!selectedNode || redirecting}
-          onClick={() => handleSelect(selectedNode)}
-          startIcon={redirecting && <Spinner size={[12, 12]} />}
-          rounded
-          color="primary"
-          variant="contained">
-          {t('common.next')}
-        </Button>
-        {/* {abtnodes && abtnodes.length ? (
+        {abtnodes && abtnodes.length ? (
           <Button
             disabled={!selectedNode || redirecting}
             onClick={() => handleSelect(selectedNode)}
@@ -184,10 +167,11 @@ function LaunchPage() {
             {t('common.next')}
           </Button>
         ) : (
-          <Button variant="contained" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-            {t('launch.createNode')}
-          </Button>
-        )} */}
+          ''
+        )}
+        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+          {t('launch.createNode')}
+        </Button>
       </div>
     </>
   );
@@ -268,12 +252,16 @@ const Container = styled.div`
       margin-right: 32px;
     }
 
+    & > button {
+      margin: 0 8px;
+    }
+
     ${(props) => props.theme.breakpoints.up('md')} {
       justify-content: center;
       padding: 24px;
-
       & > button {
-        width: 300px;
+        margin: 0 16px;
+        width: 200px;
       }
     }
 

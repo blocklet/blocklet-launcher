@@ -3,7 +3,7 @@ const flat = require('flat');
 module.exports = flat({
   common: {
     next: 'Next',
-    nodeList: 'Node List',
+    nodeList: 'Available Node List',
     optional: 'Optional',
     start: 'Start',
   },

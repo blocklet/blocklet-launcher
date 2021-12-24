@@ -3,7 +3,7 @@ const flat = require('flat');
 module.exports = flat({
   common: {
     next: '下一步',
-    nodeList: '节点列表',
+    nodeList: '可用节点列表',
     optional: '可选',
     start: '开始',
   },
@@ -32,6 +32,6 @@ module.exports = flat({
     },
   },
   pageTitle: {
-    selectNode: '选择 Blocklet Server',
+    selectNode: '选择节点',
   },
 });
