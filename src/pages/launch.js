@@ -226,12 +226,13 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100%;
+    max-height: 100%;
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
 
     ${(props) => props.theme.breakpoints.up('sm')} {
+      min-height: 332px;
       margin-top: 76px;
       padding: 24px;
     }
@@ -248,8 +249,8 @@ const Container = styled.div`
     align-items: center;
 
     width: 100%;
-    margin-top: auto;
-    box-shadow: 0px -1px 1px rgba(168, 180, 197, 0.12);
+    /* margin-top: auto; */
+    /* box-shadow: 0px -1px 1px rgba(168, 180, 197, 0.12); */
     background: #ffffff;
 
     .create-button {
@@ -261,7 +262,7 @@ const Container = styled.div`
     }
 
     ${(props) => props.theme.breakpoints.up('md')} {
-      justify-content: center;
+      /* justify-content: center; */
       padding: 24px;
       & > button {
         margin: 0 16px;
@@ -270,6 +271,7 @@ const Container = styled.div`
     }
 
     ${(props) => props.theme.breakpoints.down('sm')} {
+      margin-top: auto;
       padding: 16px;
     }
   }
