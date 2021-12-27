@@ -111,6 +111,10 @@ function LaunchPage() {
       <Typography className="page-title" component="h5" variant="h5">
         {t('pageTitle.selectNode')}
       </Typography>
+
+      <Typography color="textSecondary" style={{ textAlign: 'center' }}>
+        {t('pageTitle.selectAbtNodeSubTitle')}
+      </Typography>
       <div className="page-content">
         {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
         {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
@@ -156,7 +160,7 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
-        {abtnodes && abtnodes.length && (
+        {abtnodes && abtnodes.length ? (
           <Button
             disabled={!selectedNode || redirecting}
             onClick={() => handleSelect(selectedNode)}
@@ -166,6 +170,8 @@ function LaunchPage() {
             variant="contained">
             {t('common.next')}
           </Button>
+        ) : (
+          ''
         )}
         <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
           {t('launch.createNode')}
@@ -238,7 +244,7 @@ const Container = styled.div`
 
   .page-footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 
     width: 100%;

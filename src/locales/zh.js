@@ -11,10 +11,9 @@ module.exports = flat({
     intro: 'Blocklet Launcher 可以帮助你很方便的将应用安装到你的 Blocklet Server 上。',
   },
   launch: {
-    openInRegistry: '在 Registry 中打开',
     selectAbtNode: '选择节点',
+    launchApp: '安装应用',
     createAbtNode: '创建节点',
-    launchApp: '启动应用',
     title: '请选择节点',
     noInstance: '没有节点',
     invalidParam: '无效的参数',
@@ -33,5 +32,6 @@ module.exports = flat({
   },
   pageTitle: {
     selectNode: '选择节点',
+    selectAbtNodeSubTitle: '安装应用前，需选择或创建节点',
   },
 });
