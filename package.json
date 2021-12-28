@@ -19,10 +19,10 @@
     "url": "https://github.com/blocklet/install-on-abtnode"
   },
   "dependencies": {
-    "@arcblock/abt-launcher": "^1.15.30",
-    "@arcblock/did-connect": "^1.15.30",
-    "@arcblock/icons": "^1.15.30",
-    "@arcblock/ux": "^1.15.30",
+    "@arcblock/abt-launcher": "^1.15.35",
+    "@arcblock/did-connect": "^1.15.35",
+    "@arcblock/icons": "^1.15.35",
+    "@arcblock/ux": "^1.15.35",
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
