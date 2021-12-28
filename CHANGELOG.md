@@ -1,3 +1,7 @@
+## 1.2.4 (December 28, 2021)
+
+- chore: update docs/scripts/actions (abtnode rebranding)
+
 ## 1.2.3 (十二月 21, 2021)
 
 - feat: add the entry to create a node button in not loggedin
