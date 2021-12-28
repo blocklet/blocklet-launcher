@@ -1,3 +1,7 @@
+## 1.2.5 (十二月 28, 2021)\n
+- refactor: change the timing of creating a new node button
+- refactor: select server page title
+
 ## 1.2.4 (December 28, 2021)
 
 - chore: update docs/scripts/actions (abtnode rebranding)

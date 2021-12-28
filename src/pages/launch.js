@@ -53,6 +53,7 @@ function LaunchPage() {
 
       if (data.instances) {
         setAbtnodes(data.instances);
+        // setAbtnodes([]);
       }
     } catch (err) {
       console.error(err);
@@ -107,8 +108,12 @@ function LaunchPage() {
 
   return (
     <>
-      <Typography className="page-title" component="h2">
+      <Typography className="page-title" component="h5" variant="h5">
         {t('pageTitle.selectNode')}
+      </Typography>
+
+      <Typography color="textSecondary" style={{ textAlign: 'center' }}>
+        {t('pageTitle.selectAbtNodeSubTitle')}
       </Typography>
       <div className="page-content">
         {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
@@ -137,16 +142,6 @@ function LaunchPage() {
         )}
         {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
           <>
-            <Hidden smDown>
-              <div className="toolbar">
-                <Typography className="toolbar_title" component="span">
-                  {t('common.nodeList')}
-                </Typography>
-                <Button variant="contained" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-                  {t('launch.createNode')}
-                </Button>
-              </div>
-            </Hidden>
             <List
               className="node-list"
               abtnodes={abtnodes}
@@ -158,19 +153,21 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
-        <Hidden mdUp>
-          <Button className="create-button" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-            {t('launch.createNode')}
+        {abtnodes && abtnodes.length ? (
+          <Button
+            disabled={!selectedNode || redirecting}
+            onClick={() => handleSelect(selectedNode)}
+            startIcon={redirecting && <Spinner size={[12, 12]} />}
+            rounded
+            color="primary"
+            variant="contained">
+            {t('common.next')}
           </Button>
-        </Hidden>
-        <Button
-          disabled={!selectedNode || redirecting}
-          onClick={() => handleSelect(selectedNode)}
-          startIcon={redirecting && <Spinner size={[12, 12]} />}
-          rounded
-          color="primary"
-          variant="contained">
-          {t('common.next')}
+        ) : (
+          ''
+        )}
+        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+          {t('launch.createNode')}
         </Button>
       </div>
     </>
@@ -191,7 +188,7 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   ${(props) => props.theme.breakpoints.up('sm')} {
-    margin-top: 68px;
+    margin-top: 34px;
   }
 
   ${(props) => props.theme.breakpoints.down('sm')} {
@@ -204,8 +201,6 @@ const Container = styled.div`
   }
 
   .page-title {
-    color: #222;
-    font-size: 28px;
     text-align: center;
   }
 
@@ -215,7 +210,7 @@ const Container = styled.div`
     align-items: center;
 
     .toolbar_title {
-      color: #999999;
+      color: ${(props) => props.theme.palette.grey['900']};
       font-size: 16px;
     }
   }
@@ -224,12 +219,14 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100%;
+    max-height: 100%;
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
 
     ${(props) => props.theme.breakpoints.up('sm')} {
+      min-height: 332px;
+      max-height: 470px;
       margin-top: 76px;
       padding: 24px;
     }
@@ -237,33 +234,36 @@ const Container = styled.div`
     ${(props) => props.theme.breakpoints.down('sm')} {
       margin-top: 33px;
       padding: 16px;
+      height: calc(100vh - 250px);
     }
   }
 
   .page-footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 
     width: 100%;
-    margin-top: auto;
-    box-shadow: 0px -1px 1px rgba(168, 180, 197, 0.12);
     background: #ffffff;
 
     .create-button {
       margin-right: 32px;
     }
 
-    ${(props) => props.theme.breakpoints.up('md')} {
-      justify-content: center;
-      padding: 24px;
+    & > button {
+      margin: 0 8px;
+    }
 
+    ${(props) => props.theme.breakpoints.up('md')} {
+      padding: 24px;
       & > button {
-        width: 300px;
+        margin: 0 12px;
+        width: 200px;
       }
     }
 
     ${(props) => props.theme.breakpoints.down('sm')} {
+      margin-top: auto;
       padding: 16px;
     }
   }
