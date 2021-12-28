@@ -12,7 +12,7 @@ module.exports = flat({
   },
   launch: {
     selectAbtNode: '选择节点',
-    launchApp: '安装应用',
+    launchApp: '启动应用',
     createAbtNode: '创建节点',
     title: '请选择节点',
     noInstance: '没有节点',
@@ -32,6 +32,6 @@ module.exports = flat({
   },
   pageTitle: {
     selectNode: '选择节点',
-    selectAbtNodeSubTitle: '安装应用前，需选择或创建节点',
+    selectAbtNodeSubTitle: '启动应用前，需选择或创建节点',
   },
 });

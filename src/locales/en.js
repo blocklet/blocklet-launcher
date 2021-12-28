@@ -12,7 +12,7 @@ module.exports = flat({
   },
   launch: {
     selectAbtNode: 'Select Blocklet Server',
-    launchApp: 'Install Application',
+    launchApp: 'Launcher Application',
     createAbtNode: 'Create Blocklet Server',
     title: 'Select Blocklet Server',
     noInstance: 'No Instance',
@@ -32,6 +32,6 @@ module.exports = flat({
   },
   pageTitle: {
     selectNode: 'Select Blocklet Server',
-    selectAbtNodeSubTitle: 'Before installing the application, you need to select or create a Blocklet Server ',
+    selectAbtNodeSubTitle: 'Before launcher the application, you need to select or create a Blocklet Server ',
   },
 });
