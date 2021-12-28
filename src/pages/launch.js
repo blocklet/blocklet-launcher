@@ -142,13 +142,6 @@ function LaunchPage() {
         )}
         {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
           <>
-            <Hidden smDown>
-              <div className="toolbar">
-                <Typography className="toolbar_title" component="span">
-                  {t('common.nodeList')}
-                </Typography>
-              </div>
-            </Hidden>
             <List
               className="node-list"
               abtnodes={abtnodes}
@@ -158,6 +151,9 @@ function LaunchPage() {
             />
           </>
         )}
+        {/* {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
+          <div className="main-container">asd</div>
+        )} */}
       </div>
       <div className="page-footer">
         {abtnodes && abtnodes.length ? (
@@ -233,6 +229,7 @@ const Container = styled.div`
 
     ${(props) => props.theme.breakpoints.up('sm')} {
       min-height: 332px;
+      max-height: 470px;
       margin-top: 76px;
       padding: 24px;
     }
@@ -240,9 +237,14 @@ const Container = styled.div`
     ${(props) => props.theme.breakpoints.down('sm')} {
       margin-top: 33px;
       padding: 16px;
+      height: calc(100vh - 250px);
     }
   }
 
+  /* .main-container {
+    background: red;
+    flex: 1;
+  } */
   .page-footer {
     display: flex;
     justify-content: center;
@@ -262,10 +264,9 @@ const Container = styled.div`
     }
 
     ${(props) => props.theme.breakpoints.up('md')} {
-      /* justify-content: center; */
       padding: 24px;
       & > button {
-        margin: 0 16px;
+        margin: 0 12px;
         width: 200px;
       }
     }
