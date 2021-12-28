@@ -6,21 +6,17 @@ A simple blocklet that helps you to install blocklet on Blocklet Server.
 
 [![docs](https://img.shields.io/badge/-run%20online-blue.svg)](https://install.arcblock.io/)
 
-## Install on my Blocklet Server
-
-[![Install on my Blocklet Server](https://raw.githubusercontent.com/blocklet/development-guide/main/assets/install_on_abtnode.svg)](https://install.arcblock.io/?action=blocklet-install&meta_url=https%3A%2F%2Fgithub.com%2Fblocklet%2Fblocklet-launcher%2Freleases%2Fdownload%2Fv1.2.0%2Fblocklet.json)
-
 ## Table of Contents
 
-- [Install On ABT Node](#install-on-abt-node)
-  - [Install on my ABT Node](#install-on-my-abt-node)
-  - [Table of Contents](#table-of-contents)
-  - [Visuals](#visuals)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Development to local ABT Node](#development-to-local-abt-node)
-    - [Deploy to local ABT Node](#deploy-to-local-abt-node)
-  - [License](#license)
+- [Launch on Blocklet Server](#launch-on-blocklet-server)
+- [Visuals](#visuals)
+- [Development](#development)
+- [Requirement](#requirement)
+  - [Clone and install dependencies](#clone-and-install-dependencies)
+  - [Configuration](#configuration)
+  - [Start debug](#start-debug)
+  - [Deploy to local Blocklet Server](#deploy-to-local-blocklet-server)
+- [License](#license)
 
 ## Visuals
 

@@ -11,12 +11,12 @@ all: build
 
 init:
 	@echo "Install npm dependencies required for this repo..."
-	@yarn global add @abtnode/cli
+	@yarn global add @blocklet/cli
 	@yarn
 
 github-action-init:
 	@echo "Install npm dependencies required for this repo..."
-	@sudo npm install -g @abtnode/cli
+	@sudo npm install -g @blocklet/cli
 	@yarn
 
 clean:

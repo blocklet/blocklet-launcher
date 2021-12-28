@@ -21,12 +21,12 @@ jobs:
       run: make github-action-init
 
     - name: Blocklet workflow
-      uses: blocklet/action-workflow@v0.2.2
+      uses: blocklet/action-workflow@v1
       with:
         skip-deploy: false
         bundle-command: yarn build
-        abtnode-endpoint: ${{ secrets.AWS_NODE_ENDPOINT }}
-        access-key: ${{ secrets.AWS_NODE_ACCESS_KEY }}
-        access-secret: ${{ secrets.AWS_NODE_ACCESS_SECRET }}
+        server-endpoint: ${{ secrets.AWS_NODE_ENDPOINT }}
+        server-access-key: ${{ secrets.AWS_NODE_ACCESS_KEY }}
+        server-access-secret: ${{ secrets.AWS_NODE_ACCESS_SECRET }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
