@@ -151,9 +151,6 @@ function LaunchPage() {
             />
           </>
         )}
-        {/* {!isEmpty(launcherCredential) && !fetchNodesState.loading && !fetchNodesState.error && (
-          <div className="main-container">asd</div>
-        )} */}
       </div>
       <div className="page-footer">
         {abtnodes && abtnodes.length ? (
@@ -241,18 +238,12 @@ const Container = styled.div`
     }
   }
 
-  /* .main-container {
-    background: red;
-    flex: 1;
-  } */
   .page-footer {
     display: flex;
     justify-content: center;
     align-items: center;
 
     width: 100%;
-    /* margin-top: auto; */
-    /* box-shadow: 0px -1px 1px rgba(168, 180, 197, 0.12); */
     background: #ffffff;
 
     .create-button {

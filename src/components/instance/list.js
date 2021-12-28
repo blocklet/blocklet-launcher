@@ -13,22 +13,6 @@ export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect
   return (
     <Content>
       {abtnodes.length === 0 && <Empty>{t('launch.noInstance')}</Empty>}
-      {/* {abtnodes.length > 0 && (
-        <div className="node-list">
-          <Grid container spacing={5} {...props}>
-            {abtnodes.map((node) => (
-              <Grid key={node.did} item lg={3} md={4} sm={12} xs={12}>
-                <Item
-                  onClick={() => onSelect(node)}
-                  className={`item ${selectedNode && selectedNode.did === node.did ? 'item-selected' : ''}`}
-                  abtnode={node}
-                  blockletMetaUrl={blockletMetaUrl}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </div>
-      )} */}
       <div className="node-con">
         {abtnodes.map((node) => (
           <Item
@@ -52,8 +36,6 @@ const Content = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* max-height: calc(100vh - 490px); */
-    /* max-height: 372px; */
 
     .item {
       width: 200px;
@@ -80,18 +62,6 @@ const Content = styled.div`
         width: 100%;
       }
     }
-  }
-
-  /* .node-list {
-    .item {
-      cursor: pointer;
-    }
-
-    .item-selected {
-      background: #f4f6ff;
-      border-color: #4f6af6;
-      cursor: pointer;
-    }
 
     .action {
       display: flex;
@@ -102,8 +72,7 @@ const Content = styled.div`
         bottom: 24px;
         width: 300px;
       }
-    }
-  } */
+  }
 `;
 
 List.propTypes = {
