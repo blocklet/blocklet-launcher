@@ -1,6 +1,6 @@
 name: install-on-abtnode
 title: Blocklet Launcher
-version: 1.2.5
+version: 1.2.6
 description: A simple blocklet that helps you install blocklet on abtnode
 keywords:
   - dapp
@@ -43,7 +43,7 @@ interfaces:
 scripts:
   preDeploy: npm run build
   dev: npm run start
-specVersion: 1.2.0
+specVersion: 1.2.1
 did: z8iZmTHdfidsHjmzCLeSUbdj4yrABe1CewFvF
 timeout:
   start: 10

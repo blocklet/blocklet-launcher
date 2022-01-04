@@ -1,4 +1,9 @@
-## 1.2.5 (十二月 28, 2021)\n
+## 1.2.6 (January 04, 2022)
+
+- chore(i18n): polish i18n text
+
+## 1.2.5 (十二月 28, 2021)
+
 - refactor: change the timing of creating a new node button
 - refactor: select server page title
 
