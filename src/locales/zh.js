@@ -8,7 +8,7 @@ module.exports = flat({
     start: '开始',
   },
   home: {
-    intro: 'Blocklet Launcher 可以帮助你很方便的将应用安装到你的 Blocklet Server 上。',
+    intro: '启动器可以帮助你很方便的将应用安装到你的节点上。',
   },
   launch: {
     selectAbtNode: '选择节点',
@@ -18,13 +18,13 @@ module.exports = flat({
     noInstance: '没有节点',
     invalidParam: '无效的参数',
     loadingError: '加载节点列表失败',
-    connectLauncherButton: '连接 Launcher',
-    createNode: '创建新节点',
+    connectLauncherButton: '连接节点启动器',
+    createNode: '创建节点',
     stepTip: '步骤 {progressText}',
   },
   connectLauncher: {
     authMessages: {
-      title: '连接 ABT Launcher',
+      title: '连接节点启动器',
       scan: '请使用 DID 钱包扫码下面的二维码完成连接',
       confirm: '在 DID 钱包中确认连接',
       success: '连接成功',
