@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Spinner from '@arcblock/ux/lib/Spinner';
+import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import useQuery from '../hooks/query';
 import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
 
@@ -10,12 +11,14 @@ export default function NewNode() {
   const [loading, setLoading] = useState(true);
   const [width, setWidth] = useState('0');
   const [height, setHeight] = useState('0');
+  const { locale } = useLocaleContext();
 
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
   const launchUrlObject = new URL(getEnvironment('LAUNCHER_URL'));
   launchUrlObject.searchParams.append('blocklet_meta_url', blockletMetaUrl);
   launchUrlObject.searchParams.append('content_type', 'bare');
+  launchUrlObject.searchParams.append('locale', locale);
 
   const handleLoaded = () => setLoading(false);
 

@@ -1,3 +1,7 @@
+## 1.2.7 (一月 11, 2022)
+
+- fix: change lang in iframe
+
 ## 1.2.6 (January 04, 2022)
 
 - chore(i18n): polish i18n text
