@@ -16,6 +16,7 @@ export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect
       <div className="node-con">
         {abtnodes.map((node) => (
           <Item
+            key={node.did}
             onClick={() => onSelect(node)}
             className={`item ${selectedNode && selectedNode.did === node.did ? 'item-selected' : ''}`}
             abtnode={node}

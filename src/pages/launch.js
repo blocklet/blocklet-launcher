@@ -147,6 +147,9 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
+        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+          {t('launch.createNode')}
+        </Button>
         {abtnodes && abtnodes.length ? (
           <Button
             disabled={!selectedNode || redirecting}
@@ -160,9 +163,6 @@ function LaunchPage() {
         ) : (
           ''
         )}
-        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-          {t('launch.createNode')}
-        </Button>
       </div>
     </>
   );
