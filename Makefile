@@ -16,7 +16,6 @@ init:
 
 github-action-init:
 	@echo "Install npm dependencies required for this repo..."
-	@sudo npm install -g @blocklet/cli
 	@yarn
 
 clean:
