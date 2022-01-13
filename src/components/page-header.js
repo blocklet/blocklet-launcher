@@ -20,7 +20,7 @@ const Content = styled.div`
   }
 
   .sub-title {
-    font-size: 16px;
+    font-size: 14px;
     color: ${(props) => props.theme.palette.grey[600]};
   }
 `;
