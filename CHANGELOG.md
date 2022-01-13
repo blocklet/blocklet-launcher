@@ -1,3 +1,7 @@
+## 1.2.8 (一月 13, 2022)\n
+
+chore: update package.json dependencies
+
 ## 1.2.7 (一月 11, 2022)
 
 - fix: change lang in iframe
