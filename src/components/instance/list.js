@@ -42,10 +42,6 @@ const Content = styled.div`
       margin: 0 12px 24px;
       cursor: pointer;
       transition:all ease .2s;
-
-      /* ${(props) => props.theme.breakpoints.down('md')} {
-        width: 200px;
-      } */
     }
 
     .item-selected {

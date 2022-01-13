@@ -6,7 +6,6 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
-import Typography from '@material-ui/core/Typography';
 import { Hidden } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
@@ -108,13 +107,8 @@ function LaunchPage() {
 
   return (
     <>
-      <Typography className="page-title" component="h5" variant="h5">
-        {t('pageTitle.selectNode')}
-      </Typography>
-
-      <Typography color="textSecondary" style={{ textAlign: 'center' }}>
-        {t('pageTitle.selectAbtNodeSubTitle')}
-      </Typography>
+      <PageTitle>{t('pageTitle.selectNode')}</PageTitle>
+      <PageSubTitle>{t('pageTitle.selectAbtNodeSubTitle')}</PageSubTitle>
       <div className="page-content">
         {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
         {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
@@ -181,6 +175,19 @@ export default function Page() {
     </Container>
   );
 }
+
+const PageTitle = styled.div`
+  font-size: 24px;
+  text-align: center;
+  color: ${(props) => props.theme.palette.common.black};
+  font-weight: 500;
+`;
+
+const PageSubTitle = styled.div`
+  text-align: center;
+  font-size: 14px;
+  color: ${(props) => props.theme.palette.grey[600]};
+`;
 
 const Container = styled.div`
   display: flex;
