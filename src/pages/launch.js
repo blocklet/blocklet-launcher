@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
 
 import useQuery from '../hooks/query';
+import PageHeader from '../components/page-header';
 import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
@@ -107,8 +108,7 @@ function LaunchPage() {
 
   return (
     <>
-      <PageTitle>{t('pageTitle.selectNode')}</PageTitle>
-      <PageSubTitle>{t('pageTitle.selectAbtNodeSubTitle')}</PageSubTitle>
+      <PageHeader title={t('pageTitle.selectNode')} subTitle={t('pageTitle.selectAbtNodeSubTitle')} />
       <div className="page-content">
         {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
         {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
@@ -175,19 +175,6 @@ export default function Page() {
     </Container>
   );
 }
-
-const PageTitle = styled.div`
-  font-size: 24px;
-  text-align: center;
-  color: ${(props) => props.theme.palette.common.black};
-  font-weight: 500;
-`;
-
-const PageSubTitle = styled.div`
-  text-align: center;
-  font-size: 14px;
-  color: ${(props) => props.theme.palette.grey[600]};
-`;
 
 const Container = styled.div`
   display: flex;
