@@ -12,6 +12,9 @@ function PageHeader({ title, subTitle }) {
 }
 
 const Content = styled.div`
+  ${(props) => props.theme.breakpoints.up('md')} {
+    margin-top: 36px;
+  }
   text-align: center;
 
   .title {
