@@ -38,9 +38,10 @@ const Content = styled.div`
     justify-content: center;
 
     .item {
-      width: 200px;
+      width: 240px;
       margin: 0 12px 24px;
       cursor: pointer;
+      transition:all ease .2s;
 
       /* ${(props) => props.theme.breakpoints.down('md')} {
         width: 200px;
@@ -48,7 +49,7 @@ const Content = styled.div`
     }
 
     .item-selected {
-      background: #f4f6ff;
+      background: rgba(244, 246, 255, 0.3);
       border-color: #4f6af6;
       cursor: pointer;
     }

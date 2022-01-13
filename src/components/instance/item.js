@@ -39,7 +39,7 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
   return (
     <Container {...props}>
       <div className="node-header">
-        <ABTNodeIcon color="#BFBFBF" />
+        <ABTNodeIcon color="#BFBFBF" width={40} height={40} />
         <Hidden smDown>
           <InfoIcon
             className="info_icon"
@@ -97,7 +97,7 @@ const Container = styled.div`
   ${(props) => props.theme.breakpoints.up('md')} {
     flex-direction: column;
     align-items: center;
-    height: 200px;
+    height: 170px;
   }
 
   ${(props) => props.theme.breakpoints.down('sm')} {
