@@ -1,3 +1,7 @@
+## 1.2.8 (一月 14, 2022)
+
+- feat: change launch page UI
+
 ## 1.2.7 (一月 11, 2022)
 
 - fix: change lang in iframe
