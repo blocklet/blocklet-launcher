@@ -74,6 +74,7 @@ const InnerApp = () => {
           baseUrl: blockletMeta.registryUrl,
           logoPath: blockletMeta.data.logo,
         })}
+        pcWidth="65%"
         headerEndAddons={<LocaleSelector size={26} showText={false} className="locale-addon" />}>
         <Content>
           <Switch>
