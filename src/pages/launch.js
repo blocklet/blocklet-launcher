@@ -6,12 +6,12 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
-import Typography from '@material-ui/core/Typography';
 import { Hidden } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
 
 import useQuery from '../hooks/query';
+import PageHeader from '../components/page-header';
 import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
@@ -108,13 +108,7 @@ function LaunchPage() {
 
   return (
     <>
-      <Typography className="page-title" component="h5" variant="h5">
-        {t('pageTitle.selectNode')}
-      </Typography>
-
-      <Typography color="textSecondary" style={{ textAlign: 'center' }}>
-        {t('pageTitle.selectAbtNodeSubTitle')}
-      </Typography>
+      <PageHeader title={t('pageTitle.selectNode')} subTitle={t('pageTitle.selectAbtNodeSubTitle')} />
       <div className="page-content">
         {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
         {fetchNodesState.error && <Alert severity="error">{fetchNodesState.error}</Alert>}
@@ -153,6 +147,9 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
+        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+          {t('launch.createNode')}
+        </Button>
         {abtnodes && abtnodes.length ? (
           <Button
             disabled={!selectedNode || redirecting}
@@ -166,9 +163,6 @@ function LaunchPage() {
         ) : (
           ''
         )}
-        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
-          {t('launch.createNode')}
-        </Button>
       </div>
     </>
   );

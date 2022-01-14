@@ -16,6 +16,7 @@ export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect
       <div className="node-con">
         {abtnodes.map((node) => (
           <Item
+            key={node.did}
             onClick={() => onSelect(node)}
             className={`item ${selectedNode && selectedNode.did === node.did ? 'item-selected' : ''}`}
             abtnode={node}
@@ -38,17 +39,14 @@ const Content = styled.div`
     justify-content: center;
 
     .item {
-      width: 200px;
+      width: 240px;
       margin: 0 12px 24px;
       cursor: pointer;
-
-      /* ${(props) => props.theme.breakpoints.down('md')} {
-        width: 200px;
-      } */
+      transition:all ease .2s;
     }
 
     .item-selected {
-      background: #f4f6ff;
+      background: rgba(244, 246, 255, 0.3);
       border-color: #4f6af6;
       cursor: pointer;
     }
