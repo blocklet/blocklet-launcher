@@ -30,6 +30,9 @@ function LaunchPage() {
     loading: true,
     error: '',
   });
+  const [frameLoading, setFrameLoading] = useState(true);
+  // 当 frameLoading 未完成时点击了创建节点， 先展示 btnLoading
+  const [nodeBtnLoading, setNodeBtnLoading] = useState(false);
 
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
@@ -83,7 +86,11 @@ function LaunchPage() {
   }, [locale]);
 
   const handleCreateNode = () => {
-    history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
+    if (!frameLoading) {
+      history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
+    } else {
+      setNodeBtnLoading(true);
+    }
   };
 
   useEffect(() => {
@@ -91,6 +98,14 @@ function LaunchPage() {
       const preloadFrame = document.createElement('iframe');
       preloadFrame.id = 'server-preload-page';
       preloadFrame.src = blockletMetaUrl;
+      preloadFrame.addEventListener('load', () => {
+        setFrameLoading(false);
+
+        if (nodeBtnLoading) {
+          // 在frameLoading未完成时按了创建，等frame缓存完后，重新进入创建节点流程
+          handleCreateNode();
+        }
+      });
       Object.assign(preloadFrame.style, {
         width: 0,
         height: 0,
@@ -142,7 +157,8 @@ function LaunchPage() {
                 rounded
                 variant="outlined"
                 onClick={handleCreateNode}
-                style={{ marginLeft: '16px' }}>
+                style={{ marginLeft: '16px' }}
+                loading={nodeBtnLoading}>
                 {t('launch.createAbtNode')}
               </Button>
             </Hidden>
@@ -161,7 +177,13 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
-        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+        <Button
+          variant="outlined"
+          rounded
+          onClick={handleCreateNode}
+          startIcon={<AddIcon />}
+          color="primary"
+          loading={nodeBtnLoading}>
           {t('launch.createNode')}
         </Button>
         {abtnodes && abtnodes.length ? (
