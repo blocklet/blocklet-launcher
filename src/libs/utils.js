@@ -57,6 +57,8 @@ const getBlockletLogoUrl = ({ did, baseUrl, logoPath }) => {
 
 const getRegistryUrl = (blockletMetaUrl) => (blockletMetaUrl ? new URL(blockletMetaUrl).origin : '');
 
+// 确认缓存过的地址
+const cachePool = new Set();
 /**
  * 缓存页面的函数，完成操作会进行callback
  * @param {String} url 等待缓存的页面地址
@@ -65,6 +67,10 @@ const getRegistryUrl = (blockletMetaUrl) => (blockletMetaUrl ? new URL(blockletM
  */
 const preloadPage = (url, time = 5000) =>
   new Promise((res) => {
+    if (cachePool.has(url)) {
+      res();
+      return;
+    }
     const preloadFrame = document.createElement('iframe');
     preloadFrame.id = 'server-preload-page';
     preloadFrame.src = url;
@@ -78,6 +84,7 @@ const preloadPage = (url, time = 5000) =>
       res();
       clearTimeout(timer);
       document.body.removeChild(preloadFrame);
+      cachePool.add(url);
     });
 
     Object.assign(preloadFrame.style, {

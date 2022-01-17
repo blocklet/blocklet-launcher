@@ -31,7 +31,6 @@ function LaunchPage() {
     loading: true,
     error: '',
   });
-
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
   if (!blockletMetaUrl) {
@@ -54,7 +53,6 @@ function LaunchPage() {
 
       if (data.instances) {
         setAbtnodes(data.instances);
-        // setAbtnodes([]);
       }
     } catch (err) {
       console.error(err);
@@ -101,19 +99,34 @@ function LaunchPage() {
     return url.toString();
   };
 
+  // 小于当前数时，选中切换时缓存页面
+  const canCacheNodesLen = 3;
+
+  useEffect(() => {
+    if (abtnodes && abtnodes.length < canCacheNodesLen && selectedNode) {
+      preloadPage(getLaunchNodeUrl(selectedNode));
+    }
+  }, [abtnodes, selectedNode, blockletMetaUrl]);
+
+  const toNode = (node) => {
+    try {
+      window.location.href = getLaunchNodeUrl(node);
+    } catch (error) {
+      setRedirecting(false);
+      console.error('redirect to node error', error);
+    }
+  };
+
   const handleSelect = (node) => {
     setRedirecting(true);
 
-    preloadPage(getLaunchNodeUrl(selectedNode)).then(() => {
-      setRedirecting(false);
+    if (abtnodes.length < canCacheNodesLen) {
+      toNode(node);
+      return;
+    }
 
-      try {
-        setRedirecting(true);
-        window.location.href = getLaunchNodeUrl(node);
-      } catch (error) {
-        setRedirecting(false);
-        console.error('redirect to node error', error);
-      }
+    preloadPage(getLaunchNodeUrl(selectedNode)).then(() => {
+      toNode(node);
     });
   };
 
@@ -139,6 +152,7 @@ function LaunchPage() {
                 rounded
                 variant="outlined"
                 onClick={handleCreateNode}
+                disabled={redirecting}
                 style={{ marginLeft: '16px' }}>
                 {t('launch.createAbtNode')}
               </Button>
@@ -151,14 +165,25 @@ function LaunchPage() {
               className="node-list"
               abtnodes={abtnodes}
               selectedNode={selectedNode}
-              onSelect={setSelectedNode}
+              onSelect={(e) => {
+                if (redirecting) {
+                  return;
+                }
+                setSelectedNode(e);
+              }}
               blockletMetaUrl={blockletMetaUrl}
             />
           </>
         )}
       </div>
       <div className="page-footer">
-        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+        <Button
+          variant="outlined"
+          rounded
+          onClick={handleCreateNode}
+          startIcon={<AddIcon />}
+          color="primary"
+          disabled={redirecting}>
           {t('launch.createNode')}
         </Button>
         {abtnodes && abtnodes.length ? (
