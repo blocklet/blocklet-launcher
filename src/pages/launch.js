@@ -16,7 +16,7 @@ import PageHeader from '../components/page-header';
 import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
-import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
+import { getBlockletMetaUrl, getEnvironment, cacheUrlPage } from '../libs/utils';
 
 function LaunchPage() {
   const { t, locale } = useLocaleContext();
@@ -89,42 +89,13 @@ function LaunchPage() {
   };
 
   useEffect(() => {
-    let preloadFrame;
-    let timer;
-    if (blockletMetaUrl && selectedNode && selectedNode.url) {
-      const url = new URL('/admin/launch-blocklet', selectedNode.url);
-      url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
-
-      preloadFrame = document.createElement('iframe');
-      preloadFrame.id = 'server-preload-page';
-      preloadFrame.src = url.toString();
-
-      preloadFrame.addEventListener('load', () => {
+    if (selectedNode && selectedNode.url) {
+      // 缓存页面完成后，进行loading false 操作
+      cacheUrlPage(getLaunchNodeUrl(selectedNode)).then(() => {
         setFrameLoading(false);
-        clearTimeout(timer);
       });
-      Object.assign(preloadFrame.style, {
-        width: 0,
-        height: 0,
-        opacity: 0,
-      });
-      document.body.appendChild(preloadFrame);
-
-      // 3秒超时还原，让用户等待
-      timer = setTimeout(() => {
-        setFrameLoading(false);
-      }, 3000);
     }
-
-    return () => {
-      if (preloadFrame) {
-        preloadFrame.parentNode.removeChild(preloadFrame);
-      }
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [blockletMetaUrl, selectedNode]);
+  }, [selectedNode, blockletMetaUrl]);
 
   if (/^.*((iPhone)|(iPad)|(Safari))+.*$/.test(navigator.userAgent)) {
     window.addEventListener('pageshow', (e) => {
@@ -134,12 +105,16 @@ function LaunchPage() {
     });
   }
 
+  const getLaunchNodeUrl = (node) => {
+    const url = new URL('/admin/launch-blocklet', node.url);
+    url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
+    return url.toString();
+  };
+
   const handleSelect = (node) => {
     try {
       setRedirecting(true);
-      const url = new URL('/admin/launch-blocklet', node.url);
-      url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
-      window.location.href = url.toString();
+      window.location.href = getLaunchNodeUrl(node);
     } catch (error) {
       setRedirecting(false);
       console.error('redirect to node error', error);
@@ -197,7 +172,8 @@ function LaunchPage() {
             startIcon={redirecting && <Spinner size={[12, 12]} />}
             rounded
             color="primary"
-            variant="contained">
+            variant="contained"
+            loading={frameLoading}>
             {t('common.next')}
           </Button>
         ) : (

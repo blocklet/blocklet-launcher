@@ -57,6 +57,37 @@ const getBlockletLogoUrl = ({ did, baseUrl, logoPath }) => {
 
 const getRegistryUrl = (blockletMetaUrl) => (blockletMetaUrl ? new URL(blockletMetaUrl).origin : '');
 
+/**
+ * 缓存页面的函数，完成操作会进行callback
+ * @param {String} url 等待缓存的页面地址
+ * @param {Number} time 超时请求时间
+ * @returns callback promise
+ */
+const cacheUrlPage = (url, time = 5000) =>
+  new Promise((res) => {
+    const preloadFrame = document.createElement('iframe');
+    preloadFrame.id = 'server-preload-page';
+    preloadFrame.src = url;
+
+    const timer = setTimeout(() => {
+      res();
+      document.body.removeChild(preloadFrame);
+    }, time);
+
+    preloadFrame.addEventListener('load', () => {
+      res();
+      clearTimeout(timer);
+      document.body.removeChild(preloadFrame);
+    });
+
+    Object.assign(preloadFrame.style, {
+      width: 0,
+      height: 0,
+      opacity: 0,
+    });
+    document.body.appendChild(preloadFrame);
+  });
+
 export {
   getWebWalletUrl,
   isObjectFn,
@@ -67,4 +98,5 @@ export {
   getBlockletMetaUrl,
   getBlockletLogoUrl,
   getRegistryUrl,
+  cacheUrlPage,
 };
