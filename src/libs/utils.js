@@ -60,10 +60,10 @@ const getRegistryUrl = (blockletMetaUrl) => (blockletMetaUrl ? new URL(blockletM
 /**
  * 缓存页面的函数，完成操作会进行callback
  * @param {String} url 等待缓存的页面地址
- * @param {Number} time 超时请求时间
+ * @param {Number} time [5000] 超时请求时间
  * @returns callback promise
  */
-const cacheUrlPage = (url, time = 5000) =>
+const preloadPage = (url, time = 5000) =>
   new Promise((res) => {
     const preloadFrame = document.createElement('iframe');
     preloadFrame.id = 'server-preload-page';
@@ -98,5 +98,5 @@ export {
   getBlockletMetaUrl,
   getBlockletLogoUrl,
   getRegistryUrl,
-  cacheUrlPage,
+  preloadPage,
 };

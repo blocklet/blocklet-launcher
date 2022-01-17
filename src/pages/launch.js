@@ -16,7 +16,7 @@ import PageHeader from '../components/page-header';
 import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
-import { getBlockletMetaUrl, getEnvironment, cacheUrlPage } from '../libs/utils';
+import { getBlockletMetaUrl, getEnvironment, preloadPage } from '../libs/utils';
 
 function LaunchPage() {
   const { t, locale } = useLocaleContext();
@@ -31,7 +31,6 @@ function LaunchPage() {
     loading: true,
     error: '',
   });
-  const [frameLoading, setFrameLoading] = useState(true);
 
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
@@ -88,15 +87,6 @@ function LaunchPage() {
     history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
   };
 
-  useEffect(() => {
-    if (selectedNode && selectedNode.url) {
-      // 缓存页面完成后，进行loading false 操作
-      cacheUrlPage(getLaunchNodeUrl(selectedNode)).then(() => {
-        setFrameLoading(false);
-      });
-    }
-  }, [selectedNode, blockletMetaUrl]);
-
   if (/^.*((iPhone)|(iPad)|(Safari))+.*$/.test(navigator.userAgent)) {
     window.addEventListener('pageshow', (e) => {
       if (e.persisted) {
@@ -112,13 +102,19 @@ function LaunchPage() {
   };
 
   const handleSelect = (node) => {
-    try {
-      setRedirecting(true);
-      window.location.href = getLaunchNodeUrl(node);
-    } catch (error) {
+    setRedirecting(true);
+
+    preloadPage(getLaunchNodeUrl(selectedNode)).then(() => {
       setRedirecting(false);
-      console.error('redirect to node error', error);
-    }
+
+      try {
+        setRedirecting(true);
+        window.location.href = getLaunchNodeUrl(node);
+      } catch (error) {
+        setRedirecting(false);
+        console.error('redirect to node error', error);
+      }
+    });
   };
 
   return (
@@ -172,8 +168,7 @@ function LaunchPage() {
             startIcon={redirecting && <Spinner size={[12, 12]} />}
             rounded
             color="primary"
-            variant="contained"
-            loading={frameLoading}>
+            variant="contained">
             {t('common.next')}
           </Button>
         ) : (
