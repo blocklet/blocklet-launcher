@@ -197,8 +197,7 @@ function LaunchPage() {
             startIcon={redirecting && <Spinner size={[12, 12]} />}
             rounded
             color="primary"
-            variant="contained"
-            loading={frameLoading}>
+            variant="contained">
             {t('common.next')}
           </Button>
         ) : (
