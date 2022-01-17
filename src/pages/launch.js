@@ -86,6 +86,20 @@ function LaunchPage() {
     history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
   };
 
+  useEffect(() => {
+    if (blockletMetaUrl && !document.querySelector('#server-preload-page')) {
+      const preloadFrame = document.createElement('iframe');
+      preloadFrame.id = 'server-preload-page';
+      preloadFrame.src = blockletMetaUrl;
+      Object.assign(preloadFrame.style, {
+        width: 0,
+        height: 0,
+        opacity: 0,
+      });
+      document.body.appendChild(preloadFrame);
+    }
+  }, [blockletMetaUrl]);
+
   if (/^.*((iPhone)|(iPad)|(Safari))+.*$/.test(navigator.userAgent)) {
     window.addEventListener('pageshow', (e) => {
       if (e.persisted) {
