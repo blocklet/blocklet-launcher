@@ -90,10 +90,13 @@ function LaunchPage() {
 
   useEffect(() => {
     let preloadFrame;
-    if (blockletMetaUrl) {
+    if (blockletMetaUrl && selectedNode && selectedNode.url) {
+      const url = new URL('/admin/launch-blocklet', selectedNode.url);
+      url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
+
       preloadFrame = document.createElement('iframe');
       preloadFrame.id = 'server-preload-page';
-      preloadFrame.src = `/launch/new?blocklet_meta_url=${blockletMetaUrl}`;
+      preloadFrame.src = url.toString();
 
       preloadFrame.addEventListener('load', () => {
         setFrameLoading(false);
@@ -111,7 +114,7 @@ function LaunchPage() {
         preloadFrame.parentNode.removeChild(preloadFrame);
       }
     };
-  }, [blockletMetaUrl]);
+  }, [blockletMetaUrl, selectedNode]);
 
   if (/^.*((iPhone)|(iPad)|(Safari))+.*$/.test(navigator.userAgent)) {
     window.addEventListener('pageshow', (e) => {
@@ -155,8 +158,7 @@ function LaunchPage() {
                 rounded
                 variant="outlined"
                 onClick={handleCreateNode}
-                style={{ marginLeft: '16px' }}
-                loading={frameLoading}>
+                style={{ marginLeft: '16px' }}>
                 {t('launch.createAbtNode')}
               </Button>
             </Hidden>
@@ -175,13 +177,7 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
-        <Button
-          variant="outlined"
-          rounded
-          onClick={handleCreateNode}
-          startIcon={<AddIcon />}
-          color="primary"
-          loading={frameLoading}>
+        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
           {t('launch.createNode')}
         </Button>
         {abtnodes && abtnodes.length ? (
@@ -191,7 +187,8 @@ function LaunchPage() {
             startIcon={redirecting && <Spinner size={[12, 12]} />}
             rounded
             color="primary"
-            variant="contained">
+            variant="contained"
+            loading={frameLoading}>
             {t('common.next')}
           </Button>
         ) : (
