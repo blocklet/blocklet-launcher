@@ -1,3 +1,7 @@
+## 1.2.9 (一月 17, 2022)
+
+- feat: preload server page
+
 ## 1.2.8 (一月 14, 2022)
 
 - feat: change launch page UI
