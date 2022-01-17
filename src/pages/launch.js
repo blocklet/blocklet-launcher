@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import isEmpty from 'is-empty';
 import { useHistory } from 'react-router-dom';
@@ -31,8 +32,6 @@ function LaunchPage() {
     error: '',
   });
   const [frameLoading, setFrameLoading] = useState(true);
-  // 当 frameLoading 未完成时点击了创建节点， 先展示 btnLoading
-  const [nodeBtnLoading, setNodeBtnLoading] = useState(false);
 
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
@@ -86,25 +85,18 @@ function LaunchPage() {
   }, [locale]);
 
   const handleCreateNode = () => {
-    if (!frameLoading) {
-      history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
-    } else {
-      setNodeBtnLoading(true);
-    }
+    history.push(`/launch/new?blocklet_meta_url=${blockletMetaUrl}`);
   };
 
   useEffect(() => {
-    if (blockletMetaUrl && !document.querySelector('#server-preload-page')) {
-      const preloadFrame = document.createElement('iframe');
+    let preloadFrame;
+    if (blockletMetaUrl) {
+      preloadFrame = document.createElement('iframe');
       preloadFrame.id = 'server-preload-page';
-      preloadFrame.src = blockletMetaUrl;
+      preloadFrame.src = `/launch/new?blocklet_meta_url=${blockletMetaUrl}`;
+
       preloadFrame.addEventListener('load', () => {
         setFrameLoading(false);
-
-        if (nodeBtnLoading) {
-          // 在frameLoading未完成时按了创建，等frame缓存完后，重新进入创建节点流程
-          handleCreateNode();
-        }
       });
       Object.assign(preloadFrame.style, {
         width: 0,
@@ -113,6 +105,12 @@ function LaunchPage() {
       });
       document.body.appendChild(preloadFrame);
     }
+
+    return () => {
+      if (preloadFrame) {
+        preloadFrame.parentNode.removeChild(preloadFrame);
+      }
+    };
   }, [blockletMetaUrl]);
 
   if (/^.*((iPhone)|(iPad)|(Safari))+.*$/.test(navigator.userAgent)) {
@@ -158,7 +156,7 @@ function LaunchPage() {
                 variant="outlined"
                 onClick={handleCreateNode}
                 style={{ marginLeft: '16px' }}
-                loading={nodeBtnLoading}>
+                loading={frameLoading}>
                 {t('launch.createAbtNode')}
               </Button>
             </Hidden>
@@ -183,7 +181,7 @@ function LaunchPage() {
           onClick={handleCreateNode}
           startIcon={<AddIcon />}
           color="primary"
-          loading={nodeBtnLoading}>
+          loading={frameLoading}>
           {t('launch.createNode')}
         </Button>
         {abtnodes && abtnodes.length ? (
