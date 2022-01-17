@@ -84,6 +84,10 @@ const preloadPage = (url, time = 5000) =>
       width: 0,
       height: 0,
       opacity: 0,
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      zIndex: 0,
     });
     document.body.appendChild(preloadFrame);
   });
