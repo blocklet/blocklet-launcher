@@ -90,6 +90,7 @@ function LaunchPage() {
 
   useEffect(() => {
     let preloadFrame;
+    let timer;
     if (blockletMetaUrl && selectedNode && selectedNode.url) {
       const url = new URL('/admin/launch-blocklet', selectedNode.url);
       url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
@@ -100,6 +101,7 @@ function LaunchPage() {
 
       preloadFrame.addEventListener('load', () => {
         setFrameLoading(false);
+        clearTimeout(timer);
       });
       Object.assign(preloadFrame.style, {
         width: 0,
@@ -107,11 +109,19 @@ function LaunchPage() {
         opacity: 0,
       });
       document.body.appendChild(preloadFrame);
+
+      // 3秒超时还原，让用户等待
+      timer = setTimeout(() => {
+        setFrameLoading(false);
+      }, 3000);
     }
 
     return () => {
       if (preloadFrame) {
         preloadFrame.parentNode.removeChild(preloadFrame);
+      }
+      if (timer) {
+        clearTimeout(timer);
       }
     };
   }, [blockletMetaUrl, selectedNode]);
