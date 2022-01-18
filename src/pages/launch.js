@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import isEmpty from 'is-empty';
 import { useHistory } from 'react-router-dom';
@@ -15,7 +16,7 @@ import PageHeader from '../components/page-header';
 import List from '../components/instance/list';
 import ConnectLauncher from '../components/connect-launcher';
 import api from '../libs/api';
-import { getBlockletMetaUrl, getEnvironment } from '../libs/utils';
+import { getBlockletMetaUrl, getEnvironment, preloadPage } from '../libs/utils';
 
 function LaunchPage() {
   const { t, locale } = useLocaleContext();
@@ -30,7 +31,6 @@ function LaunchPage() {
     loading: true,
     error: '',
   });
-
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
   if (!blockletMetaUrl) {
@@ -53,7 +53,6 @@ function LaunchPage() {
 
       if (data.instances) {
         setAbtnodes(data.instances);
-        // setAbtnodes([]);
       }
     } catch (err) {
       console.error(err);
@@ -94,16 +93,31 @@ function LaunchPage() {
     });
   }
 
-  const handleSelect = (node) => {
-    try {
-      setRedirecting(true);
-      const url = new URL('/admin/launch-blocklet', node.url);
-      url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
-      window.location.href = url.toString();
-    } catch (error) {
-      setRedirecting(false);
-      console.error('redirect to node error', error);
+  const getNodeUrl = (node) => {
+    const url = new URL('/admin/launch-blocklet', node.url);
+    url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
+    return url.toString();
+  };
+
+  useEffect(() => {
+    if (selectedNode) {
+      preloadPage(getNodeUrl(selectedNode));
     }
+  }, [selectedNode, blockletMetaUrl]);
+
+  const handleSelect = (node) => {
+    setRedirecting(true);
+
+    const nodeUrl = getNodeUrl(node);
+
+    preloadPage(nodeUrl).then(() => {
+      try {
+        window.location.href = nodeUrl;
+      } catch (error) {
+        setRedirecting(false);
+        console.error('redirect to node error', error);
+      }
+    });
   };
 
   return (
@@ -128,6 +142,7 @@ function LaunchPage() {
                 rounded
                 variant="outlined"
                 onClick={handleCreateNode}
+                disabled={redirecting}
                 style={{ marginLeft: '16px' }}>
                 {t('launch.createAbtNode')}
               </Button>
@@ -140,14 +155,25 @@ function LaunchPage() {
               className="node-list"
               abtnodes={abtnodes}
               selectedNode={selectedNode}
-              onSelect={setSelectedNode}
+              onSelect={(e) => {
+                if (redirecting) {
+                  return;
+                }
+                setSelectedNode(e);
+              }}
               blockletMetaUrl={blockletMetaUrl}
             />
           </>
         )}
       </div>
       <div className="page-footer">
-        <Button variant="outlined" rounded onClick={handleCreateNode} startIcon={<AddIcon />} color="primary">
+        <Button
+          variant="outlined"
+          rounded
+          onClick={handleCreateNode}
+          startIcon={<AddIcon />}
+          color="primary"
+          disabled={redirecting}>
           {t('launch.createNode')}
         </Button>
         {abtnodes && abtnodes.length ? (
