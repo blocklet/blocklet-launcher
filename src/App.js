@@ -20,7 +20,7 @@ import { translations } from './locales';
 import HomePage from './pages/index';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
-import { ABTNodeProvider } from './contexts/abtnode';
+import { ServerProvider } from './contexts/server';
 import { UserProvider, useUserContext } from './contexts/user';
 import { getBlockletLogoUrl, getBlockletMetaUrl, getEnvironment } from './libs/utils';
 import { BlockletMetaProvider, useBlockletMetaContext } from './libs/context/blocklet-meta';
@@ -150,7 +150,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <LocaleProvider translations={translations}>
           <UserProvider>
-            <ABTNodeProvider>
+            <ServerProvider>
               <GlobalStyle />
               <CssBaseline />
               <div className="wrapper">
@@ -160,7 +160,7 @@ const App = () => {
                   <Redirect path="*" to="/about" />
                 </Switch>
               </div>
-            </ABTNodeProvider>
+            </ServerProvider>
           </UserProvider>
         </LocaleProvider>
       </ThemeProvider>
