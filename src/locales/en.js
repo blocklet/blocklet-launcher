@@ -13,7 +13,6 @@ module.exports = flat({
   launch: {
     selectAbtNode: 'Select Blocklet Server',
     launchApp: 'Launch Application',
-    createAbtNode: 'Create Blocklet Server',
     title: 'Select Blocklet Server',
     noInstance: 'No Blocklet Server Available',
     invalidParam: 'Invalid Parameter',

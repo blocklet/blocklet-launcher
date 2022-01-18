@@ -1,13 +1,14 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable object-curly-newline */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-
-import { create } from '@arcblock/ux/lib/Theme';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import Button from '@arcblock/ux/lib/Button';
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+import { create } from '@arcblock/ux/lib/Theme';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { setDateTool } from '@arcblock/ux/lib/Util';
 import Center from '@arcblock/ux/lib/Center';
 import { StepProvider, Layout } from '@arcblock/abt-launcher';
@@ -20,9 +21,11 @@ import HomePage from './pages/index';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
 import { ABTNodeProvider } from './contexts/abtnode';
+import { UserProvider, useUserContext } from './contexts/user';
 import { getBlockletLogoUrl, getBlockletMetaUrl, getEnvironment } from './libs/utils';
 import { BlockletMetaProvider, useBlockletMetaContext } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
+import ConnectLauncher from './components/connect-launcher';
 import useQuery from './hooks/query';
 
 const theme = create({
@@ -30,6 +33,45 @@ const theme = create({
     fontSize: 14,
   },
 });
+
+function PrivateRoute({ component: Component, ...rest }) {
+  const { t } = useLocaleContext();
+  const { user, set: setUser } = useUserContext();
+  const [open, setOpen] = useState(false);
+
+  const handleSuccess = async ({ userDid }) => {
+    setUser(userDid);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleConnectLauncher = () => setOpen(true);
+
+  useEffect(() => {
+    if (!user) {
+      setOpen(true);
+    }
+  }, [user]);
+
+  if (!user) {
+    return (
+      <Center>
+        {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
+        <Button color="primary" rounded variant="contained" onClick={handleConnectLauncher}>
+          {t('launch.connectLauncherButton')}
+        </Button>
+      </Center>
+    );
+  }
+
+  return <Component {...rest} />;
+}
+
+PrivateRoute.propTypes = {
+  component: PropTypes.func.isRequired,
+};
 
 const InnerApp = () => {
   const { t, locale } = useLocaleContext();
@@ -53,7 +95,7 @@ const InnerApp = () => {
     },
     {
       key: 'create-node',
-      name: t('launch.createAbtNode'),
+      name: t('launch.createNode'),
       path: '/launch/new',
       optional: true,
     },
@@ -107,17 +149,19 @@ const App = () => {
     <MuiThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
         <LocaleProvider translations={translations}>
-          <ABTNodeProvider>
-            <GlobalStyle />
-            <CssBaseline />
-            <div className="wrapper">
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/launch*" component={Launch} />
-                <Redirect path="*" to="/about" />
-              </Switch>
-            </div>
-          </ABTNodeProvider>
+          <UserProvider>
+            <ABTNodeProvider>
+              <GlobalStyle />
+              <CssBaseline />
+              <div className="wrapper">
+                <Switch>
+                  <Route exact path="/" component={HomePage} />
+                  <PrivateRoute path="/launch*" component={Launch} />
+                  <Redirect path="*" to="/about" />
+                </Switch>
+              </div>
+            </ABTNodeProvider>
+          </UserProvider>
         </LocaleProvider>
       </ThemeProvider>
     </MuiThemeProvider>
