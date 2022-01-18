@@ -1,10 +1,12 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable object-curly-newline */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import joinUrl from 'url-join';
 import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { create } from '@arcblock/ux/lib/Theme';
@@ -14,6 +16,7 @@ import Center from '@arcblock/ux/lib/Center';
 import { StepProvider, Layout } from '@arcblock/abt-launcher';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
 import CookieConsent from '@arcblock/ux/lib/CookieConsent';
+import SessionManager from '@arcblock/did-connect/lib/SessionManager';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
@@ -21,11 +24,10 @@ import HomePage from './pages/index';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
 import { ServerProvider } from './contexts/server';
-import { UserProvider, useUserContext } from './contexts/user';
-import { getBlockletLogoUrl, getBlockletMetaUrl, getEnvironment } from './libs/utils';
+import { SessionProvider, useSessionContext } from './contexts/session';
+import { getBlockletLogoUrl, getBlockletMetaUrl, getEnvironment, getWebWalletUrl } from './libs/utils';
 import { BlockletMetaProvider, useBlockletMetaContext } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
-import ConnectLauncher from './components/connect-launcher';
 import useQuery from './hooks/query';
 
 const theme = create({
@@ -35,31 +37,26 @@ const theme = create({
 });
 
 function PrivateRoute({ component: Component, ...rest }) {
+  const { session } = useSessionContext();
   const { t } = useLocaleContext();
-  const { user, set: setUser } = useUserContext();
-  const [open, setOpen] = useState(false);
-
-  const handleSuccess = async ({ userDid }) => {
-    setUser(userDid);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleConnectLauncher = () => setOpen(true);
 
   useEffect(() => {
-    if (!user) {
-      setOpen(true);
+    if (!session.user) {
+      session.login();
     }
-  }, [user]);
+    // eslint-disable-next-line
+  }, [session.user]);
 
-  if (!user) {
+  if (session.loading) {
+    return <Spinner />;
+  }
+
+  const handleLogin = () => session.login();
+
+  if (!session.user) {
     return (
       <Center>
-        {open && <ConnectLauncher onSuccess={handleSuccess} onClose={handleClose} />}
-        <Button color="primary" rounded variant="contained" onClick={handleConnectLauncher}>
+        <Button color="primary" rounded variant="contained" onClick={handleLogin}>
           {t('launch.connectLauncherButton')}
         </Button>
       </Center>
@@ -70,13 +67,14 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  component: PropTypes.any.isRequired,
 };
 
 const InnerApp = () => {
   const { t, locale } = useLocaleContext();
   const query = useQuery();
   const blockletMeta = useBlockletMetaContext();
+  const { session } = useSessionContext();
 
   moment.locale(locale === 'zh' ? 'zh-cn' : locale);
   setDateTool(moment);
@@ -117,7 +115,12 @@ const InnerApp = () => {
           logoPath: blockletMeta.data.logo,
         })}
         pcWidth="65%"
-        headerEndAddons={<LocaleSelector size={26} showText={false} className="locale-addon" />}>
+        headerEndAddons={
+          <>
+            <SessionManager session={session} webWalletUrl={getWebWalletUrl()} />
+            <LocaleSelector size={26} showText={false} className="locale-addon" />
+          </>
+        }>
         <Content>
           <Switch>
             <Route exact path="/launch" component={LaunchPage} />
@@ -146,10 +149,12 @@ const Launch = () => (
 
 const App = () => {
   return (
-    <MuiThemeProvider theme={theme}>
-      <ThemeProvider theme={theme}>
-        <LocaleProvider translations={translations}>
-          <UserProvider>
+    <SessionProvider
+      serviceHost={joinUrl(getEnvironment('LAUNCHER_URL'), '/.service/@abtnode/auth-service/')}
+      autoLogin={false}>
+      <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <LocaleProvider translations={translations}>
             <ServerProvider>
               <GlobalStyle />
               <CssBaseline />
@@ -161,10 +166,10 @@ const App = () => {
                 </Switch>
               </div>
             </ServerProvider>
-          </UserProvider>
-        </LocaleProvider>
-      </ThemeProvider>
-    </MuiThemeProvider>
+          </LocaleProvider>
+        </ThemeProvider>
+      </MuiThemeProvider>
+    </SessionProvider>
   );
 };
 

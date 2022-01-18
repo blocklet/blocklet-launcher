@@ -14,13 +14,13 @@ import PageHeader from '../components/page-header';
 import List from '../components/instance/list';
 import api from '../libs/api';
 import { getBlockletMetaUrl, getEnvironment, preloadPage } from '../libs/utils';
-import { useUserContext } from '../contexts/user';
+import { useSessionContext } from '../contexts/session';
 
 function LaunchPage() {
   const { t } = useLocaleContext();
   const query = useQuery();
   const history = useHistory();
-  const { user } = useUserContext();
+  const { user } = useSessionContext();
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
