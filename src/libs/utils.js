@@ -62,23 +62,23 @@ const cachePool = new Set();
 /**
  * 缓存页面的函数，完成操作会进行callback
  * @param {String} url 等待缓存的页面地址
- * @param {Number} time [5000] 超时请求时间
+ * @param {Number} timeout [5000] 超时请求时间
  * @returns callback promise
  */
-const preloadPage = (url, time = 5000) =>
+const preloadPage = (url, timeout = 5000) =>
   new Promise((res) => {
     if (cachePool.has(url)) {
       res();
       return;
     }
     const preloadFrame = document.createElement('iframe');
-    preloadFrame.id = 'server-preload-page';
+    preloadFrame.setAttribute('preload-page', '');
     preloadFrame.src = url;
 
     const timer = setTimeout(() => {
       res();
       document.body.removeChild(preloadFrame);
-    }, time);
+    }, timeout);
 
     preloadFrame.addEventListener('load', () => {
       res();

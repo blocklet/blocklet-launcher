@@ -93,40 +93,30 @@ function LaunchPage() {
     });
   }
 
-  const getLaunchNodeUrl = (node) => {
+  const getNodeUrl = (node) => {
     const url = new URL('/admin/launch-blocklet', node.url);
     url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
     return url.toString();
   };
 
-  // 小于当前数时，选中切换时缓存页面
-  const canCacheNodesLen = 3;
-
   useEffect(() => {
-    if (abtnodes && abtnodes.length < canCacheNodesLen && selectedNode) {
-      preloadPage(getLaunchNodeUrl(selectedNode));
+    if (selectedNode) {
+      preloadPage(getNodeUrl(selectedNode));
     }
-  }, [abtnodes, selectedNode, blockletMetaUrl]);
-
-  const toNode = (node) => {
-    try {
-      window.location.href = getLaunchNodeUrl(node);
-    } catch (error) {
-      setRedirecting(false);
-      console.error('redirect to node error', error);
-    }
-  };
+  }, [selectedNode, blockletMetaUrl]);
 
   const handleSelect = (node) => {
     setRedirecting(true);
 
-    if (abtnodes.length < canCacheNodesLen) {
-      toNode(node);
-      return;
-    }
+    const nodeUrl = getNodeUrl(node);
 
-    preloadPage(getLaunchNodeUrl(selectedNode)).then(() => {
-      toNode(node);
+    preloadPage(nodeUrl).then(() => {
+      try {
+        window.location.href = nodeUrl;
+      } catch (error) {
+        setRedirecting(false);
+        console.error('redirect to node error', error);
+      }
     });
   };
 
