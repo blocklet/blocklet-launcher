@@ -13,7 +13,6 @@ module.exports = flat({
   launch: {
     selectAbtNode: '选择节点',
     launchApp: '启动应用',
-    createAbtNode: '创建节点',
     title: '请选择节点',
     noInstance: '没有节点',
     invalidParam: '无效的参数',

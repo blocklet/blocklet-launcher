@@ -1,3 +1,9 @@
+## 1.2.10 (January 18, 2022)
+
+- feat: display user info after auhtorized
+- refactor: rename abtnode context to server context
+- feat: require user authorization when launching the application
+
 ## 1.2.9 (一月 17, 2022)
 
 - feat: preload server page

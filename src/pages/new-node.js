@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import useLocalStorage from 'react-use/lib/useLocalStorage';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import useQuery from '../hooks/query';
@@ -12,12 +13,14 @@ export default function NewNode() {
   const [width, setWidth] = useState('0');
   const [height, setHeight] = useState('0');
   const { locale } = useLocaleContext();
+  const [{ userDid }] = useLocalStorage('launcher_credential', {});
 
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
   const launchUrlObject = new URL(getEnvironment('LAUNCHER_URL'));
   launchUrlObject.searchParams.append('blocklet_meta_url', blockletMetaUrl);
   launchUrlObject.searchParams.append('content_type', 'bare');
+  launchUrlObject.searchParams.append('userDid', userDid);
   launchUrlObject.searchParams.append('locale', locale);
 
   const handleLoaded = () => setLoading(false);

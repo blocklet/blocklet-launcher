@@ -1,26 +1,31 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable object-curly-newline */
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
-
-import { create } from '@arcblock/ux/lib/Theme';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import joinUrl from 'url-join';
 import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
-import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+import Spinner from '@arcblock/ux/lib/Spinner';
+import Button from '@arcblock/ux/lib/Button';
+import { LocaleConsumer, LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+import { create } from '@arcblock/ux/lib/Theme';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { setDateTool } from '@arcblock/ux/lib/Util';
 import Center from '@arcblock/ux/lib/Center';
 import { StepProvider, Layout } from '@arcblock/abt-launcher';
 import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
 import CookieConsent from '@arcblock/ux/lib/CookieConsent';
+import SessionManager from '@arcblock/did-connect/lib/SessionManager';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { translations } from './locales';
 import HomePage from './pages/index';
 import LaunchPage from './pages/launch';
 import NewNodePage from './pages/new-node';
-import { ABTNodeProvider } from './contexts/abtnode';
-import { getBlockletLogoUrl, getBlockletMetaUrl, getEnvironment } from './libs/utils';
+import { ServerProvider } from './contexts/server';
+import { SessionProvider, useSessionContext } from './contexts/session';
+import { getBlockletLogoUrl, getBlockletMetaUrl, getEnvironment, getWebWalletUrl } from './libs/utils';
 import { BlockletMetaProvider, useBlockletMetaContext } from './libs/context/blocklet-meta';
 import GlobalStyle from './components/layout/global-style';
 import useQuery from './hooks/query';
@@ -31,10 +36,60 @@ const theme = create({
   },
 });
 
+const connectMessages = {
+  en: {
+    title: 'Authorize Launcher Account',
+    scan: 'Connect your Blocklet Server Launcher account to get a list of the servers you have or create new ones',
+    confirm: 'Confirm login in your DID Wallet',
+    success: 'Connect successfully',
+  },
+  zh: {
+    title: '授权启动器账户',
+    scan: '连接你的节点启动器账户，以获取你所拥有的节点列表或者创建新的节点',
+    confirm: '在 DID 钱包中确认登录',
+    success: '连接成功',
+  },
+};
+
+function PrivateRoute({ component: Component, ...rest }) {
+  const { session } = useSessionContext();
+  const { t } = useLocaleContext();
+
+  useEffect(() => {
+    if (!session.user) {
+      session.login();
+    }
+    // eslint-disable-next-line
+  }, [session.user]);
+
+  if (session.loading) {
+    return <Spinner />;
+  }
+
+  const handleLogin = () => session.login();
+
+  if (!session.user) {
+    return (
+      <div style={{ display: 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <Button color="primary" rounded variant="contained" onClick={handleLogin}>
+          {t('launch.connectLauncherButton')}
+        </Button>
+      </div>
+    );
+  }
+
+  return <Component {...rest} />;
+}
+
+PrivateRoute.propTypes = {
+  component: PropTypes.any.isRequired,
+};
+
 const InnerApp = () => {
   const { t, locale } = useLocaleContext();
   const query = useQuery();
   const blockletMeta = useBlockletMetaContext();
+  const { session } = useSessionContext();
 
   moment.locale(locale === 'zh' ? 'zh-cn' : locale);
   setDateTool(moment);
@@ -53,7 +108,7 @@ const InnerApp = () => {
     },
     {
       key: 'create-node',
-      name: t('launch.createAbtNode'),
+      name: t('launch.createNode'),
       path: '/launch/new',
       optional: true,
     },
@@ -75,11 +130,16 @@ const InnerApp = () => {
           logoPath: blockletMeta.data.logo,
         })}
         pcWidth="65%"
-        headerEndAddons={<LocaleSelector size={26} showText={false} className="locale-addon" />}>
+        headerEndAddons={
+          <>
+            <SessionManager session={session} webWalletUrl={getWebWalletUrl()} />
+            <LocaleSelector size={26} showText={false} className="locale-addon" />
+          </>
+        }>
         <Content>
           <Switch>
             <Route exact path="/launch" component={LaunchPage} />
-            <Route exact path="/launch/new" component={NewNodePage} />
+            <PrivateRoute exact path="/launch/new" component={NewNodePage} />
           </Switch>
           <CookieConsent />
         </Content>
@@ -107,17 +167,27 @@ const App = () => {
     <MuiThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
         <LocaleProvider translations={translations}>
-          <ABTNodeProvider>
-            <GlobalStyle />
-            <CssBaseline />
-            <div className="wrapper">
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/launch*" component={Launch} />
-                <Redirect path="*" to="/about" />
-              </Switch>
-            </div>
-          </ABTNodeProvider>
+          <LocaleConsumer>
+            {({ locale }) => (
+              <SessionProvider
+                locale={locale}
+                messages={connectMessages}
+                serviceHost={joinUrl(getEnvironment('LAUNCHER_URL'), '/.service/@abtnode/auth-service/')}
+                autoLogin={false}>
+                <ServerProvider>
+                  <GlobalStyle />
+                  <CssBaseline />
+                  <div className="wrapper">
+                    <Switch>
+                      <Route exact path="/" component={HomePage} />
+                      <Route path="/launch*" component={Launch} />
+                      <Redirect path="*" to="/about" />
+                    </Switch>
+                  </div>
+                </ServerProvider>
+              </SessionProvider>
+            )}
+          </LocaleConsumer>
         </LocaleProvider>
       </ThemeProvider>
     </MuiThemeProvider>
