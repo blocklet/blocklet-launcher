@@ -8,7 +8,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
-import { LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
+import { LocaleConsumer, LocaleProvider, useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { create } from '@arcblock/ux/lib/Theme';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { setDateTool } from '@arcblock/ux/lib/Util';
@@ -35,6 +35,21 @@ const theme = create({
     fontSize: 14,
   },
 });
+
+const connectMessages = {
+  en: {
+    title: 'Authorize Launcher Account',
+    scan: 'Connect your Blocklet Server Launcher account to get a list of the servers you have or create new ones',
+    confirm: 'Confirm login in your DID Wallet',
+    success: 'Connect successfully',
+  },
+  zh: {
+    title: '授权启动器账户',
+    scan: '连接你的节点启动器账户，以获取你所拥有的节点列表或者创建新的节点',
+    confirm: '在 DID 钱包中确认登录',
+    success: '连接成功',
+  },
+};
 
 function PrivateRoute({ component: Component, ...rest }) {
   const { session } = useSessionContext();
@@ -149,27 +164,33 @@ const Launch = () => (
 
 const App = () => {
   return (
-    <SessionProvider
-      serviceHost={joinUrl(getEnvironment('LAUNCHER_URL'), '/.service/@abtnode/auth-service/')}
-      autoLogin={false}>
-      <MuiThemeProvider theme={theme}>
-        <ThemeProvider theme={theme}>
-          <LocaleProvider translations={translations}>
-            <ServerProvider>
-              <GlobalStyle />
-              <CssBaseline />
-              <div className="wrapper">
-                <Switch>
-                  <Route exact path="/" component={HomePage} />
-                  <Route path="/launch*" component={Launch} />
-                  <Redirect path="*" to="/about" />
-                </Switch>
-              </div>
-            </ServerProvider>
-          </LocaleProvider>
-        </ThemeProvider>
-      </MuiThemeProvider>
-    </SessionProvider>
+    <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <LocaleProvider translations={translations}>
+          <LocaleConsumer>
+            {({ locale }) => (
+              <SessionProvider
+                locale={locale}
+                messages={connectMessages}
+                serviceHost={joinUrl(getEnvironment('LAUNCHER_URL'), '/.service/@abtnode/auth-service/')}
+                autoLogin={false}>
+                <ServerProvider>
+                  <GlobalStyle />
+                  <CssBaseline />
+                  <div className="wrapper">
+                    <Switch>
+                      <Route exact path="/" component={HomePage} />
+                      <Route path="/launch*" component={Launch} />
+                      <Redirect path="*" to="/about" />
+                    </Switch>
+                  </div>
+                </ServerProvider>
+              </SessionProvider>
+            )}
+          </LocaleConsumer>
+        </LocaleProvider>
+      </ThemeProvider>
+    </MuiThemeProvider>
   );
 };
 

@@ -117,15 +117,17 @@ function LaunchPage() {
         )}
       </div>
       <div className="page-footer">
-        <Button
-          variant="outlined"
-          rounded
-          onClick={handleCreateNode}
-          startIcon={<AddIcon />}
-          color="primary"
-          disabled={redirecting}>
-          {t('launch.createNode')}
-        </Button>
+        {session.user && (
+          <Button
+            variant="outlined"
+            rounded
+            onClick={handleCreateNode}
+            startIcon={<AddIcon />}
+            color="primary"
+            disabled={redirecting}>
+            {t('launch.createNode')}
+          </Button>
+        )}
         {!session.user && (
           <Button color="primary" rounded variant="contained" onClick={handleLogin}>
             {t('launch.connectLauncherButton')}
