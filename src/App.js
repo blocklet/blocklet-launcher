@@ -55,11 +55,11 @@ function PrivateRoute({ component: Component, ...rest }) {
 
   if (!session.user) {
     return (
-      <Center>
+      <div style={{ display: 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
         <Button color="primary" rounded variant="contained" onClick={handleLogin}>
           {t('launch.connectLauncherButton')}
         </Button>
-      </Center>
+      </div>
     );
   }
 
@@ -124,7 +124,7 @@ const InnerApp = () => {
         <Content>
           <Switch>
             <Route exact path="/launch" component={LaunchPage} />
-            <Route exact path="/launch/new" component={NewNodePage} />
+            <PrivateRoute exact path="/launch/new" component={NewNodePage} />
           </Switch>
           <CookieConsent />
         </Content>
@@ -161,7 +161,7 @@ const App = () => {
               <div className="wrapper">
                 <Switch>
                   <Route exact path="/" component={HomePage} />
-                  <PrivateRoute path="/launch*" component={Launch} />
+                  <Route path="/launch*" component={Launch} />
                   <Redirect path="*" to="/about" />
                 </Switch>
               </div>

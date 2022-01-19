@@ -21,9 +21,12 @@ function LaunchPage() {
   const query = useQuery();
   const history = useHistory();
   const { user } = useSessionContext();
+  const { session } = useSessionContext();
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
+
+  const handleLogin = () => session.login();
 
   const fetchNodesState = useAsync(async () => {
     const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${user}`);
@@ -123,6 +126,11 @@ function LaunchPage() {
           disabled={redirecting}>
           {t('launch.createNode')}
         </Button>
+        {!session.user && (
+          <Button color="primary" rounded variant="contained" onClick={handleLogin}>
+            {t('launch.connectLauncherButton')}
+          </Button>
+        )}
         {instances && instances.length > 0 && (
           <Button
             disabled={!selectedNode || redirecting}
