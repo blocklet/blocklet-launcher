@@ -20,7 +20,6 @@ function LaunchPage() {
   const { t } = useLocaleContext();
   const query = useQuery();
   const history = useHistory();
-  const { user } = useSessionContext();
   const { session } = useSessionContext();
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
@@ -29,9 +28,13 @@ function LaunchPage() {
   const handleLogin = () => session.login();
 
   const fetchNodesState = useAsync(async () => {
-    const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${user}`);
+    if (session.user) {
+      const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${session.user.did}`);
 
-    return data.instances;
+      return data.instances;
+    }
+
+    return [];
   });
 
   const instances = fetchNodesState.value || [];
