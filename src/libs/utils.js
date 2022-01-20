@@ -42,6 +42,13 @@ export const formatRegistryLogoPath = (did, asset) => {
 };
 
 const getBlockletLogoUrl = ({ did, baseUrl, logoPath }) => {
+  // eslint-disable-next-line no-debugger
+  // debugger;
+
+  if (!logoPath) {
+    return 'https://store.blocklet.dev/assets/z8ia29UsENBg6tLZUKi2HABj38Cw1LmHZocbQ/logo.png';
+  }
+
   if (baseUrl.startsWith('http') && logoPath) {
     return joinUrl(baseUrl, formatRegistryLogoPath(did, logoPath));
   }
