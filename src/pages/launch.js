@@ -233,7 +233,7 @@ const Container = styled.div`
       padding: 24px;
       & > button {
         margin: 0 12px;
-        width: 200px;
+        min-width: 200px;
       }
     }
 
