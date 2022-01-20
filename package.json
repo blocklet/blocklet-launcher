@@ -1,7 +1,7 @@
 {
   "name": "install-on-abtnode",
   "title": "Blocklet Launcher",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "A simple blocklet that helps you install blocklet on abtnode",
   "keywords": [
     "dapp",
