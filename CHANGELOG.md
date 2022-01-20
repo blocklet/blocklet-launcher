@@ -1,3 +1,7 @@
+## 1.2.12 (January 20, 2022)
+
+- fix get user blocklet server list bug
+
 ## 1.2.11 (一月 20, 2022)
 
 - fix: launch button width
