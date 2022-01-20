@@ -8,7 +8,8 @@ module.exports = flat({
     start: '开始',
   },
   home: {
-    intro: '启动器可以帮助你很方便的将应用安装到你的节点上。',
+    name: '应用启动器',
+    intro: '应用启动器可以帮助你很方便的将应用安装到你的节点上。',
   },
   launch: {
     selectAbtNode: '选择节点',

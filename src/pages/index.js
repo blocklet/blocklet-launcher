@@ -22,7 +22,7 @@ export default function Home() {
     <BaseLayout addons={<LocaleSelector showText={false} />}>
       <Content>
         <div className="intro">
-          <h1>Blocklet Launcher</h1>
+          <h1>{t('home.name')}</h1>
           <div className="intro__desc">
             <div>{t('home.intro')}</div>
             <Button
