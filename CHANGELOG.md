@@ -1,3 +1,7 @@
+## 1.2.11 (一月 20, 2022)
+
+- fix: launch button width
+
 ## 1.2.10 (January 18, 2022)
 
 - feat: display user info after auhtorized
