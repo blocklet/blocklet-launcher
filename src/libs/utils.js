@@ -42,10 +42,6 @@ export const formatRegistryLogoPath = (did, asset) => {
 };
 
 const getBlockletLogoUrl = ({ did, baseUrl, logoPath }) => {
-  if (!logoPath) {
-    return '';
-  }
-
   if (baseUrl.startsWith('http') && logoPath) {
     return joinUrl(baseUrl, formatRegistryLogoPath(did, logoPath));
   }

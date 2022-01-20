@@ -124,11 +124,15 @@ const InnerApp = () => {
       <Layout
         locale={locale}
         blockletMeta={blockletMeta.data}
-        logoUrl={getBlockletLogoUrl({
-          did: blockletMeta.data.did,
-          baseUrl: blockletMeta.registryUrl,
-          logoPath: blockletMeta.data.logo,
-        })}
+        logoUrl={
+          blockletMeta.logo
+            ? getBlockletLogoUrl({
+                did: blockletMeta.did,
+                baseUrl: blockletMeta.registryUrl,
+                logoPath: blockletMeta.logo,
+              })
+            : ''
+        }
         pcWidth="65%"
         headerEndAddons={
           <>
