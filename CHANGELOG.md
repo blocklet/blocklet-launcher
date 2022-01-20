@@ -1,3 +1,7 @@
+## 1.2.13 (一月 20, 2022)
+
+- fix: show did-avatar as fallback blocklet logo in launch page
+
 ## 1.2.12 (January 20, 2022)
 
 - fix get user blocklet server list bug

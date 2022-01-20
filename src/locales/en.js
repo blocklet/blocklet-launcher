@@ -8,6 +8,7 @@ module.exports = flat({
     start: 'Start',
   },
   home: {
+    name: 'Blocklet Launcher',
     intro: 'Blocklet Launcher can help you easily launch applications to your Blocklet Server.',
   },
   launch: {

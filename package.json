@@ -1,7 +1,7 @@
 {
   "name": "install-on-abtnode",
   "title": "Blocklet Launcher",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "A simple blocklet that helps you install blocklet on abtnode",
   "keywords": [
     "dapp",
@@ -19,10 +19,10 @@
     "url": "https://github.com/blocklet/install-on-abtnode"
   },
   "dependencies": {
-    "@arcblock/abt-launcher": "^1.16.11",
-    "@arcblock/did-connect": "^1.16.11",
-    "@arcblock/icons": "^1.16.11",
-    "@arcblock/ux": "^1.16.11",
+    "@arcblock/abt-launcher": "^1.16.12",
+    "@arcblock/did-connect": "^1.16.12",
+    "@arcblock/icons": "^1.16.12",
+    "@arcblock/ux": "^1.16.12",
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
