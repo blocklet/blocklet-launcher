@@ -67,18 +67,19 @@ const cachePool = new Set();
  */
 const preloadPage = (url, timeout = 5000) =>
   new Promise((res) => {
-    // 强制请求 https 资源，否则会被浏览器 block
+    // 这里强制设置为和当前域相同的 protocol
+    // 否则如果当前域名是 https, 而 url 是 http 会被浏览器 block
     const httpsUrlObj = new URL(url);
-    httpsUrlObj.protocol = 'https';
-    const httpsUrl = httpsUrlObj.toString();
+    httpsUrlObj.protocol = window.location.protocol;
+    const formatedUrl = httpsUrlObj.toString();
 
-    if (cachePool.has(httpsUrl)) {
+    if (cachePool.has(formatedUrl)) {
       res();
       return;
     }
     const preloadFrame = document.createElement('iframe');
     preloadFrame.setAttribute('preload-page', '');
-    preloadFrame.src = httpsUrl;
+    preloadFrame.src = formatedUrl;
 
     const timer = setTimeout(() => {
       res();
@@ -89,7 +90,7 @@ const preloadPage = (url, timeout = 5000) =>
       res();
       clearTimeout(timer);
       document.body.removeChild(preloadFrame);
-      cachePool.add(httpsUrl);
+      cachePool.add(formatedUrl);
     });
 
     Object.assign(preloadFrame.style, {
