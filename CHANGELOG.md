@@ -1,3 +1,7 @@
+## 1.2.14 (一月 21, 2022)
+
+- fix: blocklet icon show failure
+
 ## 1.2.13 (一月 20, 2022)
 
 - fix: show did-avatar as fallback blocklet logo in launch page
