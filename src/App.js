@@ -125,15 +125,15 @@ const InnerApp = () => {
         locale={locale}
         blockletMeta={blockletMeta.data}
         logoUrl={
-          blockletMeta.logo
+          blockletMeta.data.logo
             ? getBlockletLogoUrl({
-                did: blockletMeta.did,
-                baseUrl: blockletMeta.registryUrl,
-                logoPath: blockletMeta.logo,
+                did: blockletMeta.data.did,
+                baseUrl: blockletMeta.data.registryUrl,
+                logoPath: blockletMeta.data.logo,
               })
             : ''
         }
-        pcWidth="65%"
+        pcWidth="80%"
         headerEndAddons={
           <>
             <SessionManager session={session} webWalletUrl={getWebWalletUrl()} />
