@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import useAsync from 'react-use/lib/useAsync';
+import useAsyncRetry from 'react-use/lib/useAsyncRetry';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
@@ -25,9 +25,7 @@ function LaunchPage() {
   const [redirecting, setRedirecting] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
-  const handleLogin = () => session.login();
-
-  const fetchNodesState = useAsync(async () => {
+  const fetchNodesState = useAsyncRetry(async () => {
     if (session.user) {
       const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${session.user.did}`);
 
@@ -35,7 +33,9 @@ function LaunchPage() {
     }
 
     return [];
-  });
+  }, [session.user]);
+
+  const handleLogin = () => session.login();
 
   const instances = fetchNodesState.value || [];
 

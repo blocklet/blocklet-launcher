@@ -6,6 +6,7 @@ const { SessionProvider, SessionContext } = createSessionContext('abt_launcher_l
 
 function useSessionContext() {
   const info = useContext(SessionContext);
+
   return info;
 }
 
