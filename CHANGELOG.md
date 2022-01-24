@@ -1,3 +1,7 @@
+## 1.2.15 (January 21, 2022)
+
+- fix login and pre-load bugs
+
 ## 1.2.14 (一月 21, 2022)
 
 - fix: blocklet icon show failure

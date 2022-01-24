@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import useAsync from 'react-use/lib/useAsync';
+import useAsyncRetry from 'react-use/lib/useAsyncRetry';
 import Spinner from '@arcblock/ux/lib/Spinner';
 import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
@@ -25,9 +25,7 @@ function LaunchPage() {
   const [redirecting, setRedirecting] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
-  const handleLogin = () => session.login();
-
-  const fetchNodesState = useAsync(async () => {
+  const fetchNodesState = useAsyncRetry(async () => {
     if (session.user) {
       const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${session.user.did}`);
 
@@ -35,7 +33,9 @@ function LaunchPage() {
     }
 
     return [];
-  });
+  }, [session.user]);
+
+  const handleLogin = () => session.login();
 
   const instances = fetchNodesState.value || [];
 
@@ -43,13 +43,19 @@ function LaunchPage() {
     if (instances && instances.length > 0) {
       setSelectedNode(instances[0]);
     }
-  }, [fetchNodesState.value]);
+  }, [instances]);
+
+  const getNodeUrl = (node) => {
+    const url = new URL('/admin/launch-blocklet', node.url);
+    url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
+    return url.toString();
+  };
 
   useEffect(() => {
     if (selectedNode) {
       preloadPage(getNodeUrl(selectedNode));
     }
-  }, [selectedNode, blockletMetaUrl]);
+  }, [selectedNode, blockletMetaUrl]); /* eslint-disable-line */
 
   if (fetchNodesState.error) {
     return <Alert severity="error">{fetchNodesState.error}</Alert>;
@@ -78,12 +84,6 @@ function LaunchPage() {
       }
     });
   }
-
-  const getNodeUrl = (node) => {
-    const url = new URL('/admin/launch-blocklet', node.url);
-    url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
-    return url.toString();
-  };
 
   const handleSelect = (node) => {
     setRedirecting(true);

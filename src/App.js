@@ -55,9 +55,13 @@ function PrivateRoute({ component: Component, ...rest }) {
   const { session } = useSessionContext();
   const { t } = useLocaleContext();
 
+  const handleLogin = () => {
+    session.login();
+  };
+
   useEffect(() => {
     if (!session.user) {
-      session.login();
+      handleLogin();
     }
     // eslint-disable-next-line
   }, [session.user]);
@@ -65,8 +69,6 @@ function PrivateRoute({ component: Component, ...rest }) {
   if (session.loading) {
     return <Spinner />;
   }
-
-  const handleLogin = () => session.login();
 
   if (!session.user) {
     return (

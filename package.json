@@ -1,7 +1,7 @@
 {
   "name": "install-on-abtnode",
   "title": "Blocklet Launcher",
-  "version": "1.2.14",
+  "version": "1.2.15",
   "description": "A simple blocklet that helps you install blocklet on abtnode",
   "keywords": [
     "dapp",
@@ -56,7 +56,7 @@
     "prepush": "yarn lint",
     "clean": "rm -rf build api/dist .blocklet",
     "start": "npm-run-all --parallel start:*",
-    "start:client": "PUBLIC_URL=\"\" react-app-rewired start",
+    "start:client": "NODE_ENV=developmen PUBLIC_URL=\"\" react-app-rewired start",
     "start:server": "NODE_ENV=development nodemon api/index.js -w api",
     "build": "yarn clean && npm run build:client && rm -f build/static/**/*.{js,css}.map && npm run build:server",
     "build:client": "PUBLIC_URL=\"/\" react-app-rewired build",
@@ -82,7 +82,7 @@
   "devDependencies": {
     "@arcblock/eslint-config": "^0.1.8",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
+    "eslint": "^7.31.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
@@ -94,12 +94,11 @@
     "husky": "^4.2.3",
     "lint-staged": "^12.1.2",
     "mutationobserver-shim": "^0.3.7",
-    "nodemon": "^2.0.15",
+    "nodemon": "^1.19.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
-    "react-app-rewired": "^2.1.8",
-    "react-dev-utils": "^11.0.4",
-    "react-scripts": "^4.0.3"
+    "react-app-rewired": "^2.1.6",
+    "react-scripts": "3.4.3"
   },
   "license": "Apache-2.0",
   "lint-staged": {
