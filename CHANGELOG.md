@@ -1,3 +1,7 @@
+## 1.2.16 (一月 24, 2022)
+
+fix: font family problem about abt launcher
+
 ## 1.2.15 (January 21, 2022)
 
 - fix login and pre-load bugs
