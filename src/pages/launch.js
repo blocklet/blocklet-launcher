@@ -8,6 +8,7 @@ import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
+import AddServerGuide from '../components/guide-dialog/add-server-guide';
 
 import useQuery from '../hooks/query';
 import PageHeader from '../components/page-header';
@@ -23,6 +24,7 @@ function LaunchPage() {
   const { session } = useSessionContext();
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(true);
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
   const fetchNodesState = useAsyncRetry(async () => {
@@ -121,15 +123,26 @@ function LaunchPage() {
       </div>
       <div className="page-footer">
         {session.user && (
-          <Button
-            variant="outlined"
-            rounded
-            onClick={handleCreateNode}
-            startIcon={<AddIcon />}
-            color="primary"
-            disabled={redirecting}>
-            {t('launch.createNode')}
-          </Button>
+          <>
+            <Button
+              variant="outlined"
+              rounded
+              onClick={handleCreateNode}
+              startIcon={<AddIcon />}
+              color="primary"
+              disabled={redirecting}>
+              {t('launch.createNode')}
+            </Button>
+            <Button
+              rounded
+              startIcon={<AddIcon />}
+              variant="contained"
+              color="primary"
+              disabled={redirecting}
+              onClick={() => setGuideOpen(true)}>
+              {t('launch.addNode')}
+            </Button>
+          </>
         )}
         {!session.user && (
           <Button color="primary" rounded variant="contained" onClick={handleLogin}>
@@ -148,6 +161,7 @@ function LaunchPage() {
           </Button>
         )}
       </div>
+      <AddServerGuide open={guideOpen} onClose={() => setGuideOpen(false)} />
     </>
   );
 }

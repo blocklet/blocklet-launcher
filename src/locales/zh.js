@@ -20,6 +20,7 @@ module.exports = flat({
     loadingError: '加载节点列表失败',
     connectLauncherButton: '连接节点启动器',
     createNode: '创建节点',
+    addNode: '添加节点',
     stepTip: '步骤 {progressText}',
   },
   connectLauncher: {
@@ -29,6 +30,11 @@ module.exports = flat({
       confirm: '在 DID 钱包中确认连接',
       success: '连接成功',
     },
+  },
+  addServerGuide: {
+    descOne: '在账户概览页，点击左下 “设置”',
+    descTwo: '点击右侧的 “关于”',
+    descThree: '点击中间的 “添加” 按钮',
   },
   pageTitle: {
     selectNode: '选择节点',
