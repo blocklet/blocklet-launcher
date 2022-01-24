@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@arcblock/abt-launcher@^1.16.12":
+"@arcblock/abt-launcher@^1.16.14":
   version "1.16.14"
   resolved "https://registry.yarnpkg.com/@arcblock/abt-launcher/-/abt-launcher-1.16.14.tgz#800ce5f2b8d1afd4fc27966138c13755e3a6cc44"
   integrity sha512-SlPIwzSuY8MxeWPGTzTfltJRPZda6xUH+LS80aU6kpYaNWKkQp8czvuAeB8nzjnw/MMMejxPGk3NEYehUHPTog==
@@ -12,7 +12,7 @@
     styled-components "^5.3.3"
     url-join "^4.0.1"
 
-"@arcblock/did-connect@^1.16.12":
+"@arcblock/did-connect@^1.16.14":
   version "1.16.14"
   resolved "https://registry.yarnpkg.com/@arcblock/did-connect/-/did-connect-1.16.14.tgz#b3c17e3311a4286470f22e6635571f50ea577c8e"
   integrity sha512-kwvVRtDWHc9jxPDRWm8HErHQE2bHhpSj5sjujzNEA4YT6XDnKr+OIAscaZ2+gJhaqvxhxfb8uYChmvr6+2g/2Q==
@@ -51,7 +51,7 @@
     wolfy87-eventemitter "^5.2.5"
     ws "^7.2.0"
 
-"@arcblock/icons@^1.16.12", "@arcblock/icons@^1.16.14":
+"@arcblock/icons@^1.16.14":
   version "1.16.14"
   resolved "https://registry.yarnpkg.com/@arcblock/icons/-/icons-1.16.14.tgz#13fa051581adc8c0f2dd6acc5e23b6aa09dde7df"
   integrity sha512-01RteUxxhNnU6Bg8WYueSr+qXKTS8RcM2Fh07nic59HDBF0irV7qM369QJqF8JRVZ55ctrEs8u3Nwa921WA4Sw==
@@ -65,7 +65,7 @@
     event-target-shim "^5.0.1"
     ismobilejs "^1.0.3"
 
-"@arcblock/ux@^1.16.12", "@arcblock/ux@^1.16.14":
+"@arcblock/ux@^1.16.14":
   version "1.16.14"
   resolved "https://registry.yarnpkg.com/@arcblock/ux/-/ux-1.16.14.tgz#92eddafca9a271ee54574ad5226775b23c007059"
   integrity sha512-p89mvd1yFQI2KIgNRR+dCV+XF+8Va+l3BOa6vngVGtNZJmfz7yoVBwXrExML2KUpviMhUXqt+zOkesIbMtQxXQ==
