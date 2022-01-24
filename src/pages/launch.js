@@ -43,13 +43,19 @@ function LaunchPage() {
     if (instances && instances.length > 0) {
       setSelectedNode(instances[0]);
     }
-  }, [fetchNodesState.value]);
+  }, [instances]);
+
+  const getNodeUrl = (node) => {
+    const url = new URL('/admin/launch-blocklet', node.url);
+    url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
+    return url.toString();
+  };
 
   useEffect(() => {
     if (selectedNode) {
       preloadPage(getNodeUrl(selectedNode));
     }
-  }, [selectedNode, blockletMetaUrl]);
+  }, [selectedNode, blockletMetaUrl]); /* eslint-disable-line */
 
   if (fetchNodesState.error) {
     return <Alert severity="error">{fetchNodesState.error}</Alert>;
@@ -78,12 +84,6 @@ function LaunchPage() {
       }
     });
   }
-
-  const getNodeUrl = (node) => {
-    const url = new URL('/admin/launch-blocklet', node.url);
-    url.searchParams.set('blocklet_meta_url', decodeURIComponent(blockletMetaUrl));
-    return url.toString();
-  };
 
   const handleSelect = (node) => {
     setRedirecting(true);

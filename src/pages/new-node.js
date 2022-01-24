@@ -40,7 +40,7 @@ export default function NewNode() {
 
   useEffect(() => {
     handleResize();
-  }, [loading]);
+  }, [loading]); /* eslint-disable-line */
 
   return (
     <Div>

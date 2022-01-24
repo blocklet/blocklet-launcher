@@ -69,9 +69,14 @@ const preloadPage = (url, timeout = 5000) =>
   new Promise((res) => {
     // 这里强制设置为和当前域相同的 protocol
     // 否则如果当前域名是 https, 而 url 是 http 会被浏览器 block
-    const httpsUrlObj = new URL(url);
-    httpsUrlObj.protocol = window.location.protocol;
-    const formatedUrl = httpsUrlObj.toString();
+    const urlObj = new URL(url);
+    const { protocol } = window.location;
+
+    if (protocol === 'https:') {
+      urlObj.protocol = protocol;
+    }
+
+    const formatedUrl = urlObj.toString();
 
     if (cachePool.has(formatedUrl)) {
       res();
