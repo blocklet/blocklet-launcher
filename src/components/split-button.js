@@ -9,7 +9,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 
-export default function SplitButton({ children, size, variant, onClick, color, menulist, startIcon }) {
+export default function SplitButton({ children, size, variant, onClick, color, menulist, startIcon, minWidth }) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -27,8 +27,8 @@ export default function SplitButton({ children, size, variant, onClick, color, m
 
   return (
     <>
-      <ButtonGroup variant={variant} size={size} color={color} aria-label="split button" rounded>
-        <Button size={size} startIcon={startIcon} onClick={onClick}>
+      <ButtonGroup variant={variant} size={size} color={color} aria-label="split button" rounded style={{ minWidth }}>
+        <Button size={size} startIcon={startIcon} onClick={onClick} style={{ flex: 1 }}>
           {children}
         </Button>
         <Button
@@ -75,6 +75,7 @@ SplitButton.propTypes = {
   onClick: PropTypes.func,
   menulist: PropTypes.array,
   startIcon: PropTypes.any,
+  minWidth: PropTypes.string,
 };
 
 SplitButton.defaultProps = {
@@ -85,4 +86,5 @@ SplitButton.defaultProps = {
   onClick: () => {},
   menulist: [],
   startIcon: '',
+  minWidth: '',
 };

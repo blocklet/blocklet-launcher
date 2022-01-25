@@ -11,7 +11,9 @@ import Alert from '@material-ui/lab/Alert';
 import AddServerGuide from '../components/guide-dialog/add-server-guide';
 
 import useQuery from '../hooks/query';
+import useMobile from '../hooks/is-mobile';
 import PageHeader from '../components/page-header';
+import SplitButton from '../components/split-button';
 import List from '../components/instance/list';
 import api from '../libs/api';
 import { getBlockletMetaUrl, getEnvironment, preloadPage } from '../libs/utils';
@@ -20,6 +22,7 @@ import { useSessionContext } from '../contexts/session';
 function LaunchPage() {
   const { t } = useLocaleContext();
   const query = useQuery();
+  const isMobile = useMobile();
   const history = useHistory();
   const { session } = useSessionContext();
   const [selectedNode, setSelectedNode] = useState(null);
@@ -36,6 +39,7 @@ function LaunchPage() {
     }
 
     // 获取缓存的节点
+    // if (localStorage.localServers && session.user) {
     if (localStorage.localServers) {
       const localServers = JSON.parse(localStorage.localServers).filter(
         (e) => !result.find((item) => e.did === item.did)
@@ -140,26 +144,20 @@ function LaunchPage() {
       </div>
       <div className="page-footer">
         {session.user && (
-          <>
-            <Button
-              variant="outlined"
-              rounded
-              onClick={handleCreateNode}
-              startIcon={<AddIcon />}
-              color="primary"
-              disabled={redirecting}>
-              {t('launch.createNode')}
-            </Button>
-            <Button
-              rounded
-              startIcon={<AddIcon />}
-              variant="contained"
-              color="primary"
-              disabled={redirecting}
-              onClick={() => setGuideOpen(true)}>
-              {t('launch.addNode')}
-            </Button>
-          </>
+          <SplitButton
+            className="button"
+            minWidth={!isMobile ? '200px' : ''}
+            variant="outlined"
+            onClick={handleCreateNode}
+            startIcon={<AddIcon />}
+            menulist={[
+              {
+                label: t('launch.addNode'),
+                onClick: () => setGuideOpen(true),
+              },
+            ]}>
+            {t('launch.createNode')}
+          </SplitButton>
         )}
         {!session.user && (
           <Button color="primary" rounded variant="contained" onClick={handleLogin}>
@@ -259,13 +257,15 @@ const Container = styled.div`
       margin-right: 32px;
     }
 
-    & > button {
+    & > button,
+    .button {
       margin: 0 8px;
     }
 
     ${(props) => props.theme.breakpoints.up('md')} {
       padding: 24px;
-      & > button {
+      & > button,
+      .button {
         margin: 0 12px;
         min-width: 200px;
       }
