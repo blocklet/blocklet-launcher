@@ -8,7 +8,7 @@ import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
 import Hidden from '@material-ui/core/Hidden';
 
-export default function Item({ abtnode, blockletMetaUrl, ...props }) {
+export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const url = new URL('/admin/launch-blocklet', abtnode.url);
   url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletMetaUrl)));
@@ -48,10 +48,15 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
             color="disabled"
           />
         </Hidden>
+        {isAdd && <div className="local_mark">Local</div>}
       </div>
       <div className="node-body">
-        <Typography className="instance-name text bold">{abtnode.name}</Typography>
-        <Typography className="instance-desc text light">{abtnode.description}</Typography>
+        <Typography className="instance-name text bold" title={abtnode.name}>
+          {abtnode.name}
+        </Typography>
+        <Typography className="instance-desc text light" title={abtnode.description}>
+          {abtnode.description}
+        </Typography>
       </div>
       <Hidden mdUp>
         <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
@@ -88,6 +93,7 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   padding: 20px;
@@ -119,6 +125,7 @@ const Container = styled.div`
     height: '100px';
   }
   .node-header {
+    position: relative;
     display: flex;
 
     ${(props) => props.theme.breakpoints.up('md')} {
@@ -175,9 +182,26 @@ const Container = styled.div`
   .instance-select {
     margin-top: auto;
   }
+
+  .local_mark {
+    position: absolute;
+    left: 50px;
+    bottom: 0;
+    padding: 2px 6px;
+    border-radius: 0 0 0 0;
+    color: #fff;
+    background-color: ${(props) => props.theme.palette.primary.main};
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      left: 0;
+      padding: 1px 3px;
+      font-size: 8px;
+    }
+  }
 `;
 
 Item.propTypes = {
   abtnode: PropTypes.object.isRequired,
   blockletMetaUrl: PropTypes.string.isRequired,
+  isAdd: PropTypes.any.isRequired,
 };

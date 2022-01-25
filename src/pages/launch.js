@@ -28,13 +28,30 @@ function LaunchPage() {
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
   const fetchNodesState = useAsyncRetry(async () => {
+    let result = [];
     if (session.user) {
       const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${session.user.did}`);
 
-      return data.instances;
+      result = data.instances;
     }
 
-    return [];
+    // 获取缓存的节点
+    if (localStorage.localServers) {
+      const localServers = JSON.parse(localStorage.localServers).filter(
+        (e) => !result.find((item) => e.did === item.did)
+      );
+
+      result.push(
+        ...localServers.map((e) => {
+          return {
+            ...e,
+            isAdd: 1,
+          };
+        })
+      );
+    }
+
+    return result;
   }, [session.user]);
 
   const handleLogin = () => session.login();
