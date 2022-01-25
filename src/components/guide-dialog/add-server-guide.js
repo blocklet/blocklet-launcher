@@ -32,7 +32,7 @@ export default function AddServerGuide({ open, onClose }) {
   ];
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth={false} style={{ zIndex: 1402 }}>
+    <Dialog open={open} onClose={onClose} maxWidth={false}>
       <GuideGallery tutorial={tutorial} />
     </Dialog>
   );
