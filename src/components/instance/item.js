@@ -17,14 +17,16 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    event.currentTarget.style.zIndex = 1401;
     event.preventDefault();
     event.stopPropagation();
     clearTimeout(popCloseTimer);
     return false;
   };
 
-  const handlePopoverClose = () => {
+  const handlePopoverClose = (event) => {
     clearTimeout(popCloseTimer);
+    event.currentTarget.style.zIndex = '';
     popCloseTimer = setTimeout(() => {
       setAnchorEl(null);
     }, 100);
@@ -114,7 +116,6 @@ const Container = styled.div`
 
   .info_icon {
     cursor: 'pointer';
-    z-index: 1401;
   }
 
   .card_content {
