@@ -31,6 +31,11 @@ module.exports = flat({
       success: 'Connect successful',
     },
   },
+  addServerGuide: {
+    descOne: 'On the account overview page, click "Settings" at the bottom left',
+    descTwo: 'Click "About" on the right',
+    descThree: 'Click the "Add" button in the middle',
+  },
   pageTitle: {
     selectNode: 'Select Blocklet Server',
     selectAbtNodeSubTitle: 'Before launcher the application, you need to select or create a Blocklet Server ',

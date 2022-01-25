@@ -24,7 +24,7 @@ function LaunchPage() {
   const { session } = useSessionContext();
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
-  const [guideOpen, setGuideOpen] = useState(true);
+  const [guideOpen, setGuideOpen] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
 
   const fetchNodesState = useAsyncRetry(async () => {

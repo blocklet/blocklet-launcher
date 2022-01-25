@@ -18,6 +18,44 @@ export default function Home() {
     history.push(`/launch${window.location.search}`);
   }
 
+  if (query.get('action') === 'node-register') {
+    const info = query.get('info');
+    let infoData;
+    try {
+      infoData = JSON.parse(info);
+    } catch (e) {
+      console.error('parse info error', e);
+    }
+
+    let contentEle;
+
+    const localServers = localStorage.localServers ? JSON.parse(localStorage.localServers) : [];
+
+    if (!localServers.find((e) => e.did === infoData.did)) {
+      localServers.push(infoData);
+      localStorage.setItem('localServers', JSON.stringify(localServers));
+
+      contentEle = (
+        <div className="intro">
+          <h1>添加 {infoData.name} 成功</h1>
+        </div>
+      );
+    } else {
+      contentEle = (
+        <div className="intro">
+          <h1>{infoData.name} 已添加</h1>
+        </div>
+      );
+    }
+
+    return (
+      <BaseLayout addons={<LocaleSelector showText={false} />}>
+        <Content>{contentEle}</Content>
+        <CookieConsent locale={locale} />
+      </BaseLayout>
+    );
+  }
+
   return (
     <BaseLayout addons={<LocaleSelector showText={false} />}>
       <Content>

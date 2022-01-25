@@ -4,23 +4,29 @@ import Dialog from '@material-ui/core/Dialog';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import GuideGallery from './guide-gallery';
 
-import img1 from './imgs/cn/1.jpg';
-import img2 from './imgs/cn/2.jpg';
-import img3 from './imgs/cn/3.jpg';
+import img1cn from './imgs/cn/1.jpg';
+import img2cn from './imgs/cn/2.jpg';
+import img3cn from './imgs/cn/3.jpg';
+import img1en from './imgs/en/1.jpg';
+import img2en from './imgs/en/2.jpg';
+import img3en from './imgs/en/3.jpg';
 
 export default function AddServerGuide({ open, onClose }) {
-  const { t } = useLocaleContext();
+  const { t, locale } = useLocaleContext();
+
+  const isEN = locale === 'en';
+
   const tutorial = [
     {
-      pic: img1,
+      pic: isEN ? img1en : img1cn,
       desc: t('addServerGuide.descOne'),
     },
     {
-      pic: img2,
+      pic: isEN ? img2en : img2cn,
       desc: t('addServerGuide.descTwo'),
     },
     {
-      pic: img3,
+      pic: isEN ? img3en : img3cn,
       desc: t('addServerGuide.descThree'),
     },
   ];
