@@ -9,6 +9,7 @@ export default function GuideGallery({ tutorial }) {
   return (
     <Container>
       <div className="gallery">
+        <div className="steps-mark">{`${currentid + 1} / ${tutorial.length}`}</div>
         <div className="gallery-imgs">
           {tutorial.map((e, index) => {
             let galleryIdType;
@@ -53,15 +54,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  width: 100%;
+  height: 100%;
   padding: 26px;
-  width: 80vw;
-  height: 80vh;
   background: #fff;
-
-  ${(props) => props.theme.breakpoints.down('sm')} {
-    width: calc(100vw - 64px);
-    height: calc(100vh - 64px);
-  }
 
   .gallery {
     position: relative;
@@ -101,6 +97,17 @@ const Container = styled.div`
       max-height: 100%;
       user-select: none;
     }
+  }
+
+  .steps-mark {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 4px 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 3;
   }
 
   .arrow-content {

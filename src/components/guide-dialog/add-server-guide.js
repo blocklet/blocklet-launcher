@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
-import GuideGallery from './guide-gallery';
+import styled from 'styled-components';
+import GuideGallery from '../guide-gallery';
 
 import img1cn from './imgs/cn/1.jpg';
 import img2cn from './imgs/cn/2.jpg';
@@ -33,10 +34,17 @@ export default function AddServerGuide({ open, onClose }) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth={false}>
-      <GuideGallery tutorial={tutorial} />
+      <Container>
+        <GuideGallery tutorial={tutorial} />
+      </Container>
     </Dialog>
   );
 }
+
+const Container = styled.div`
+  width: 80vw;
+  height: 80vh;
+`;
 
 AddServerGuide.propTypes = {
   open: PropTypes.bool,
