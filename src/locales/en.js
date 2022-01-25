@@ -20,7 +20,7 @@ module.exports = flat({
     loadingError: 'Something went wrong when fetching blocklet server list',
     connectLauncherButton: 'Connect Launcher',
     createNode: 'Create Blocklet Server',
-    addNode: 'Add Blocklet Server',
+    addNode: 'Add created Blocklet Server',
     stepTip: 'Step {progressText}',
   },
   connectLauncher: {

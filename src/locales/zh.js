@@ -20,7 +20,7 @@ module.exports = flat({
     loadingError: '加载节点列表失败',
     connectLauncherButton: '连接节点启动器',
     createNode: '创建节点',
-    addNode: '添加节点',
+    addNode: '添加已创建的节点',
     stepTip: '步骤 {progressText}',
   },
   connectLauncher: {
