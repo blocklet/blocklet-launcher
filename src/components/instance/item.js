@@ -118,7 +118,11 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, onRemove, ...pro
       </Popover>
       {isAdd && (
         <>
-          <div className="close-btn" aria-describedby={abtnode.url} onClick={clickServerFork}>
+          <div
+            className="close-btn"
+            aria-describedby={abtnode.url}
+            onClick={clickServerFork}
+            onMouseLeave={outClosePopper}>
             <Close style={{ fontSize: 16 }} />
           </div>
           <Popper id={abtnode.url} open={!!closeAnchorEl} anchorEl={closeAnchorEl}>
