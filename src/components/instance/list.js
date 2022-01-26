@@ -6,7 +6,6 @@ import Empty from '@arcblock/ux/lib/Empty';
 // import { Grid } from '@material-ui/core';
 import Item from './item';
 
-// export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect, ...props }) {
 export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect, onRemove }) {
   const { t } = useLocaleContext();
 
