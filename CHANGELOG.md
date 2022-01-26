@@ -1,10 +1,10 @@
 ## 1.2.17 (一月 26, 2022)
 
-feat: can add blocklet server custom
+- feat: can add blocklet server custom
 
 ## 1.2.16 (一月 24, 2022)
 
-fix: font family problem about abt launcher
+- fix: font family problem about abt launcher
 
 ## 1.2.15 (January 21, 2022)
 

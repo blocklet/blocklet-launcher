@@ -9,11 +9,11 @@ import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
 import Hidden from '@material-ui/core/Hidden';
 import Tag from '@arcblock/ux/lib/Tag';
-import { Close } from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
 import Popper from '@material-ui/core/Popper';
 import Button from '@arcblock/ux/lib/Button';
 
-export default function Item({ abtnode, blockletMetaUrl, isAdd, onRemove, ...props }) {
+export default function Item({ abtnode, blockletMetaUrl, source, onRemove, ...props }) {
   const { t } = useLocaleContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const url = new URL('/admin/launch-blocklet', abtnode.url);
@@ -78,7 +78,7 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, onRemove, ...pro
             color="disabled"
           />
         </Hidden>
-        {isAdd && <Tag className="local_mark">Added</Tag>}
+        {source === 'register' && <Tag className="local_mark">Register</Tag>}
       </div>
       <div className="node-body">
         <Typography className="instance-name text bold" title={abtnode.name}>
@@ -118,7 +118,7 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, onRemove, ...pro
           </CardContent>
         </Card>
       </Popover>
-      {isAdd && (
+      {source === 'register' && (
         <>
           <div
             className="close-btn"
@@ -283,10 +283,11 @@ const ClosePopper = styled.div`
 Item.propTypes = {
   abtnode: PropTypes.object.isRequired,
   blockletMetaUrl: PropTypes.string.isRequired,
-  isAdd: PropTypes.any.isRequired,
+  source: PropTypes.string,
   onRemove: PropTypes.func,
 };
 
 Item.defaultProps = {
   onRemove: () => {},
+  source: 'launcher',
 };

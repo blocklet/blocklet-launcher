@@ -13,7 +13,7 @@ module.exports = flat({
     intro: 'Blocklet Launcher can help you easily launch applications to your Blocklet Server.',
     updateDesc: 'Update {name} data? ',
     updateSucceed: '{name} updated successfully ',
-    addSucceed: 'Add {name} succeeded',
+    addSucceed: '{name} successfully added to blocklet server list',
     added: '{name} was added',
   },
   launch: {
@@ -25,7 +25,7 @@ module.exports = flat({
     loadingError: 'Something went wrong when fetching blocklet server list',
     connectLauncherButton: 'Connect Launcher',
     createNode: 'Create Blocklet Server',
-    addNode: 'Add created Blocklet Server',
+    addNode: 'Add existing Blocklet Server',
     stepTip: 'Step {progressText}',
     removeNode: 'Remove the current Blocklet Server? ',
     remove: 'Remove',

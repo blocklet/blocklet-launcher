@@ -49,7 +49,7 @@ function LaunchPage() {
         ...localServers.map((e) => {
           return {
             ...e,
-            isAdd: 1,
+            source: 'register',
           };
         })
       );

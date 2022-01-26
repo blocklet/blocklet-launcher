@@ -19,7 +19,7 @@ export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect
             onClick={() => onSelect(node)}
             className={`item ${selectedNode && selectedNode.did === node.did ? 'item-selected' : ''}`}
             abtnode={node}
-            isAdd={node.isAdd || false}
+            source={node.source}
             blockletMetaUrl={blockletMetaUrl}
             onRemove={onRemove}
           />

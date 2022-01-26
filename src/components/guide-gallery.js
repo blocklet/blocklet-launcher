@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { ArrowBack, ArrowForward } from '@material-ui/icons';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowForward from '@material-ui/icons/ArrowForward';
 
 export default function GuideGallery({ tutorial }) {
   const [currentid, setCurrentid] = useState(0);
