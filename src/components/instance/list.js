@@ -7,7 +7,7 @@ import Empty from '@arcblock/ux/lib/Empty';
 import Item from './item';
 
 // export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect, ...props }) {
-export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect }) {
+export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect, onRemove }) {
   const { t } = useLocaleContext();
 
   return (
@@ -22,6 +22,7 @@ export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect
             abtnode={node}
             isAdd={node.isAdd || false}
             blockletMetaUrl={blockletMetaUrl}
+            onRemove={onRemove}
           />
         ))}
       </div>
@@ -79,10 +80,12 @@ List.propTypes = {
   selectedNode: PropTypes.object,
   abtnodes: PropTypes.arrayOf(PropTypes.object),
   blockletMetaUrl: PropTypes.string.isRequired,
+  onRemove: PropTypes.func,
 };
 
 List.defaultProps = {
   onSelect: () => {},
   selectedNode: null,
   abtnodes: [],
+  onRemove: () => {},
 };

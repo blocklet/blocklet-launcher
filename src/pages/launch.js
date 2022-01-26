@@ -29,6 +29,7 @@ function LaunchPage() {
   const [redirecting, setRedirecting] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
+  const [instances, setInstances] = useState([]);
 
   const fetchNodesState = useAsyncRetry(async () => {
     let result = [];
@@ -39,7 +40,6 @@ function LaunchPage() {
     }
 
     // 获取缓存的节点
-    // if (localStorage.localServers && session.user) {
     if (localStorage.localServers) {
       const localServers = JSON.parse(localStorage.localServers).filter(
         (e) => !result.find((item) => e.did === item.did)
@@ -55,18 +55,18 @@ function LaunchPage() {
       );
     }
 
+    setInstances(result || []);
+
     return result;
   }, [session.user]);
 
   const handleLogin = () => session.login();
 
-  const instances = fetchNodesState.value || [];
-
   useEffect(() => {
     if (instances && instances.length > 0) {
       setSelectedNode(instances[0]);
     }
-  }, [instances]);
+  }, [JSON.stringify(instances)]);
 
   const getNodeUrl = (node) => {
     const url = new URL('/admin/launch-blocklet', node.url);
@@ -123,6 +123,24 @@ function LaunchPage() {
     });
   };
 
+  const removeNode = (abtnode) => {
+    const targetInstanceId = instances.findIndex((e) => e.did === abtnode.did);
+    if (targetInstanceId > -1) {
+      setInstances(instances.filter((e, i) => i !== targetInstanceId));
+    }
+
+    if (localStorage.localServers) {
+      const localServers = JSON.parse(localStorage.localServers);
+
+      const targetId = localServers.findIndex((e) => e.did === abtnode.did);
+
+      if (targetId > -1) {
+        localServers.splice(targetId, 1);
+        localStorage.localServers = JSON.stringify(localServers);
+      }
+    }
+  };
+
   return (
     <>
       <PageHeader title={t('pageTitle.selectNode')} subTitle={t('pageTitle.selectAbtNodeSubTitle')} />
@@ -138,6 +156,7 @@ function LaunchPage() {
               }
               setSelectedNode(e);
             }}
+            onRemove={removeNode}
             blockletMetaUrl={blockletMetaUrl}
           />
         )}

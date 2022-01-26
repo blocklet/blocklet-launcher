@@ -12,7 +12,7 @@ import { Close } from '@material-ui/icons';
 import Popper from '@material-ui/core/Popper';
 import Button from '@arcblock/ux/lib/Button';
 
-export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
+export default function Item({ abtnode, blockletMetaUrl, isAdd, onRemove, ...props }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const url = new URL('/admin/launch-blocklet', abtnode.url);
   url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletMetaUrl)));
@@ -47,9 +47,9 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
     setCloseAnchorEl(closeAnchorEl ? null : e.currentTarget);
   };
 
-  // const removeLocalServer = (abtnode) => {
-  const removeLocalServer = () => {
+  const removeLocalServer = (node) => {
     setCloseAnchorEl(null);
+    onRemove(node);
   };
 
   let closePopperTimer;
@@ -278,4 +278,9 @@ Item.propTypes = {
   abtnode: PropTypes.object.isRequired,
   blockletMetaUrl: PropTypes.string.isRequired,
   isAdd: PropTypes.any.isRequired,
+  onRemove: PropTypes.func,
+};
+
+Item.defaultProps = {
+  onRemove: () => {},
 };
