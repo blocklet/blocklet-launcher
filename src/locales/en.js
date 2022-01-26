@@ -6,11 +6,15 @@ module.exports = flat({
     nodeList: 'Available Blocklet Server List',
     optional: 'Optional',
     start: 'Start',
-    replace: 'Replace',
+    update: 'Update',
   },
   home: {
     name: 'Blocklet Launcher',
     intro: 'Blocklet Launcher can help you easily launch applications to your Blocklet Server.',
+    updateDesc: 'Update {name} data? ',
+    updateSucceed: '{name} updated successfully ',
+    addSucceed: 'Add {name} succeeded',
+    added: '{name} was added',
   },
   launch: {
     selectAbtNode: 'Select Blocklet Server',

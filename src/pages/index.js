@@ -50,22 +50,26 @@ export default function Home() {
 
       contentEle = (
         <div className="intro">
-          <h1>添加 {infoData.name} 成功</h1>
+          <h1>{t('home.addSucceed', { name: infoData.name })}</h1>
         </div>
       );
     } else if (isUpdate) {
       contentEle = (
         <div className="intro">
-          <h1>{infoData.name} 更新成功</h1>
+          <h1>{t('home.updateSucceed', { name: infoData.name })}</h1>
         </div>
       );
     } else if (targetNode.url !== infoData.url) {
       contentEle = (
         <div className="intro">
-          <h1>是否更新 {infoData.name} 的数据？</h1>
+          <h1>
+            {t('home.updateDesc', {
+              name: infoData.name,
+            })}
+          </h1>
           <div className="intro__desc">
             <Button className="intro__start" color="primary" rounded variant="contained" onClick={() => updateNode()}>
-              {t('common.replace')}
+              {t('common.update')}
             </Button>
           </div>
         </div>
@@ -73,7 +77,7 @@ export default function Home() {
     } else {
       contentEle = (
         <div className="intro">
-          <h1>{infoData.name} 已添加</h1>
+          <h1>{t('home.added', { name: infoData.name })}</h1>
         </div>
       );
     }

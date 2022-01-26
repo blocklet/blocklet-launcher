@@ -6,11 +6,15 @@ module.exports = flat({
     nodeList: '可用节点列表',
     optional: '可选',
     start: '开始',
-    replace: '替换',
+    update: '更新',
   },
   home: {
     name: '应用启动器',
     intro: '应用启动器可以帮助你很方便的将应用安装到你的节点上。',
+    updateDesc: '是否更新 {name} 的数据？',
+    updateSucceed: '{name} 更新成功',
+    addSucceed: '添加 {name} 成功',
+    added: '{name} 已添加',
   },
   launch: {
     selectAbtNode: '选择节点',
