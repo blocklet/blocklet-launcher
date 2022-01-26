@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '@arcblock/ux/lib/Button';
@@ -13,6 +13,7 @@ export default function Home() {
   const { t, locale } = useLocaleContext();
   const history = useHistory();
   const query = useQuery();
+  const [isUpdate, setIsUpdate] = useState(false);
 
   if (query.get('meta_url')) {
     history.push(`/launch${window.location.search}`);
@@ -31,13 +32,42 @@ export default function Home() {
 
     const localServers = localStorage.localServers ? JSON.parse(localStorage.localServers) : [];
 
-    if (!localServers.find((e) => e.did === infoData.did)) {
+    const targetNode = localServers.find((e) => e.did === infoData.did);
+
+    const updateNode = () => {
+      const targetIndex = localServers.find((e) => e.did === infoData.did);
+
+      localServers.splice(targetIndex, 1, infoData);
+
+      localStorage.localServers = JSON.stringify(localServers);
+
+      setIsUpdate(true);
+    };
+
+    if (!targetNode) {
       localServers.push(infoData);
       localStorage.setItem('localServers', JSON.stringify(localServers));
 
       contentEle = (
         <div className="intro">
           <h1>添加 {infoData.name} 成功</h1>
+        </div>
+      );
+    } else if (isUpdate) {
+      contentEle = (
+        <div className="intro">
+          <h1>{infoData.name} 更新成功</h1>
+        </div>
+      );
+    } else if (targetNode.url !== infoData.url) {
+      contentEle = (
+        <div className="intro">
+          <h1>是否更新 {infoData.name} 的数据？</h1>
+          <div className="intro__desc">
+            <Button className="intro__start" color="primary" rounded variant="contained" onClick={() => updateNode()}>
+              {t('common.replace')}
+            </Button>
+          </div>
         </div>
       );
     } else {

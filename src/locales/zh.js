@@ -6,6 +6,7 @@ module.exports = flat({
     nodeList: '可用节点列表',
     optional: '可选',
     start: '开始',
+    replace: '替换',
   },
   home: {
     name: '应用启动器',

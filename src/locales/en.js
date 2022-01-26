@@ -6,6 +6,7 @@ module.exports = flat({
     nodeList: 'Available Blocklet Server List',
     optional: 'Optional',
     start: 'Start',
+    replace: 'Replace',
   },
   home: {
     name: 'Blocklet Launcher',
