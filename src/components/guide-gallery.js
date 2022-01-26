@@ -57,13 +57,13 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 26px;
-  background: #fff;
+  background: ${(props) => props.theme.palette.common.white};
 
   .gallery {
     position: relative;
     flex: 1;
     margin-bottom: 26px;
-    background-color: #eee;
+    background-color: ${(props) => props.theme.palette.grey[200]};
     .gallery-imgs {
       position: absolute;
       left: 0;
@@ -105,7 +105,7 @@ const Container = styled.div`
     top: 0;
     padding: 4px 10px;
     font-size: 16px;
-    color: #fff;
+    color: ${(props) => props.theme.palette.common.white};
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 3;
   }
@@ -122,7 +122,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    color: ${(props) => props.theme.palette.common.white};
     width: 50px;
     height: 50px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -139,7 +139,7 @@ const Container = styled.div`
   }
   .content {
     padding-top: 26px;
-    border-top: #ddd solid 1px;
+    border-top: ${(props) => props.theme.palette.grey[300]} solid 1px;
     font-size: 18px;
     font-weight: bold;
     text-align: center;
