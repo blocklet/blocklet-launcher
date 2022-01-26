@@ -169,7 +169,7 @@ function LaunchPage() {
             variant="outlined"
             onClick={handleCreateNode}
             startIcon={<AddIcon />}
-            menulist={[
+            menuItems={[
               {
                 label: t('launch.addNode'),
                 onClick: () => setGuideOpen(true),

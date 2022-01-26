@@ -9,7 +9,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 
-export default function SplitButton({ children, size, variant, onClick, color, menulist, startIcon, minWidth }) {
+export default function SplitButton({ children, size, variant, onClick, color, menuItems, startIcon, minWidth }) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -51,7 +51,7 @@ export default function SplitButton({ children, size, variant, onClick, color, m
         <Paper>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList id="split-button-menu">
-              {menulist.map((e, i) => {
+              {menuItems.map((e, i) => {
                 return (
                   // eslint-disable-next-line react/no-array-index-key
                   <MenuItem data-cy="open-install-form" key={i} onClick={e.onClick}>
@@ -73,7 +73,7 @@ SplitButton.propTypes = {
   color: PropTypes.string,
   variant: PropTypes.string,
   onClick: PropTypes.func,
-  menulist: PropTypes.array,
+  menuItems: PropTypes.array,
   startIcon: PropTypes.any,
   minWidth: PropTypes.string,
 };
@@ -84,7 +84,7 @@ SplitButton.defaultProps = {
   variant: 'contained',
   color: 'primary',
   onClick: () => {},
-  menulist: [],
+  menuItems: [],
   startIcon: '',
   minWidth: '',
 };
