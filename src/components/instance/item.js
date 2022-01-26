@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import DidAddress from '@arcblock/did-connect/lib/Address';
 import ABTNodeIcon from '@arcblock/icons/lib/ABTNode';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
+import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
 import Hidden from '@material-ui/core/Hidden';
@@ -13,6 +14,7 @@ import Popper from '@material-ui/core/Popper';
 import Button from '@arcblock/ux/lib/Button';
 
 export default function Item({ abtnode, blockletMetaUrl, isAdd, onRemove, ...props }) {
+  const { t } = useLocaleContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const url = new URL('/admin/launch-blocklet', abtnode.url);
   url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletMetaUrl)));
@@ -130,10 +132,10 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, onRemove, ...pro
               onClick={(e) => e.stopPropagation()}
               onMouseEnter={hoverClosePopper}
               onMouseLeave={outClosePopper}>
-              <div>从本地移除当前节点？</div>
+              <div>{t('launch.removeNode')}</div>
               <div className="pop-btn-container">
                 <Button color="danger" size="small" rounded onClick={() => removeLocalServer(abtnode)}>
-                  移除
+                  {t('launch.remove')}
                 </Button>
               </div>
             </ClosePopper>

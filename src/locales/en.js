@@ -27,6 +27,8 @@ module.exports = flat({
     createNode: 'Create Blocklet Server',
     addNode: 'Add created Blocklet Server',
     stepTip: 'Step {progressText}',
+    removeNode: 'Remove the current Blocklet Server? ',
+    remove: 'Remove',
   },
   connectLauncher: {
     authMessages: {

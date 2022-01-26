@@ -27,6 +27,8 @@ module.exports = flat({
     createNode: '创建节点',
     addNode: '添加已创建的节点',
     stepTip: '步骤 {progressText}',
+    removeNode: '本地移除当前节点？',
+    remove: '移除',
   },
   connectLauncher: {
     authMessages: {
