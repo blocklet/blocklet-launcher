@@ -7,6 +7,10 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
 import Hidden from '@material-ui/core/Hidden';
+import Tag from '@arcblock/ux/lib/Tag';
+import { Close } from '@material-ui/icons';
+import Popper from '@material-ui/core/Popper';
+import Button from '@arcblock/ux/lib/Button';
 
 export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -36,7 +40,29 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
     clearTimeout(popCloseTimer);
   };
 
-  const open = Boolean(anchorEl);
+  const [closeAnchorEl, setCloseAnchorEl] = useState(null);
+
+  const clickServerFork = (e) => {
+    e.stopPropagation();
+    setCloseAnchorEl(closeAnchorEl ? null : e.currentTarget);
+  };
+
+  // const removeLocalServer = (abtnode) => {
+  const removeLocalServer = () => {
+    setCloseAnchorEl(null);
+  };
+
+  let closePopperTimer;
+
+  const hoverClosePopper = () => {
+    clearTimeout(closePopperTimer);
+  };
+
+  const outClosePopper = () => {
+    closePopperTimer = setTimeout(() => {
+      setCloseAnchorEl(null);
+    }, 300);
+  };
 
   return (
     <Container {...props}>
@@ -50,7 +76,7 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
             color="disabled"
           />
         </Hidden>
-        {isAdd && <div className="local_mark">Local</div>}
+        {isAdd && <Tag className="local_mark">Added</Tag>}
       </div>
       <div className="node-body">
         <Typography className="instance-name text bold" title={abtnode.name}>
@@ -64,7 +90,7 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
         <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
       </Hidden>
       <Popover
-        open={open}
+        open={!!anchorEl}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'bottom',
@@ -90,6 +116,26 @@ export default function Item({ abtnode, blockletMetaUrl, isAdd, ...props }) {
           </CardContent>
         </Card>
       </Popover>
+      {isAdd && (
+        <>
+          <div className="close-btn" aria-describedby={abtnode.url} onClick={clickServerFork}>
+            <Close style={{ fontSize: 16 }} />
+          </div>
+          <Popper id={abtnode.url} open={!!closeAnchorEl} anchorEl={closeAnchorEl}>
+            <ClosePopper
+              onClick={(e) => e.stopPropagation()}
+              onMouseEnter={hoverClosePopper}
+              onMouseLeave={outClosePopper}>
+              <div>从本地移除当前节点？</div>
+              <div className="pop-btn-container">
+                <Button color="danger" size="small" rounded onClick={() => removeLocalServer(abtnode)}>
+                  移除
+                </Button>
+              </div>
+            </ClosePopper>
+          </Popper>
+        </>
+      )}
     </Container>
   );
 }
@@ -188,16 +234,43 @@ const Container = styled.div`
     position: absolute;
     left: 50px;
     bottom: 0;
-    padding: 2px 6px;
-    border-radius: 0 0 0 0;
-    color: #fff;
-    background-color: ${(props) => props.theme.palette.primary.main};
 
     ${(props) => props.theme.breakpoints.down('sm')} {
       left: 0;
       padding: 1px 3px;
       font-size: 8px;
     }
+  }
+
+  .close-btn {
+    position: absolute;
+    right: -13px;
+    top: -13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+    color: ${(props) => props.theme.palette.common.white};
+    background-color: ${(props) => props.theme.palette.error.main};
+    cursor: pointer;
+    transition: all ease 0.2s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+`;
+
+const ClosePopper = styled.div`
+  padding: 16px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px;
+  background-color: ${(props) => props.theme.palette.common.white};
+  .pop-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
   }
 `;
 
