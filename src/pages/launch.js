@@ -8,42 +8,53 @@ import Button from '@arcblock/ux/lib/Button';
 import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
+import AddServerGuide from '../components/guide-dialog/add-server-guide';
 
 import useQuery from '../hooks/query';
+import useMobile from '../hooks/is-mobile';
 import PageHeader from '../components/page-header';
+import SplitButton from '../components/split-button';
 import List from '../components/instance/list';
 import api from '../libs/api';
 import { getBlockletMetaUrl, getEnvironment, preloadPage } from '../libs/utils';
 import { useSessionContext } from '../contexts/session';
+import { useInstances } from '../hooks/instances';
 
 function LaunchPage() {
   const { t } = useLocaleContext();
   const query = useQuery();
+  const isMobile = useMobile();
   const history = useHistory();
   const { session } = useSessionContext();
   const [selectedNode, setSelectedNode] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
+  const [instances, dispatchInstances] = useInstances();
 
   const fetchNodesState = useAsyncRetry(async () => {
+    let result = [];
     if (session.user) {
       const { data } = await api.create().get(`${getEnvironment('LAUNCHER_INSTANCE_API')}?userDid=${session.user.did}`);
 
-      return data.instances;
+      result = data.instances;
     }
 
-    return [];
+    dispatchInstances({
+      type: 'add',
+      result,
+    });
+
+    return result;
   }, [session.user]);
 
   const handleLogin = () => session.login();
-
-  const instances = fetchNodesState.value || [];
 
   useEffect(() => {
     if (instances && instances.length > 0) {
       setSelectedNode(instances[0]);
     }
-  }, [instances]);
+  }, [JSON.stringify(instances)]);
 
   const getNodeUrl = (node) => {
     const url = new URL('/admin/launch-blocklet', node.url);
@@ -100,6 +111,13 @@ function LaunchPage() {
     });
   };
 
+  const removeNode = (abtnode) => {
+    dispatchInstances({
+      type: 'unregister',
+      did: abtnode.did,
+    });
+  };
+
   return (
     <>
       <PageHeader title={t('pageTitle.selectNode')} subTitle={t('pageTitle.selectAbtNodeSubTitle')} />
@@ -115,21 +133,27 @@ function LaunchPage() {
               }
               setSelectedNode(e);
             }}
+            onRemove={removeNode}
             blockletMetaUrl={blockletMetaUrl}
           />
         )}
       </div>
       <div className="page-footer">
         {session.user && (
-          <Button
+          <SplitButton
+            className="button"
+            minWidth={!isMobile ? '200px' : ''}
             variant="outlined"
-            rounded
             onClick={handleCreateNode}
             startIcon={<AddIcon />}
-            color="primary"
-            disabled={redirecting}>
+            menuItems={[
+              {
+                label: t('launch.addNode'),
+                onClick: () => setGuideOpen(true),
+              },
+            ]}>
             {t('launch.createNode')}
-          </Button>
+          </SplitButton>
         )}
         {!session.user && (
           <Button color="primary" rounded variant="contained" onClick={handleLogin}>
@@ -148,6 +172,7 @@ function LaunchPage() {
           </Button>
         )}
       </div>
+      <AddServerGuide open={guideOpen} onClose={() => setGuideOpen(false)} />
     </>
   );
 }
@@ -228,13 +253,15 @@ const Container = styled.div`
       margin-right: 32px;
     }
 
-    & > button {
+    & > button,
+    .button {
       margin: 0 8px;
     }
 
     ${(props) => props.theme.breakpoints.up('md')} {
       padding: 24px;
-      & > button {
+      & > button,
+      .button {
         margin: 0 12px;
         min-width: 200px;
       }

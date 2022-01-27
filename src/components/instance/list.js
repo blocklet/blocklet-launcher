@@ -6,8 +6,7 @@ import Empty from '@arcblock/ux/lib/Empty';
 // import { Grid } from '@material-ui/core';
 import Item from './item';
 
-// export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect, ...props }) {
-export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect }) {
+export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect, onRemove }) {
   const { t } = useLocaleContext();
 
   return (
@@ -20,7 +19,9 @@ export default function List({ abtnodes, blockletMetaUrl, selectedNode, onSelect
             onClick={() => onSelect(node)}
             className={`item ${selectedNode && selectedNode.did === node.did ? 'item-selected' : ''}`}
             abtnode={node}
+            source={node.source}
             blockletMetaUrl={blockletMetaUrl}
+            onRemove={onRemove}
           />
         ))}
       </div>
@@ -78,10 +79,12 @@ List.propTypes = {
   selectedNode: PropTypes.object,
   abtnodes: PropTypes.arrayOf(PropTypes.object),
   blockletMetaUrl: PropTypes.string.isRequired,
+  onRemove: PropTypes.func,
 };
 
 List.defaultProps = {
   onSelect: () => {},
   selectedNode: null,
   abtnodes: [],
+  onRemove: () => {},
 };

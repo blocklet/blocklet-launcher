@@ -4,11 +4,17 @@ import styled from 'styled-components';
 import DidAddress from '@arcblock/did-connect/lib/Address';
 import ABTNodeIcon from '@arcblock/icons/lib/ABTNode';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
+import { useLocaleContext } from '@arcblock/ux/lib/Locale/context';
 import { Card, CardContent, Popover, Typography } from '@material-ui/core';
 import ExternalLink from '@material-ui/core/Link';
 import Hidden from '@material-ui/core/Hidden';
+import Tag from '@arcblock/ux/lib/Tag';
+import Close from '@material-ui/icons/Close';
+import Popper from '@material-ui/core/Popper';
+import Button from '@arcblock/ux/lib/Button';
 
-export default function Item({ abtnode, blockletMetaUrl, ...props }) {
+export default function Item({ abtnode, blockletMetaUrl, source, onRemove, ...props }) {
+  const { t } = useLocaleContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const url = new URL('/admin/launch-blocklet', abtnode.url);
   url.searchParams.set('blocklet_meta_url', encodeURIComponent(decodeURIComponent(blockletMetaUrl)));
@@ -17,14 +23,16 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    event.currentTarget.style.zIndex = 1401;
     event.preventDefault();
     event.stopPropagation();
     clearTimeout(popCloseTimer);
     return false;
   };
 
-  const handlePopoverClose = () => {
+  const handlePopoverClose = (event) => {
     clearTimeout(popCloseTimer);
+    event.currentTarget.style.zIndex = '';
     popCloseTimer = setTimeout(() => {
       setAnchorEl(null);
     }, 100);
@@ -34,7 +42,29 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
     clearTimeout(popCloseTimer);
   };
 
-  const open = Boolean(anchorEl);
+  const [closeAnchorEl, setCloseAnchorEl] = useState(null);
+
+  const clickServerFork = (e) => {
+    e.stopPropagation();
+    setCloseAnchorEl(closeAnchorEl ? null : e.currentTarget);
+  };
+
+  const removeLocalServer = (node) => {
+    setCloseAnchorEl(null);
+    onRemove(node);
+  };
+
+  let closePopperTimer;
+
+  const hoverClosePopper = () => {
+    clearTimeout(closePopperTimer);
+  };
+
+  const outClosePopper = () => {
+    closePopperTimer = setTimeout(() => {
+      setCloseAnchorEl(null);
+    }, 300);
+  };
 
   return (
     <Container {...props}>
@@ -42,22 +72,27 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         <ABTNodeIcon color="#BFBFBF" width={40} height={40} />
         <Hidden smDown>
           <InfoIcon
-            className="info_icon"
+            className="info-icon"
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
             color="disabled"
           />
         </Hidden>
+        {source === 'register' && <Tag className="local-mark">Register</Tag>}
       </div>
       <div className="node-body">
-        <Typography className="instance-name text bold">{abtnode.name}</Typography>
-        <Typography className="instance-desc text light">{abtnode.description}</Typography>
+        <Typography className="instance-name text bold" title={abtnode.name}>
+          {abtnode.name}
+        </Typography>
+        <Typography className="instance-desc text light" title={abtnode.description}>
+          {abtnode.description}
+        </Typography>
       </div>
       <Hidden mdUp>
         <InfoIcon style={{ cursor: 'pointer' }} onClick={handlePopoverOpen} color="disabled" />
       </Hidden>
       <Popover
-        open={open}
+        open={!!anchorEl}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'bottom',
@@ -74,7 +109,7 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
         onClose={handlePopoverClose}>
         <Card>
           <CardContent
-            className="card_content"
+            className="card-content"
             onMouseEnter={handlerOverPop}
             onMouseLeave={handlePopoverClose}
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100px' }}>
@@ -83,11 +118,36 @@ export default function Item({ abtnode, blockletMetaUrl, ...props }) {
           </CardContent>
         </Card>
       </Popover>
+      {source === 'register' && (
+        <>
+          <div
+            className="close-btn"
+            aria-describedby={abtnode.url}
+            onClick={clickServerFork}
+            onMouseLeave={outClosePopper}>
+            <Close style={{ fontSize: 16 }} />
+          </div>
+          <Popper id={abtnode.url} open={!!closeAnchorEl} anchorEl={closeAnchorEl}>
+            <ClosePopper
+              onClick={(e) => e.stopPropagation()}
+              onMouseEnter={hoverClosePopper}
+              onMouseLeave={outClosePopper}>
+              <div>{t('launch.removeNode')}</div>
+              <div className="pop-btn-container">
+                <Button color="danger" size="small" rounded onClick={() => removeLocalServer(abtnode)}>
+                  {t('launch.remove')}
+                </Button>
+              </div>
+            </ClosePopper>
+          </Popper>
+        </>
+      )}
     </Container>
   );
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   padding: 20px;
@@ -106,12 +166,11 @@ const Container = styled.div`
     height: 72px;
   }
 
-  .info_icon {
+  .info-icon {
     cursor: 'pointer';
-    z-index: 1401;
   }
 
-  .card_content {
+  .card-content {
     position: 'relative';
     display: 'flex';
     flex-direction: 'column';
@@ -119,6 +178,7 @@ const Container = styled.div`
     height: '100px';
   }
   .node-header {
+    position: relative;
     display: flex;
 
     ${(props) => props.theme.breakpoints.up('md')} {
@@ -175,9 +235,59 @@ const Container = styled.div`
   .instance-select {
     margin-top: auto;
   }
+
+  .local-mark {
+    position: absolute;
+    left: 50px;
+    bottom: 0;
+
+    ${(props) => props.theme.breakpoints.down('sm')} {
+      left: 0;
+      padding: 1px 3px;
+      font-size: 8px;
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    right: -13px;
+    top: -13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+    color: ${(props) => props.theme.palette.common.white};
+    background-color: ${(props) => props.theme.palette.error.main};
+    cursor: pointer;
+    transition: all ease 0.2s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+`;
+
+const ClosePopper = styled.div`
+  padding: 16px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px;
+  background-color: ${(props) => props.theme.palette.common.white};
+  .pop-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
 `;
 
 Item.propTypes = {
   abtnode: PropTypes.object.isRequired,
   blockletMetaUrl: PropTypes.string.isRequired,
+  source: PropTypes.string,
+  onRemove: PropTypes.func,
+};
+
+Item.defaultProps = {
+  onRemove: () => {},
+  source: 'launcher',
 };
