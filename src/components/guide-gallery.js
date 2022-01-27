@@ -5,19 +5,19 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 
 export default function GuideGallery({ tutorial }) {
-  const [currentid, setCurrentid] = useState(0);
+  const [currentId, setCurrentId] = useState(0);
 
   return (
     <Container>
       <div className="gallery">
-        <div className="steps-mark">{`${currentid + 1} / ${tutorial.length}`}</div>
+        <div className="steps-mark">{`${currentId + 1} / ${tutorial.length}`}</div>
         <div className="gallery-imgs">
           {tutorial.map((e, index) => {
             let galleryIdType;
 
-            if (index === currentid) {
+            if (index === currentId) {
               galleryIdType = 'curent';
-            } else if (index > currentid) {
+            } else if (index > currentId) {
               galleryIdType = 'before';
             } else {
               galleryIdType = 'after';
@@ -33,20 +33,20 @@ export default function GuideGallery({ tutorial }) {
         </div>
 
         <div className="arrow-content">
-          {currentid > 0 && (
-            <div className="left-arrow" onClick={() => setCurrentid(currentid - 1)}>
+          {currentId > 0 && (
+            <div className="left-arrow" onClick={() => setCurrentId(currentId - 1)}>
               <ArrowBack />
             </div>
           )}
 
-          {currentid < tutorial.length - 1 && (
-            <div className="right-arrow" onClick={() => setCurrentid(currentid + 1)}>
+          {currentId < tutorial.length - 1 && (
+            <div className="right-arrow" onClick={() => setCurrentId(currentId + 1)}>
               <ArrowForward />
             </div>
           )}
         </div>
       </div>
-      <div className="content">{tutorial[currentid] ? tutorial[currentid].desc : ''}</div>
+      <div className="content">{tutorial[currentId] ? tutorial[currentId].desc : ''}</div>
     </Container>
   );
 }

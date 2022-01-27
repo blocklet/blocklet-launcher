@@ -72,13 +72,13 @@ export default function Item({ abtnode, blockletMetaUrl, source, onRemove, ...pr
         <ABTNodeIcon color="#BFBFBF" width={40} height={40} />
         <Hidden smDown>
           <InfoIcon
-            className="info_icon"
+            className="info-icon"
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
             color="disabled"
           />
         </Hidden>
-        {source === 'register' && <Tag className="local_mark">Register</Tag>}
+        {source === 'register' && <Tag className="local-mark">Register</Tag>}
       </div>
       <div className="node-body">
         <Typography className="instance-name text bold" title={abtnode.name}>
@@ -109,7 +109,7 @@ export default function Item({ abtnode, blockletMetaUrl, source, onRemove, ...pr
         onClose={handlePopoverClose}>
         <Card>
           <CardContent
-            className="card_content"
+            className="card-content"
             onMouseEnter={handlerOverPop}
             onMouseLeave={handlePopoverClose}
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100px' }}>
@@ -166,11 +166,11 @@ const Container = styled.div`
     height: 72px;
   }
 
-  .info_icon {
+  .info-icon {
     cursor: 'pointer';
   }
 
-  .card_content {
+  .card-content {
     position: 'relative';
     display: 'flex';
     flex-direction: 'column';
@@ -236,7 +236,7 @@ const Container = styled.div`
     margin-top: auto;
   }
 
-  .local_mark {
+  .local-mark {
     position: absolute;
     left: 50px;
     bottom: 0;
