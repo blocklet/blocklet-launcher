@@ -2,35 +2,52 @@ import { useReducer } from 'react';
 
 export function instancesReducer(instances, action) {
   switch (action.type) {
-    case 'unregister':
-      {
-        // 去除本地节点
-        const { did } = action;
-        const targetInstanceId = instances.findIndex((e) => e.did === did);
-        if (targetInstanceId > -1) {
-          const newInstances = instances.filter((e, i) => i !== targetInstanceId);
+    case 'add': {
+      // 添加普通节点
+      const result = action.result.filter((e) => {
+        return !instances.find((item) => item.did === e.did);
+      });
 
-          try {
-            if (localStorage.localServers) {
-              const localServers = JSON.parse(localStorage.localServers);
+      return [...result, ...instances];
+    }
+    case 'unregister': {
+      // 去除本地节点
+      const { did } = action;
+      const targetInstanceId = instances.findIndex((e) => e.did === did);
+      if (targetInstanceId > -1) {
+        const newInstances = instances.filter((e, i) => i !== targetInstanceId);
 
-              const targetId = localServers.findIndex((e) => e.did === did);
+        try {
+          if (localStorage.localServers) {
+            const localServers = JSON.parse(localStorage.localServers);
 
-              if (targetId > -1) {
-                localServers.splice(targetId, 1);
-                localStorage.localServers = JSON.stringify(localServers);
-              }
+            const targetId = localServers.findIndex((e) => e.did === did);
+
+            if (targetId > -1) {
+              localServers.splice(targetId, 1);
+              localStorage.localServers = JSON.stringify(localServers);
             }
-          } catch (e) {
-            console.error('unregister localServer error', e);
           }
-          return newInstances;
+        } catch (e) {
+          console.error('unregister localServer error', e);
         }
+        return newInstances;
       }
       return instances;
-    case 'add':
-      // 添加普通节点
-      return [...action.result, ...instances];
+    }
+    case 'register': {
+      instances.push(action.result);
+      localStorage.setItem('localServers', JSON.stringify(instances));
+      return instances;
+    }
+    case 'update': {
+      const targetIndex = instances.find((e) => e.did === action.result.did);
+
+      instances.splice(targetIndex, 1, action.result);
+
+      localStorage.localServers = JSON.stringify(instances);
+      return instances;
+    }
     default:
       return instances;
   }

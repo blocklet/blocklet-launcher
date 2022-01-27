@@ -8,12 +8,14 @@ import LocaleSelector from '@arcblock/ux/lib/Locale/selector';
 import CookieConsent from '@arcblock/ux/lib/CookieConsent';
 
 import useQuery from '../hooks/query';
+import { useInstances } from '../hooks/instances';
 
 export default function Home() {
   const { t, locale } = useLocaleContext();
   const history = useHistory();
   const query = useQuery();
   const [isUpdate, setIsUpdate] = useState(false);
+  const [instances, dispatchInstances] = useInstances();
 
   if (query.get('meta_url')) {
     history.push(`/launch${window.location.search}`);
@@ -30,23 +32,22 @@ export default function Home() {
 
     let contentEle;
 
-    const localServers = localStorage.localServers ? JSON.parse(localStorage.localServers) : [];
-
-    const targetNode = localServers.find((e) => e.did === infoData.did);
+    const targetNode = instances.find((e) => e.did === infoData.did);
 
     const updateNode = () => {
-      const targetIndex = localServers.find((e) => e.did === infoData.did);
-
-      localServers.splice(targetIndex, 1, infoData);
-
-      localStorage.localServers = JSON.stringify(localServers);
+      dispatchInstances({
+        type: 'update',
+        result: infoData,
+      });
 
       setIsUpdate(true);
     };
 
     if (!targetNode) {
-      localServers.push(infoData);
-      localStorage.setItem('localServers', JSON.stringify(localServers));
+      dispatchInstances({
+        type: 'register',
+        result: infoData,
+      });
 
       contentEle = (
         <div className="intro">
