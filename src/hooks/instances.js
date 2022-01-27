@@ -36,17 +36,28 @@ export function instancesReducer(instances, action) {
       return instances;
     }
     case 'register': {
-      instances.push(action.result);
-      localStorage.setItem('localServers', JSON.stringify(instances));
-      return instances;
-    }
-    case 'update': {
-      const targetIndex = instances.find((e) => e.did === action.result.did);
+      // 注册节点，相同did情况会更新节点信息
+      const { result } = action;
+      // 在注册的节点内修正
+      const regedInstances = instances.filter((e) => e.source === 'register');
 
-      instances.splice(targetIndex, 1, action.result);
+      result.source = 'register';
 
-      localStorage.localServers = JSON.stringify(instances);
-      return instances;
+      // 判断是否已经存在
+      const targetIndex = regedInstances.findIndex((e) => e.did === result.did);
+      if (targetIndex > -1) {
+        // 更新对象数据
+        regedInstances.splice(targetIndex, 1, result);
+      } else {
+        regedInstances.push(result);
+      }
+
+      localStorage.setItem('localServers', JSON.stringify(regedInstances));
+
+      // 重新组合 instance 列表
+      const newInstances = instances.filter((e) => e.source !== 'register');
+      newInstances.push(...regedInstances);
+      return newInstances;
     }
     default:
       return instances;
@@ -70,7 +81,6 @@ export function useInstances() {
         ...localServers.map((e) => {
           return {
             ...e,
-            source: 'register',
           };
         })
       );

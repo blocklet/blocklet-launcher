@@ -15,6 +15,7 @@ export default function Home() {
   const history = useHistory();
   const query = useQuery();
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
   const [instances, dispatchInstances] = useInstances();
 
   if (query.get('meta_url')) {
@@ -36,7 +37,7 @@ export default function Home() {
 
     const updateNode = () => {
       dispatchInstances({
-        type: 'update',
+        type: 'register',
         result: infoData,
       });
 
@@ -49,6 +50,8 @@ export default function Home() {
         result: infoData,
       });
 
+      setIsRegister(true);
+    } else if (isRegister) {
       contentEle = (
         <div className="intro">
           <h1>{t('home.addSucceed', { name: infoData.name })}</h1>
