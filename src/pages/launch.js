@@ -18,6 +18,7 @@ import List from '../components/instance/list';
 import api from '../libs/api';
 import { getBlockletMetaUrl, getEnvironment, preloadPage } from '../libs/utils';
 import { useSessionContext } from '../contexts/session';
+import { useInstances } from '../hooks/instances';
 
 function LaunchPage() {
   const { t } = useLocaleContext();
@@ -29,7 +30,7 @@ function LaunchPage() {
   const [redirecting, setRedirecting] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
   const blockletMetaUrl = getBlockletMetaUrl(query);
-  const [instances, setInstances] = useState([]);
+  const [instances, dispatchInstances] = useInstances();
 
   const fetchNodesState = useAsyncRetry(async () => {
     let result = [];
@@ -39,23 +40,10 @@ function LaunchPage() {
       result = data.instances;
     }
 
-    // 获取缓存的节点
-    if (localStorage.localServers) {
-      const localServers = JSON.parse(localStorage.localServers).filter(
-        (e) => !result.find((item) => e.did === item.did)
-      );
-
-      result.push(
-        ...localServers.map((e) => {
-          return {
-            ...e,
-            source: 'register',
-          };
-        })
-      );
-    }
-
-    setInstances(result || []);
+    dispatchInstances({
+      type: 'add',
+      result,
+    });
 
     return result;
   }, [session.user]);
@@ -124,21 +112,10 @@ function LaunchPage() {
   };
 
   const removeNode = (abtnode) => {
-    const targetInstanceId = instances.findIndex((e) => e.did === abtnode.did);
-    if (targetInstanceId > -1) {
-      setInstances(instances.filter((e, i) => i !== targetInstanceId));
-    }
-
-    if (localStorage.localServers) {
-      const localServers = JSON.parse(localStorage.localServers);
-
-      const targetId = localServers.findIndex((e) => e.did === abtnode.did);
-
-      if (targetId > -1) {
-        localServers.splice(targetId, 1);
-        localStorage.localServers = JSON.stringify(localServers);
-      }
-    }
+    dispatchInstances({
+      type: 'unregister',
+      did: abtnode.did,
+    });
   };
 
   return (
